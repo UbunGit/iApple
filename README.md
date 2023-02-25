@@ -1,2 +1,3 @@
 # iApple
-广告聚合
+
+[iAD使用方法](./doc/iAD.md)
