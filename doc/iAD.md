@@ -2,7 +2,7 @@
 
 ## 1:Pod引入
 ```
- pod "iApple/iAD", :path=>"../"
+pod "iApple/iAD", :git=>"https://github.com/UbunGit/iApple"
 ```
 
 ## 2：使用
@@ -41,6 +41,7 @@ ADManage.defual.showSplash(vc: self) { state in
 
 ### 2.2 激励
 ``` swift
-ADManage.defual.showRewarded(vc: self, fineshBlock:{ state in          
+ADManage.defual.showRewarded(vc: self, fineshBlock:{ state in
+          
 })
 ```
