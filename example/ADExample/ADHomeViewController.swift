@@ -21,11 +21,9 @@ class ADHomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "iAD"
         makeUI()
         makeLayout()
-        ADManage.defual.showSplash(vc: self) { state in
-            
-        }
     }
     
     func makeUI(){

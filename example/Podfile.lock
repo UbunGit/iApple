@@ -110,12 +110,10 @@ PODS:
   - SnapKit (5.6.0)
 
 DEPENDENCIES:
-  - Ads-CN
-  - Google-Mobile-Ads-SDK
-  - iApple (from `../`)
-  - iApple/iAD (from `../`)
-  - iApple/iRouter (from `../`)
-  - iApple/iView (from `../`)
+  - iApple (from `https://github.com/UbunGit/iApple`)
+  - iApple/iAD (from `https://github.com/UbunGit/iApple`)
+  - iApple/iRouter (from `https://github.com/UbunGit/iApple`)
+  - iApple/iView (from `https://github.com/UbunGit/iApple`)
   - SnapKit
 
 SPEC REPOS:
@@ -133,7 +131,12 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   iApple:
-    :path: "../"
+    :git: https://github.com/UbunGit/iApple
+
+CHECKOUT OPTIONS:
+  iApple:
+    :commit: 133aff2dabe8c7219396c7011c60dd624cb4f951
+    :git: https://github.com/UbunGit/iApple
 
 SPEC CHECKSUMS:
   Ads-CN: 342fba3a46d17fa395da7bba1d88893fe33905e6
@@ -148,6 +151,6 @@ SPEC CHECKSUMS:
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: ea0e322d206e39a05fd5b9e2b66ba02c99c6ed16
+PODFILE CHECKSUM: cd084d2f503e4269f0cac0bb2527ea25e792e151
 
 COCOAPODS: 1.11.3

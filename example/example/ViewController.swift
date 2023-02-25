@@ -22,11 +22,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "iApple"
         makeUI()
         makeLayout()
-        ADManage.defual.showSplash(vc: self) { state in
-            
-        }
     }
     
     func makeUI(){
