@@ -9,7 +9,7 @@
 
 ### 2.1 初始化
 
-```
+```  swift
 // 替换自己的广告id
 let adData:ADData = .init(rewarded_time: 240,
                           platforms: [.csj,.google],
@@ -33,3 +33,14 @@ ADManage.defual.setUp()
 ```
 
 ### 2.2 开屏
+``` swift
+ADManage.defual.showSplash(vc: self) { state in
+            
+}
+```
+
+### 2.2 激励
+``` swift
+ADManage.defual.showRewarded(vc: self, fineshBlock:{ state in          
+})
+```
