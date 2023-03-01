@@ -1,25 +1,25 @@
 Pod::Spec.new do |spec|
-	
-	spec.name         = "iApple"
-	spec.version      = "1.0.0"
-	spec.summary      = "用户信息"
-	
-	spec.description  = "ios用户信息"
-	
-	spec.homepage     = "http://github/ubungit.git"
-	
-	
-	spec.license      = "MIT"
-	
-	spec.author             = { "静静地白色外套" => "296019487@qq.com" }
-	
- 	spec.ios.deployment_target = '11'
-	
-	spec.source       = { :git => "http://github/ubungit.git", :tag => "#{spec.version}" }
-	
-
-
-
+  
+  spec.name         = "iApple"
+  spec.version      = "1.0.0"
+  spec.summary      = "用户信息"
+  
+  spec.description  = "ios用户信息"
+  
+  spec.homepage     = "http://github/ubungit.git"
+  
+  
+  spec.license      = "MIT"
+  
+  spec.author             = { "静静地白色外套" => "296019487@qq.com" }
+  
+  spec.ios.deployment_target = '11'
+  
+  spec.source       = { :git => "http://github/ubungit.git", :tag => "#{spec.version}" }
+  
+  
+  
+  
   spec.default_subspec = 'iBox'
   
   spec.subspec 'iBox' do |spec|
@@ -34,20 +34,22 @@ Pod::Spec.new do |spec|
     "iLog/**/*.{h,m,swift}"
     ]
   end
-	spec.subspec 'iAD' do |spec|
- 
+  spec.subspec 'iAD' do |spec|
+    
     spec.dependency "Ads-CN"
     spec.dependency "Google-Mobile-Ads-SDK"
     spec.dependency "iApple/iBox"
     spec.dependency "iApple/iLog"
     spec.dependency "iApple/iView"
-		spec.source_files  =  [
+    spec.source_files  =  [
     "iAD/**/*.{h,m,swift}"
     ]
-	end
+  end
   
   
   spec.subspec 'iView' do |spec|
+    
+    spec.dependency "SnapKit"
     spec.dependency "iApple/iBox"
     spec.source_files  =  [
     "iView/**/*.{h,m,swift}"
@@ -61,13 +63,21 @@ Pod::Spec.new do |spec|
     ]
   end
   
+  spec.subspec 'iRealm' do |spec|
+    
+    spec.dependency "RealmSwift"
+    spec.source_files  =  [
+    "iRealm/**/*.{h,m,swift}"
+    ]
+  end
   
   
-
-	spec.prefix_header_contents = <<-EOS
-
-	
-	EOS
-	
-	
+  
+  
+  spec.prefix_header_contents = <<-EOS
+  
+  
+  EOS
+  
+  
 end
