@@ -71,6 +71,15 @@ Pod::Spec.new do |spec|
     ]
   end
   
+  spec.subspec 'System' do |spec|
+    
+    spec.dependency "SnapKit"
+    spec.dependency "iApple/iBox"
+    spec.source_files  =  [
+    "System/**/*.{h,m,swift}"
+    ]
+  end
+  
   
   
   
