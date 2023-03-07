@@ -28,6 +28,7 @@ public extension UITableView{
         let className = cellType.i_className
         let identifier = className.components(separatedBy: ".").last!
         let nib = UINib(nibName: identifier, bundle: bundle)
+        
         register(nib, forCellReuseIdentifier: identifier)
     }
     
@@ -35,7 +36,7 @@ public extension UITableView{
         cellTypes.forEach { i_registernib(cellType: $0, bundle: bundle) }
     }
     
-    func i_dequeueReusableNibCell<T: UITableViewCell>(with type: T.Type, for indexPath: IndexPath) -> T {
+    func i_dequeueNibCell<T: UITableViewCell>(with type: T.Type, for indexPath: IndexPath) -> T {
         let className = type.i_className
         let identifier = className.components(separatedBy: ".").last!
         return dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! T
