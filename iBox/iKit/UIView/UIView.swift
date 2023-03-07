@@ -8,7 +8,11 @@
 import Foundation
 @IBDesignable
 public extension UIView{
-    
+    static func initWithNib() -> Self {
+        let className = "\(self)"
+        let nibName = className.split{$0 == "."}.map(String.init).last!
+        return Bundle.main.loadNibNamed(nibName, owner: self)?.first as! Self
+    }
     @objc var i_radius: CGFloat {
         set {
             layer.cornerRadius = newValue

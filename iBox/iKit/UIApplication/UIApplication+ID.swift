@@ -39,5 +39,27 @@ public extension UIApplication{
         UIApplication.shared.i_keychain_setValue(uuidData, key: iUUIDKEY)
         return uuistr
     }
+    // 系统版本
+    var i_systemVersion:String{
+        return UIDevice.current.systemVersion
+        
+    }
+    
+    // 手机型号
+   var i_modenName:String{
+        
+        var systemInfo = utsname()
+        uname(&systemInfo)
+        let machineMirror = Mirror(reflecting: systemInfo.machine)
+        let identifier = machineMirror.children.reduce("") { identifier, element in
+            guard let value = element.value as? Int8, value != 0 else { return identifier }
+            return identifier + String(UnicodeScalar(UInt8(value)))
+        }
+        return identifier
+        
+    }
+    var i_appVersion:String{
+        return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+    }
    
 }
