@@ -23,59 +23,74 @@ public enum ADFineshStatus:Int{
 public enum ADPlatfrom:Int,Codable{
     case csj = 0
     case google
-    
 }
 
 public struct ADData:Codable{
     
-    struct ADItem:Codable{
+    public struct ADItem:Codable{
         var appid:String?
         var splash:String
         var rewarded:String
         var expressId:String
+        
+        public init(appid: String? = nil, splash: String, rewarded: String, expressId: String) {
+            self.appid = appid
+            self.splash = splash
+            self.rewarded = rewarded
+            self.expressId = expressId
+        }
     }
-    var rewarded_time:Int
-    var platforms:[ADPlatfrom]
-    var google:ADItem
-    var csj:ADItem
+    
+ 
+    public var rewarded_time:Int
+    public var platforms:[ADPlatfrom]
+    public var google:ADItem
+    public var csj:ADItem
+    public var version:Int
+    init(rewarded_time: Int, platforms: [ADPlatfrom], google: ADItem, csj: ADItem, version: Int) {
+        self.rewarded_time = rewarded_time
+        self.platforms = platforms
+        self.google = google
+        self.csj = csj
+        self.version = version
+    }
     
 }
 
 public class ADManage{
     
+    public static let share = ADManage()
     
-    
-    var data:ADData
-    //    lazy var data: ADData = {
-    //
-    //        if let dataPath = dataPath,
-    //           let data = try? Data.init(contentsOf: dataPath) ,
-    //           let value = try? JSONDecoder().decode(ADData.self, from: data){
-    //            return value
-    //        }
-    //        return adData
-    //
-    //    }()
-    
-    public init(data: ADData) {
-        self.data = data
-    }
-    lazy var splash: Splash = {
+    public var data:ADData?
+
+    public var isShowSplash:Bool = false
+    lazy var splash: Splash? = {
+        guard let data = data else{
+            return nil
+        }
         let value = Splash(id: data.csj.splash)
         return value
     }()
     
-    
-    lazy var googleSplash: GoogleSplash = {
+    lazy var googleSplash: GoogleSplash? = {
+        guard let data = data else{
+            return nil
+        }
         let value = GoogleSplash(id: data.google.splash)
         return value
     }()
     
-    lazy var rewarded: Rewarded = {
+    lazy var rewarded: Rewarded? = {
+        guard let data = data else{
+            return nil
+        }
         let value = Rewarded(id: data.csj.rewarded)
         return value
     }()
-    lazy var googleRewarded: GoogleRewarded = {
+    lazy var googleRewarded: GoogleRewarded? = {
+        guard let data = data else{
+            return nil
+        }
         let value = GoogleRewarded(id: data.google.rewarded)
         return value
     }()
@@ -85,18 +100,21 @@ public class ADManage{
     
     // 初始化
     public func setUp(){
-        
-        BUAdSDKManager.setAppID(self.data.csj.appid)
+        guard let data = data else{
+            return
+        }
+        BUAdSDKManager.setAppID(data.csj.appid)
         GADMobileAds.sharedInstance().start()
-        self.update()
+    
+     
     }
     
     // 展示开屏广告
-    public  func showSplash(vc:UIViewController,fineshBlock: @escaping (_: ADFineshStatus) -> Void){
-        if splashPlatform == .csj{
-            splash.show(vc: vc) { state in
+    public func showSplash(vc:UIViewController,fineshBlock: @escaping (_: ADFineshStatus) -> Void){
+        if ADManage.splashPlatform == .csj{
+            splash?.show(vc: vc) { state in
                 if state == .error{
-                    self.splashPlatform = self.nextPlafrom(now: self.splashPlatform)
+                    ADManage.splashPlatform = self.nextPlafrom(now: ADManage.splashPlatform)
 #if DEBUG
                     debugPrint("穿山甲开屏展示失败")
 #endif
@@ -104,9 +122,9 @@ public class ADManage{
                 fineshBlock(state)
             }
         }else{
-            googleSplash.show(vc: vc) { state in
+            googleSplash?.show(vc: vc) { state in
                 if state == .error{
-                    self.splashPlatform =  self.nextPlafrom(now: self.splashPlatform)
+                    ADManage.splashPlatform =  self.nextPlafrom(now: ADManage.splashPlatform)
 #if DEBUG
                     debugPrint("谷歌开屏展示失败")
 #endif
@@ -135,10 +153,10 @@ public class ADManage{
     
     private func commitshowRewarded(vc:UIViewController,fineshBlock: @escaping (_: ADFineshStatus) -> Void){
         if rewardPlatform == .csj{
-            rewarded.show(vc: vc) { state in
+            rewarded?.show(vc: vc) { state in
                 if state == .error{
                     
-                    self.rewardPlatform =  self.nextPlafrom(now: self.splashPlatform)
+                    self.rewardPlatform =  self.nextPlafrom(now: self.rewardPlatform)
 #if DEBUG
                     debugPrint("穿山甲激励展示失败")
 #endif
@@ -150,9 +168,9 @@ public class ADManage{
                 fineshBlock(state)
             }
         }else{
-            googleRewarded.show(vc: vc) { state in
+            googleRewarded?.show(vc: vc) { state in
                 if state == .error{
-                    self.rewardPlatform =  self.nextPlafrom(now: self.splashPlatform)
+                    self.rewardPlatform =  self.nextPlafrom(now: self.rewardPlatform)
 #if DEBUG
                     debugPrint("谷歌激励展示失败")
 #endif
@@ -170,6 +188,9 @@ public class ADManage{
 
 extension ADManage{
     func nextPlafrom(now:ADPlatfrom)->ADPlatfrom{
+        guard let data = data else{
+            return .csj
+        }
         if data.platforms.count<=1{
             return data.platforms.first ?? .csj
         }else{
@@ -202,11 +223,9 @@ extension ADManage{
         // 900 -800 -50 //
         let now = Int(Date().timeIntervalSince1970)
         let old = rewardedLastShowtime
-#if DEBUG
-        let abs = now - old - 10 //(data.rewarded_time*60)
-#else
-        let abs = now - old - (data.rewarded_time*60)
-#endif
+
+        let abs = now - old - ((data?.rewarded_time ?? 10)*60)
+
         
         if abs > 0{
             return true
@@ -217,7 +236,7 @@ extension ADManage{
         
     }
     
-    var splashPlatform:ADPlatfrom{
+   public static var splashPlatform:ADPlatfrom{
         
         set{
             UserDefaults.standard.set(newValue.rawValue, forKey: "admanage.splash")
@@ -246,22 +265,12 @@ extension ADManage{
 }
 
 
-let adData:ADData = .init(rewarded_time: 240,
-                          platforms: [.csj,.google],
-                          google: .init(
-                            splash: "ca-app-pub-8735546255287972/4391220272",
-                            rewarded: "ca-app-pub-8735546255287972/2319041966",
-                            expressId: "ca-app-pub-8735546255287972/1744326896"
-                          ),
-                          csj:.init(appid: "5369408",
-                                    splash: "888140834",
-                                    rewarded: "951379987",
-                                    expressId: "951338398"
-                                   )
-)
+
+
+
 public extension ADManage{
     
-    public static let defual = ADManage(data: adData)
+
     var dataPath:URL?{
         
         let path = UIApplication.shared.i_documnetPath.appending("/addata.json")
@@ -273,33 +282,33 @@ public extension ADManage{
         
     }
     
-    func update(){
-        
-        let url = URL(string: "https://ghproxy.com/https://raw.githubusercontent.com/UbunGit/data/main/addata.json")!
-        let path = UIApplication.shared.i_documnetPath.appending("/addata.json")
-        let task = URLSession.shared.downloadTask(with: url) { localURL, urlResponse, error in
-            
-            if let localURL = localURL {
-                do {
-                    let data = try  Data.init(contentsOf: localURL)
-                    if let ldata = try? Data.init(contentsOf: .init(fileURLWithPath: path)),
-                       ldata.i_md5 == data.i_md5 {
-                        return
-                    }
-                    
-                    let addata = try JSONDecoder().decode(ADData.self, from: data)
-                    try data.write(to: .init(fileURLWithPath: path))
-                    self.splashPlatform = addata.platforms.first ?? .csj
-                } catch  {
-                    i_log(level: .warn, msg: "广告配置更新失败")
-                    debugPrint(error)
-                }
-            }else{
-                i_log(level: .warn, msg: "广告配置下载失败")
-            }
-        }
-        task.resume()
-    }
+//    func update(){
+//
+//        let url = URL(string: "https://ghproxy.com/https://raw.githubusercontent.com/UbunGit/data/main/addata.json")!
+//        let path = UIApplication.shared.i_documnetPath.appending("/addata.json")
+//        let task = URLSession.shared.downloadTask(with: url) { localURL, urlResponse, error in
+//
+//            if let localURL = localURL {
+//                do {
+//                    let data = try  Data.init(contentsOf: localURL)
+//                    if let ldata = try? Data.init(contentsOf: .init(fileURLWithPath: path)),
+//                       ldata.i_md5 == data.i_md5 {
+//                        return
+//                    }
+//
+//                    let addata = try JSONDecoder().decode(ADData.self, from: data)
+//                    try data.write(to: .init(fileURLWithPath: path))
+//                    self.splashPlatform = addata.platforms.first ?? .csj
+//                } catch  {
+//                    i_log(level: .warn, msg: "广告配置更新失败")
+//                    debugPrint(error)
+//                }
+//            }else{
+//                i_log(level: .warn, msg: "广告配置下载失败")
+//            }
+//        }
+//        task.resume()
+//    }
 }
 
 

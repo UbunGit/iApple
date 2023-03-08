@@ -10,16 +10,16 @@ import Foundation
 open class I_Log{
 
     
-    struct Level{
-        var rawValue:Int
-        static let all:Level = .init(rawValue: 0)
-        static let trace:Level = .init(rawValue: 100)
-        static let debug:Level = .init(rawValue: 200)
-        static let info:Level = .init(rawValue: 300)
-        static let warn:Level = .init(rawValue: 400)
-        static let error:Level = .init(rawValue: 500)
-        static let fatal:Level = .init(rawValue: 600)
-        static let off:Level = .init(rawValue: Int.max)
+    public struct Level{
+        public var rawValue:Int
+        public static let all:Level = .init(rawValue: 0)
+        public static let trace:Level = .init(rawValue: 100)
+        public static let debug:Level = .init(rawValue: 200)
+        public static let info:Level = .init(rawValue: 300)
+        public static let warn:Level = .init(rawValue: 400)
+        public static let error:Level = .init(rawValue: 500)
+        public static let fatal:Level = .init(rawValue: 600)
+        public static let off:Level = .init(rawValue: Int.max)
         
     }
     static let defual:I_Log = I_Log()
@@ -68,6 +68,6 @@ open class I_Log{
     }
 }
 
-func i_log(level:I_Log.Level,msg:String){
+public func i_log(level:I_Log.Level,msg:String){
     I_Log.defual.toConsole(msg: msg)
 }

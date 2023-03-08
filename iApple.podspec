@@ -49,6 +49,7 @@ Pod::Spec.new do |spec|
   
   spec.subspec 'iView' do |spec|
     
+    spec.dependency "SDWebImage"
     spec.dependency "SnapKit"
     spec.dependency "iApple/iBox"
     spec.source_files  =  [
@@ -68,6 +69,13 @@ Pod::Spec.new do |spec|
     spec.dependency "RealmSwift"
     spec.source_files  =  [
     "iRealm/**/*.{h,m,swift}"
+    ]
+  end
+  
+  spec.subspec 'iStore' do |spec|
+    spec.dependency "iApple/iBox"
+    spec.source_files  =  [
+    "iStore/**/*.{h,m,swift}"
     ]
   end
   

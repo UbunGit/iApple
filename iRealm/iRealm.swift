@@ -18,7 +18,7 @@ public class RealmManage{
         config.schemaVersion =  UInt64(Date().timeIntervalSince1970)
         realm = try! Realm(configuration: config)
     }
-    public func setup_Realm(){
+    public func setup(){
         #if DEBUG
         NSLog("Realm初始化成功")
         #endif
