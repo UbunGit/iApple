@@ -79,12 +79,21 @@ Pod::Spec.new do |spec|
     ]
   end
   
-  spec.subspec 'System' do |spec|
+  spec.subspec 'iSystem' do |spec|
     
     spec.dependency "SnapKit"
     spec.dependency "iApple/iBox"
     spec.source_files  =  [
-    "System/**/*.{h,m,swift}"
+    "iSystem/**/*.{h,m,swift}"
+    ]
+  end
+  
+  spec.subspec 'iHub' do |spec|
+    spec.dependency "MBProgressHUD"
+    spec.dependency "YYCategories"
+    
+    spec.source_files  =  [
+    "iHub/**/*.{h,m,swift}"
     ]
   end
   

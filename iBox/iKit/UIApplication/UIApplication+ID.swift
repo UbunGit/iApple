@@ -58,8 +58,13 @@ public extension UIApplication{
         return identifier
         
     }
+    
     var i_appVersion:String{
         return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+    }
+    
+    var i_window:UIWindow?{
+        return UIApplication.shared.delegate?.window ?? nil
     }
    
 }
