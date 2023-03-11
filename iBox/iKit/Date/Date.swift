@@ -8,9 +8,9 @@
 import Foundation
 public extension Date{
     
-    func i_toString(_ format:String="yyyy-MM-dd HH:mm:ss",locale:Locale=Locale.init(identifier: "zh_CN")) -> String {
+    func i_toString(_ format:String="yyyy-MM-dd HH:mm:ss") -> String {
         let formatter = DateFormatter()
-        formatter.locale = locale
+//        formatter.locale = locale
         formatter.dateFormat = format
         let date = formatter.string(from: self)
         return date
@@ -28,4 +28,16 @@ public extension Date{
         let month = myCalendar.component(.month, from: self)
         return month
     }
+    
+    static func fromAppleServer(dateString: String) -> Date? {
+        let seperated = dateString.components(separatedBy: " ")
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.timeZone = TimeZone(identifier: seperated.last!)
+        let dateObject = dateFormatter.date(from: (seperated.dropLast()).joined(separator: " "))
+        return dateObject
+    }
+       
+  
+   
 }

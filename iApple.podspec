@@ -74,6 +74,8 @@ Pod::Spec.new do |spec|
   
   spec.subspec 'iStore' do |spec|
     spec.dependency "iApple/iBox"
+    spec.dependency "iApple/iHub"
+    
     spec.source_files  =  [
     "iStore/**/*.{h,m,swift}"
     ]

@@ -134,7 +134,7 @@ public class ADManage{
         }
     }
     
-    // 展示记录广告
+    // 展示激励广告
     public  func showRewarded(vc:UIViewController,fineshBlock: @escaping (_: ADFineshStatus) -> Void){
         
         if canShowRewarded == false{
