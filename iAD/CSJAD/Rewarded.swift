@@ -73,14 +73,12 @@ extension Rewarded:BUNativeExpressRewardedVideoAdDelegate{
 #if DEBUG
         debugPrint("激励广告-穿山甲用户关闭广告")
 #endif
-        
-        
+
         if isValidSucceed{
-            fineshBlock?(.skip)
+            fineshBlock?(.finish)
         }else{
             fineshBlock?(.skip)
         }
-        
     }
     
     

@@ -111,6 +111,8 @@ public class ADManage{
     
     // 展示开屏广告
     public func showSplash(vc:UIViewController,fineshBlock: @escaping (_: ADFineshStatus) -> Void){
+        fineshBlock(.finish)
+        return
         if ADManage.splashPlatform == .csj{
             splash?.show(vc: vc) { state in
                 if state == .error{
@@ -135,20 +137,24 @@ public class ADManage{
     }
     
     // 展示激励广告
-    public  func showRewarded(vc:UIViewController,fineshBlock: @escaping (_: ADFineshStatus) -> Void){
+    public  func showRewarded(vc:UIViewController, isAlert:Bool = true,fineshBlock: @escaping (_: ADFineshStatus) -> Void){
         
         if canShowRewarded == false{
             fineshBlock(.skip)
             return
         }
-        let alert = UIAlertController(title: "提示", message: "观看广告可免费使用四小时", preferredStyle: .alert)
-        alert.addAction(.init(title: "看广告", style: .default,handler: { _ in
-            self.commitshowRewarded(vc: vc, fineshBlock: fineshBlock)
-        }))
-        
-        alert.addAction(.init(title: "不用了", style: .cancel))
-        
-        vc.present(alert, animated: true)
+        if isAlert{
+            let alert = UIAlertController(title: "提示", message: "观看广告可免费使用四小时", preferredStyle: .alert)
+            alert.addAction(.init(title: "看广告", style: .default,handler: { _ in
+                self.commitshowRewarded(vc: vc, fineshBlock: fineshBlock)
+            }))
+            
+            alert.addAction(.init(title: "不用了", style: .cancel))
+            
+            vc.present(alert, animated: true)
+        }
+        self.commitshowRewarded(vc: vc, fineshBlock: fineshBlock)
+
     }
     
     private func commitshowRewarded(vc:UIViewController,fineshBlock: @escaping (_: ADFineshStatus) -> Void){
@@ -162,9 +168,7 @@ public class ADManage{
 #endif
                     
                 }
-                if state == .finish{
-                    self.rewardedLastShowtime = Int(Date().timeIntervalSince1970)
-                }
+               
                 fineshBlock(state)
             }
         }else{
@@ -175,9 +179,7 @@ public class ADManage{
                     debugPrint("谷歌激励展示失败")
 #endif
                 }
-                if state == .finish{
-                    self.rewardedLastShowtime = Int(Date().timeIntervalSince1970)
-                }
+               
                 fineshBlock(state)
             }
         }

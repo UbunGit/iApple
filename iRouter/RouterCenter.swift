@@ -7,7 +7,8 @@
 
 import Foundation
 
-@objc public protocol I_RouterProtocol:NSObjectProtocol{
+@objc
+public protocol I_RouterProtocol:NSObjectProtocol{
     static func routerUrl()->String
 }
 extension I_RouterProtocol{
@@ -24,7 +25,7 @@ public class RouterCenter:NSObject{
     private var routerMap:[String:AnyClass] = [:]
     private override init(){
         super.init()
-        self.setup()
+   
     }
 
     public func setup(){

@@ -81,6 +81,15 @@ Pod::Spec.new do |spec|
     ]
   end
   
+  spec.subspec 'iWeb' do |spec|
+    
+    spec.dependency "SnapKit"
+#    spec.dependency "iApple/iBox"
+    spec.source_files  =  [
+    "iWeb/**/*.{h,m,swift}"
+    ]
+  end
+  
   spec.subspec 'iSystem' do |spec|
     
     spec.dependency "SnapKit"
@@ -91,6 +100,7 @@ Pod::Spec.new do |spec|
   end
   
   spec.subspec 'iHub' do |spec|
+    spec.dependency "SnapKit"
     spec.dependency "MBProgressHUD"
     spec.dependency "YYCategories"
     
