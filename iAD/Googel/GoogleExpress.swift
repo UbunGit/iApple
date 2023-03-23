@@ -8,27 +8,39 @@
 import Foundation
 import GoogleMobileAds
 
-class GoogleExpress:NSObject{
+class GoogleExpress:UIView{
     
     var id:String
     var fineshBlock:((_ status:ADFineshStatus)->())? = nil
     var subViewcontroller:UIViewController? = nil
     var splashad:GADAppOpenAd? = nil
     var adsize = GADAdSizeLargeBanner
-    var bannerView: GADBannerView!
-
-    
-    init(id:String) {
-        self.id = id
-    }
-
-    func load(rootvc:UIViewController){
-        
-        bannerView = GADBannerView(adSize: adsize)
+    lazy var bannerView: GADBannerView = {
+        let bannerView = GADBannerView(adSize: adsize)
         bannerView.adUnitID = id
-        bannerView.rootViewController = subViewcontroller
+//        bannerView.rootViewController = subViewcontroller
         bannerView.load(GADRequest())
         bannerView.delegate = self
+        return bannerView
+    }()
+
+
+    
+    override init(frame: CGRect) {
+        self.id = ADManage.share.data.google.expressId
+        super.init(frame: frame)
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+   
+    
+    func load(rootvc:UIViewController){
+        
+       
     }
 }
 
@@ -60,37 +72,3 @@ extension GoogleExpress:GADBannerViewDelegate{
 }
 
 
-//class GoogleExpressTableCell:UITableViewCell{
-//    var googleExpress: GoogleExpress? = nil{
-//        didSet{
-//            guard let googleExpress = googleExpress else {return}
-//            contentView.addSubview(googleExpress.bannerView)
-//            googleExpress.bannerView.snp.makeConstraints { make in
-//                make.edges.equalToSuperview()
-//            }
-//        }
-//    }
-//}
-//
-//class GoogleExpressCollectionViewCell:UICollectionViewCell{
-//    var googleExpress: GoogleExpress? = nil{
-//        didSet{
-//            guard let googleExpress = googleExpress else {return}
-//            contentView.addSubview(googleExpress.bannerView)
-//            googleExpress.bannerView.snp.makeConstraints { make in
-//                make.edges.equalToSuperview()
-//            }
-//        }
-//    }
-//}
-//class GoogleExpressCollectionReusableView:UICollectionReusableView{
-//    var googleExpress: GoogleExpress? = nil{
-//        didSet{
-//            guard let googleExpress = googleExpress else {return}
-//            addSubview(googleExpress.bannerView)
-//            googleExpress.bannerView.snp.makeConstraints { make in
-//                make.edges.equalToSuperview()
-//            }
-//        }
-//    }
-//}

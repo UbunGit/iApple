@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import UIKit
 import SnapKit
+
 open class ISimpleTableCell: UITableViewCell {
 
     public lazy var iconView: UIImageView = {
@@ -43,7 +44,7 @@ open class ISimpleTableCell: UITableViewCell {
         
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         makeUI()
         makeLayout()

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-extension NSObject{
+extension UIViewController{
     
     public static func i_initWith(urlStr:String)->Self?{
         guard let url = URL(string: urlStr) else{

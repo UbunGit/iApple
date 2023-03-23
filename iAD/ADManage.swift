@@ -41,12 +41,13 @@ public struct ADData:Codable{
         }
     }
     
- 
+    
     public var rewarded_time:Int
     public var platforms:[ADPlatfrom]
     public var google:ADItem
     public var csj:ADItem
     public var version:Int
+    
     init(rewarded_time: Int, platforms: [ADPlatfrom], google: ADItem, csj: ADItem, version: Int) {
         self.rewarded_time = rewarded_time
         self.platforms = platforms
@@ -60,148 +61,60 @@ public struct ADData:Codable{
 public class ADManage{
     
     public static let share = ADManage()
+    public var data:ADData!
     
-    public var data:ADData?
-
+    
     public var isShowSplash:Bool = false
-    lazy var splash: Splash? = {
-        guard let data = data else{
-            return nil
-        }
+    
+    lazy var splash: Splash = {
+        
         let value = Splash(id: data.csj.splash)
         return value
     }()
     
-    lazy var googleSplash: GoogleSplash? = {
-        guard let data = data else{
-            return nil
-        }
+    lazy var googleSplash: GoogleSplash = {
+        
         let value = GoogleSplash(id: data.google.splash)
         return value
     }()
     
-    lazy var rewarded: Rewarded? = {
-        guard let data = data else{
-            return nil
-        }
+    lazy var rewarded: Rewarded = {
+        
         let value = Rewarded(id: data.csj.rewarded)
         return value
     }()
-    lazy var googleRewarded: GoogleRewarded? = {
-        guard let data = data else{
-            return nil
-        }
+    lazy var googleRewarded: GoogleRewarded = {
+        
         let value = GoogleRewarded(id: data.google.rewarded)
         return value
     }()
-    
-    
-    
+
     
     // 初始化
     public func setUp(){
-        guard let data = data else{
-            return
-        }
+        
         BUAdSDKManager.setAppID(data.csj.appid)
         GADMobileAds.sharedInstance().start()
-    
-     
+        cutDownTimer.fireDate = Date()
     }
-    
-    // 展示开屏广告
-    public func showSplash(vc:UIViewController,fineshBlock: @escaping (_: ADFineshStatus) -> Void){
-        fineshBlock(.finish)
-        return
-        if ADManage.splashPlatform == .csj{
-            splash?.show(vc: vc) { state in
-                if state == .error{
-                    ADManage.splashPlatform = self.nextPlafrom(now: ADManage.splashPlatform)
-#if DEBUG
-                    debugPrint("穿山甲开屏展示失败")
-#endif
-                }
-                fineshBlock(state)
-            }
-        }else{
-            googleSplash?.show(vc: vc) { state in
-                if state == .error{
-                    ADManage.splashPlatform =  self.nextPlafrom(now: ADManage.splashPlatform)
-#if DEBUG
-                    debugPrint("谷歌开屏展示失败")
-#endif
-                }
-                fineshBlock(state)
-            }
-        }
-    }
-    
-    // 展示激励广告
-    public  func showRewarded(vc:UIViewController, isAlert:Bool = true,fineshBlock: @escaping (_: ADFineshStatus) -> Void){
-        
-        if canShowRewarded == false{
-            fineshBlock(.skip)
-            return
-        }
-        if isAlert{
-            let alert = UIAlertController(title: "提示", message: "观看广告可免费使用四小时", preferredStyle: .alert)
-            alert.addAction(.init(title: "看广告", style: .default,handler: { _ in
-                self.commitshowRewarded(vc: vc, fineshBlock: fineshBlock)
-            }))
-            
-            alert.addAction(.init(title: "不用了", style: .cancel))
-            
-            vc.present(alert, animated: true)
-        }
-        self.commitshowRewarded(vc: vc, fineshBlock: fineshBlock)
 
-    }
-    
-    private func commitshowRewarded(vc:UIViewController,fineshBlock: @escaping (_: ADFineshStatus) -> Void){
-        if rewardPlatform == .csj{
-            rewarded?.show(vc: vc) { state in
-                if state == .error{
-                    
-                    self.rewardPlatform =  self.nextPlafrom(now: self.rewardPlatform)
-#if DEBUG
-                    debugPrint("穿山甲激励展示失败")
-#endif
-                    
-                }
-               
-                fineshBlock(state)
-            }
-        }else{
-            googleRewarded?.show(vc: vc) { state in
-                if state == .error{
-                    self.rewardPlatform =  self.nextPlafrom(now: self.rewardPlatform)
-#if DEBUG
-                    debugPrint("谷歌激励展示失败")
-#endif
-                }
-               
-                fineshBlock(state)
-            }
-        }
-    }
+ 
     
     
 }
 
 extension ADManage{
-    func nextPlafrom(now:ADPlatfrom)->ADPlatfrom{
-        guard let data = data else{
-            return .csj
-        }
-        if data.platforms.count<=1{
-            return data.platforms.first ?? .csj
+   static func nextPlafrom(now:ADPlatfrom)->ADPlatfrom{
+        
+       if ADManage.share.data.platforms.count<=1{
+            return ADManage.share.data.platforms.first ?? .csj
         }else{
-            let index = data.platforms.firstIndex(of: now)
+            let index = ADManage.share.data.platforms.firstIndex(of: now)
             let nextindex = (index ?? 0)+1
-            if nextindex<data.platforms.count{
-                return data.platforms[nextindex]
+            if nextindex<ADManage.share.data.platforms.count{
+                return ADManage.share.data.platforms[nextindex]
             }
-            return data.platforms.first ?? .csj
+            return ADManage.share.data.platforms.first ?? .csj
         }
     }
     
@@ -225,20 +138,19 @@ extension ADManage{
         // 900 -800 -50 //
         let now = Int(Date().timeIntervalSince1970)
         let old = rewardedLastShowtime
-
-        let abs = now - old - ((data?.rewarded_time ?? 10)*60)
-
-        
+        #if DEBUG
+        let abs = now - old - (data.rewarded_time)
+        #else
+        let abs = now - old - ((data.rewarded_time)*60)
+        #endif
         if abs > 0{
             return true
         }else{
             return false
         }
-        
-        
     }
     
-   public static var splashPlatform:ADPlatfrom{
+    public static var splashPlatform:ADPlatfrom{
         
         set{
             UserDefaults.standard.set(newValue.rawValue, forKey: "admanage.splash")
@@ -250,7 +162,7 @@ extension ADManage{
         }
     }
     // 激励广告平台
-    var rewardPlatform:ADPlatfrom{
+    public static var rewardPlatform:ADPlatfrom{
         
         set{
             UserDefaults.standard.set(newValue.rawValue, forKey: "admanage.splash")
@@ -262,56 +174,109 @@ extension ADManage{
         }
     }
     
+    // 信息流平台
+    public static var expressPlatform:ADPlatfrom{
+        
+        set{
+            UserDefaults.standard.set(newValue.rawValue, forKey: "admanage.expressPlatform")
+        }
+        get{
+            
+            let platform = UserDefaults.standard.integer(forKey: "admanage.expressPlatform")
+            return .init(rawValue: platform) ?? .csj
+        }
+    }
+    
     
     
 }
 
-
-
-
-
-public extension ADManage{
+extension UIViewController{
     
-
-    var dataPath:URL?{
+    // 展示开屏广告
+    public func showSplash(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
         
-        let path = UIApplication.shared.i_documnetPath.appending("/addata.json")
-        var url = URL.init(fileURLWithPath: path)
-        if FileManager.default.fileExists(atPath: path) == false{
-            url = Bundle.main.url(forResource: "addata", withExtension: ".json")!
+        if ADManage.splashPlatform == .csj{
+            ADManage.share.splash.show(vc: self) { state in
+                if state == .error{
+                    ADManage.splashPlatform = ADManage.nextPlafrom(now: ADManage.splashPlatform)
+#if DEBUG
+                    debugPrint("穿山甲开屏展示失败")
+#endif
+                }
+                fineshBlock(state)
+            }
+        }else{
+            ADManage.share.googleSplash.show(vc: self) { state in
+                if state == .error{
+                    ADManage.splashPlatform =  ADManage.nextPlafrom(now: ADManage.splashPlatform)
+#if DEBUG
+                    debugPrint("谷歌开屏展示失败")
+#endif
+                }
+                fineshBlock(state)
+            }
         }
-        return url
+    }
+    
+    // 展示激励广告
+    public  func showRewarded(isAlert:Bool = true,fineshBlock: @escaping (_: ADFineshStatus) -> Void){
+        
+        if ADManage.share.canShowRewarded == false{
+            fineshBlock(.skip)
+            return
+        }
+        if isAlert{
+            let alert = UIAlertController(title: "提示", message: "观看广告可免费体验四小时", preferredStyle: .alert)
+            alert.addAction(.init(title: "看广告", style: .default,handler: { _ in
+                self.commitshowRewarded(fineshBlock: fineshBlock)
+            }))
+            alert.addAction(.init(title: "不用了", style: .cancel))
+            
+            self.present(alert, animated: true)
+        }
+        self.commitshowRewarded( fineshBlock: fineshBlock)
         
     }
     
-//    func update(){
-//
-//        let url = URL(string: "https://ghproxy.com/https://raw.githubusercontent.com/UbunGit/data/main/addata.json")!
-//        let path = UIApplication.shared.i_documnetPath.appending("/addata.json")
-//        let task = URLSession.shared.downloadTask(with: url) { localURL, urlResponse, error in
-//
-//            if let localURL = localURL {
-//                do {
-//                    let data = try  Data.init(contentsOf: localURL)
-//                    if let ldata = try? Data.init(contentsOf: .init(fileURLWithPath: path)),
-//                       ldata.i_md5 == data.i_md5 {
-//                        return
-//                    }
-//
-//                    let addata = try JSONDecoder().decode(ADData.self, from: data)
-//                    try data.write(to: .init(fileURLWithPath: path))
-//                    self.splashPlatform = addata.platforms.first ?? .csj
-//                } catch  {
-//                    i_log(level: .warn, msg: "广告配置更新失败")
-//                    debugPrint(error)
-//                }
-//            }else{
-//                i_log(level: .warn, msg: "广告配置下载失败")
-//            }
-//        }
-//        task.resume()
-//    }
+    private func commitshowRewarded(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
+        if ADManage.rewardPlatform == .csj{
+            ADManage.share.rewarded.show(vc: self) { state in
+                if state == .error{
+                    
+                    ADManage.rewardPlatform =  ADManage.nextPlafrom(now: ADManage.rewardPlatform)
+#if DEBUG
+                    debugPrint("穿山甲激励展示失败")
+#endif
+                    
+                }
+                
+                fineshBlock(state)
+            }
+        }else{
+            ADManage.share.googleRewarded.show(vc: self) { state in
+                if state == .error{
+                    ADManage.rewardPlatform =  ADManage.nextPlafrom(now: ADManage.rewardPlatform)
+#if DEBUG
+                    debugPrint("谷歌激励展示失败")
+#endif
+                }
+                
+                fineshBlock(state)
+            }
+        }
+    }
+    
 }
+
+extension Notification.Name{
+    
+    static let oneSecondCutDown:Notification.Name = .init("OneSecondCutDown")
+}
+
+let cutDownTimer = Timer.scheduledTimer(withTimeInterval: 1, block: { _ in
+    NotificationCenter.default.post(name: .oneSecondCutDown, object: nil)
+}, repeats: true)
 
 
 
