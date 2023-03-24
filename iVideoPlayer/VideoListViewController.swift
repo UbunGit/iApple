@@ -9,73 +9,81 @@ import UIKit
 import FDFullscreenPopGesture
 import AVFoundation
 
-open class VideoListViewController<T:Any>: UIViewController,I_UITableViewProtocol {
+open class VideoListViewController<T:Any>: UIViewController,I_UICollectionViewProtocol {
+    
     open var items: [T] = []
     public let player = AVPlayer()
-    public lazy var tableView: UITableView = {
-        let value = UITableView.init(frame: .zero,style: .plain)
+    lazy var backBrn: UIButton = {
+        let value = UIButton()
+        value.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        value.backgroundColor = .secondarySystemGroupedBackground
+        value.tintColor = .white
+        value.i_radius = 8
+        value.setBlockFor(.touchUpInside) { _ in
+            self.navigationController?.popViewController(animated: true)
+        }
+        return value
+    }()
+   
+    public lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        let value = UICollectionView(frame: .zero, collectionViewLayout: layout)
         value.dataSource = self
         value.delegate = self
         value.contentInsetAdjustmentBehavior = .never
-        value.i_registerCell(DefualCell.self)
+        value.i_register(cellType: DefualCell.self)
         value.isPagingEnabled = true
         return value
     }()
+    
     open override func viewDidLoad() {
         super.viewDidLoad()
         fd_prefersNavigationBarHidden  = true
-        
         makeUI()
         makeLayout()
         
     }
-    open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-    }
-    
+ 
     func makeUI(){
-        view.addSubview(tableView)
+        view.addSubview(collectionView)
+        view.addSubview(backBrn)
     }
     
     func makeLayout(){
-        tableView.snp.makeConstraints { make in
+        collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        backBrn.snp.makeConstraints { make in
+            make.size.equalTo(32)
+            make.top.equalToSuperview().offset(UIScreen.i_safeAreaInsets.top+20)
+            make.left.equalToSuperview().offset(UIScreen.i_safeAreaInsets.left+20)
+        }
     }
-    
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return items.count
     }
-    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        fatalError("需要子类实现tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)")
-        
+    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        fatalError("需要子类实现collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell")
     }
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.height
+   
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return collectionView.bounds.size
     }
-    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+   
+    open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if decelerate{
             return
         }
         reSetPlayer()
     }
     
-    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    open func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         reSetPlayer()
     }
     open func reSetPlayer(){
-        //        let offset = tableView.contentOffset
-        //        let bound = tableView.bounds.size
-        //        let point = CGPoint(x: offset.x+bound.width/2, y: offset.y+bound.height/2)
-        //        if let indexpath = tableView.indexPathForRow(at: point),
-        //        let cell = tableView.cellForRow(at: indexpath){
-        //            cell.playerLayer.player = player
-        //            let celldata = items[indexpath.row]
-        //            let item = AVPlayerItem.init(url: <#T##URL#>)
-        //        }else{
-        //
-        //        }
+   
         
         
     }
@@ -86,7 +94,7 @@ open class VideoListViewController<T:Any>: UIViewController,I_UITableViewProtoco
 
 extension VideoListViewController{
     
-    open class DefualCell:UITableViewCell{
+    open class DefualCell:UICollectionViewCell{
         
        public lazy var playerLayer: AVPlayerLayer = {
             let playerLayer = AVPlayerLayer()
@@ -102,22 +110,21 @@ extension VideoListViewController{
             return value
         }()
         
-        override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-            super.init(style: style, reuseIdentifier: reuseIdentifier)
+        public override init(frame: CGRect) {
+         
+            super.init(frame: frame)
             makeUI()
             makeLayout()
             DispatchQueue.main.asyncAfter(deadline: .now()+0.35){
                 self.playerLayer.frame = self.videoContainerView.bounds
                 self.videoContainerView.layer.addSublayer(self.playerLayer)
             }
-                
-           
         }
         
         required public init?(coder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
-        func makeUI(){
+        open func makeUI(){
             contentView.addSubview(thumbnailImgiew)
             contentView.addSubview(videoContainerView)
             
