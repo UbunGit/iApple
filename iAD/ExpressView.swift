@@ -7,7 +7,7 @@
 
 import Foundation
 import GoogleMobileAds
-
+import YYCategories
 public class ExpressView:UIView{
    
     var adSize = GADAdSizeLargeBanner.size

@@ -18,7 +18,7 @@ Pod::Spec.new do |spec|
   spec.source       = { :git => "http://github/ubungit.git", :tag => "#{spec.version}" }
   
   
-  
+  spec.dependency "YYCategories"
   
   spec.default_subspec = 'iBox'
   

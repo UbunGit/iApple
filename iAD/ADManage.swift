@@ -274,9 +274,9 @@ extension Notification.Name{
     static let oneSecondCutDown:Notification.Name = .init("OneSecondCutDown")
 }
 
-let cutDownTimer = Timer.scheduledTimer(withTimeInterval: 1, block: { _ in
+let cutDownTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
     NotificationCenter.default.post(name: .oneSecondCutDown, object: nil)
-}, repeats: true)
+})
 
 
 
