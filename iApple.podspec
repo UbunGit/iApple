@@ -120,6 +120,14 @@ Pod::Spec.new do |spec|
     ]
   end
   
+  spec.subspec 'iOpenAI' do |spec|
+
+    
+    spec.source_files  =  [
+    "iOpenAI/**/*.{h,m,swift}"
+    ]
+  end
+  
   
   
   
