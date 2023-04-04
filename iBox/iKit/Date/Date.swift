@@ -8,7 +8,7 @@
 import Foundation
 public extension Date{
     
-    func i_toString(_ format:String="yyyy-MM-dd HH:mm:ss") -> String {
+    func i_dateString(_ format:String="yyyy-MM-dd HH:mm:ss") -> String {
         let formatter = DateFormatter()
 //        formatter.locale = locale
         formatter.dateFormat = format
@@ -40,4 +40,18 @@ public extension Date{
        
   
    
+}
+
+public extension String{
+
+    func i_date(_ formatter:String = "yyyy-MM-dd HH:mm:ss") -> Date{
+        
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = formatter
+        guard let date = dateformatter.date(from: self) else {
+            return Date()
+        }
+        
+        return date
+    }
 }
