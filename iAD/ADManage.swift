@@ -195,9 +195,16 @@ extension UIViewController{
     
     // 展示开屏广告
     public func showSplash(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
-        
+     
         if ADManage.splashPlatform == .csj{
-            ADManage.share.splash.show(vc: self) { state in
+            let adsplash = ADManage.share.splash
+            adsplash.willLoadingBlock = {
+                self.view.loading()
+            }
+            adsplash.didLoadingBlock = {
+                self.view.loadingDismiss()
+            }
+            adsplash.show(vc: self) { state in
                 if state == .error{
                     ADManage.splashPlatform = ADManage.nextPlafrom(now: ADManage.splashPlatform)
 #if DEBUG
@@ -207,7 +214,8 @@ extension UIViewController{
                 fineshBlock(state)
             }
         }else{
-            ADManage.share.googleSplash.show(vc: self) { state in
+            let googlesplash = ADManage.share.googleSplash
+            googlesplash.show(vc: self) { state in
                 if state == .error{
                     ADManage.splashPlatform =  ADManage.nextPlafrom(now: ADManage.splashPlatform)
 #if DEBUG

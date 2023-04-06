@@ -41,6 +41,7 @@ Pod::Spec.new do |spec|
     spec.dependency "iApple/iBox"
     spec.dependency "iApple/iLog"
     spec.dependency "iApple/iView"
+    spec.dependency "iApple/iHub"
     spec.source_files  =  [
     "iAD/**/*.{h,m,swift}"
     ]

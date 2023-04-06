@@ -32,7 +32,7 @@ open class I_Log{
         if fileManager.fileExists(atPath: path) == false{
            try! fileManager.createDirectory(at: .init(fileURLWithPath: path), withIntermediateDirectories: false)
         }
-        let dateStr = Date().i_toString("yyyy-MM-dd")
+        let dateStr = Date().i_dateString("yyyy-MM-dd")
         let filepath = path.appending("/\(dateStr)")
         if fileManager.fileExists(atPath: filepath) == false{
             fileManager.createFile(atPath: filepath, contents: nil)
@@ -44,7 +44,7 @@ open class I_Log{
 
     @available(macOS 10.15.4, iOS 13.4, watchOS 6.2, tvOS 13.4, *)
     func tofile(level:Level = .debug, msg:String){
-        let data = Date().i_toString()
+        let data = Date().i_dateString()
         let format = "\(level.rawValue) \(data) \(msg)"
         guard var msgdata = format.data(using: .utf8) else{
             return

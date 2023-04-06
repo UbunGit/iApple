@@ -11,6 +11,8 @@ import GoogleMobileAds
 class GoogleSplash:NSObject{
     var id:String
     var fineshBlock:((_ status:ADFineshStatus)->())? = nil
+    var willLoadingBlock:(()->())? = nil
+    var didLoadingBlock:(()->())? = nil
     var subViewcontroller:UIViewController? = nil
     var splashad:GADAppOpenAd? = nil
     
@@ -21,11 +23,12 @@ class GoogleSplash:NSObject{
     func show(vc:UIViewController,fineshBlock: @escaping (_: ADFineshStatus) -> Void){
         subViewcontroller = vc
         self.fineshBlock = fineshBlock
+        willLoadingBlock?()
         GADAppOpenAd.load(withAdUnitID: id, request: GADRequest()) {  appOpenAd, error in
+            self.didLoadingBlock?()
             if error != nil || appOpenAd == nil{
                 
                 i_log(level: .warn, msg: "google splash Failed to load app open ad: \(error)")
-                
                 fineshBlock(.error)
             }else{
                 self.splashad = appOpenAd

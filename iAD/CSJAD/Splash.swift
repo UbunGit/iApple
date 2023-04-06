@@ -11,6 +11,8 @@ class Splash:NSObject{
    
     var id:String
     var fineshBlock:((_ status:ADFineshStatus)->())? = nil
+    var willLoadingBlock:(()->())? = nil
+    var didLoadingBlock:(()->())? = nil
     var subViewcontroller:UIViewController? = nil
     
     init(id: String) {
@@ -24,9 +26,11 @@ class Splash:NSObject{
         splashAdView.supportCardView = true
         return splashAdView
     }()
+    
     func show(vc:UIViewController,fineshBlock: @escaping (_: ADFineshStatus) -> Void){
         self.subViewcontroller = vc
         self.fineshBlock = fineshBlock
+        willLoadingBlock?()
         adview.loadData()
         
     }
@@ -39,11 +43,12 @@ extension Splash:BUSplashAdDelegate{
         debugPrint("穿山甲开屏广告错误:splashAdLoadFail:")
         debugPrint(error?.code)
 #endif
+        didLoadingBlock?()
         fineshBlock?(.error)
     }
     // 广告加载成功回调
     public func splashAdLoadSuccess(_ splashAd: BUSplashAd) {
-        
+        didLoadingBlock?()
         splashAd.showSplashView(inRootViewController:subViewcontroller!)
         
     }
