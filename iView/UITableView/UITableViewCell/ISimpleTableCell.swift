@@ -15,7 +15,7 @@ open class ISimpleTableCell: UITableViewCell {
     public lazy var iconView: UIImageView = {
         let value = UIImageView()
         value.image = .init(systemName: "trophy.fill")
-        value.tintColor = .yellow
+   
         return value
         
     }()

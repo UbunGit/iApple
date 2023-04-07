@@ -235,13 +235,14 @@ extension UIViewController{
             return
         }
         if isAlert{
-            let alert = UIAlertController(title: "提示", message: "观看广告可免费体验四小时", preferredStyle: .alert)
+            let alert = UIAlertController(title: "提示", message: "观看广告可免费体验3小时", preferredStyle: .alert)
             alert.addAction(.init(title: "看广告", style: .default,handler: { _ in
                 self.commitshowRewarded(fineshBlock: fineshBlock)
             }))
             alert.addAction(.init(title: "不用了", style: .cancel))
             
             self.present(alert, animated: true)
+            return
         }
         self.commitshowRewarded( fineshBlock: fineshBlock)
         

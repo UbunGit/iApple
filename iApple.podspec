@@ -129,6 +129,15 @@ Pod::Spec.new do |spec|
     ]
   end
   
+  spec.subspec 'iRandom' do |spec|
+
+    
+    spec.source_files  =  [
+    "iRandom/**/*.{h,m,swift}"
+    ]
+  end
+  
+  
   
   
   
