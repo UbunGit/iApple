@@ -25,7 +25,8 @@ var g_proId:String? = nil
 
 extension UIApplication:SKProductsRequestDelegate{
     // MARK: 初始化
-    public func setup_applepay(){
+    public func setup_applepay(password:String){
+        UserDefaults.standard.set(password, forKey: "store.password")
         SKPaymentQueue.default().add(self)
     }
     
@@ -43,11 +44,9 @@ extension UIApplication:SKProductsRequestDelegate{
         
     }
     public func i_storeRecover(){
+        UIView.loading()
         SKPaymentQueue.default().restoreCompletedTransactions()
-
     }
-   
-    
     //  MARK: 支付凭证
     var receiptTransactionsString: String? {
         get {
@@ -69,9 +68,9 @@ extension UIApplication:SKProductsRequestDelegate{
             debugPrint("获取支付凭证失败")
             return
         }
-
+        let password = UserDefaults.standard.object(forKey: "store.password")
         let parmas = ["receipt-data":transactionString,
-                      "password":"1fb3800cf297474493fc0a7e812f2fb6"
+                      "password":password
         ]
         do {
             let bodydata = try JSONSerialization.data(withJSONObject: parmas)
@@ -117,7 +116,7 @@ extension UIApplication:SKProductsRequestDelegate{
         UIView.loadingDismiss()
         let productArray = response.products
           if productArray.count == 0 {
-              UIView.error("未找到对应的商品信息")
+              UIView.tost(msg: "未找到对应的商品信息")
               return
           }
           var product:SKProduct!
@@ -143,7 +142,15 @@ extension UIApplication:SKProductsRequestDelegate{
 }
 
 extension UIApplication:SKPaymentTransactionObserver{
-
+    public func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
+        UIView.loadingDismiss()
+        UIView.tost(msg: "恢复成功")
+    }
+    
+    public func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
+        UIView.loadingDismiss()
+        UIView.tost(msg: "未找到购买记录？如有疑问请联系开发者")
+    }
     
     // 这里接收所有支付事务的状态：成功、失败或者正在支付
     public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {

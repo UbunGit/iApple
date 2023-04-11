@@ -7,10 +7,13 @@
 
 import Foundation
 import UIKit
+
 class ShowImageCell:UICollectionViewCell{
     
     var minScale:CGFloat = 1
     var mazScale:CGFloat = 4
+  
+    var longPressBlock:((_ cell:ShowImageCell)->())? = nil
     
     lazy var doubleTap: UITapGestureRecognizer = {
         let value = UITapGestureRecognizer()
@@ -43,7 +46,14 @@ class ShowImageCell:UICollectionViewCell{
         super.init(frame: frame)
         makeUI()
         makeLayout()
+        let long = UILongPressGestureRecognizer.init(target: self, action: #selector(longPress))
+        long.minimumPressDuration = 1.5
+        long.numberOfTouchesRequired = 1
+        self.addGestureRecognizer(long)
+
+
     }
+  
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -87,6 +97,10 @@ class ShowImageCell:UICollectionViewCell{
         let zoomRect = self.zoomRectForScale(scrollview: scroll,scale: newscale, center: tap.location(in: tap.view))
         
         scrollView.zoom(to: zoomRect, animated: true)
+    }
+    // 长按
+    @objc func longPress(){
+        longPressBlock?(self)
     }
 
 }

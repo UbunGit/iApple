@@ -9,8 +9,23 @@ import UIKit
 import SnapKit
 import SwiftUI
 import SDWebImage
+
+open class IMediaItem{
+    var image:UIImage?
+    var url:URL?
+    var placeholderImage:UIImage?
+
+    public init(image: UIImage) {
+        self.image = image
+    }
+    public init(url: URL, placeholderImage: UIImage? = nil) {
+        self.url = url
+        self.placeholderImage = placeholderImage
+    }
+}
 class ShowImageView:UIView {
-    init(datas:[String],index:Int = 0){
+    var longPressBlock:((_ cell:ShowImageCell)->())? = nil
+    init(datas:[IMediaItem],index:Int = 0){
       
         self.datas = datas
         self.index = index
@@ -26,11 +41,9 @@ class ShowImageView:UIView {
                 self.collectionView.alpha = 1
             }
         }
-       
-       
     }
     
-    var datas:[String]{
+    var datas:[IMediaItem]{
         didSet{
             collectionView.reloadData()
         }
@@ -89,6 +102,7 @@ class ShowImageView:UIView {
         }
         
     }
+ 
     
 }
 
@@ -100,13 +114,19 @@ extension ShowImageView:I_UICollectionViewProtocol{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.i_dequeueReusableCell(with: ShowImageCell.self, for: indexPath)
         let celldata = datas[indexPath.row]
-        cell.imageView.sd_setImage(with:.init(string: celldata))
-        
+        if let image = celldata.image {
+            cell.imageView.image = image
+        }else if let url = celldata.url {
+            cell.imageView.sd_setImage(with:url)
+        }
+        cell.longPressBlock = longPressBlock
+        cell.tag = indexPath.row
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.bounds.size
     }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let w = Int(self.collectionView.bounds.width)
         let x = Int(self.collectionView.contentOffset.x)
@@ -123,7 +143,7 @@ extension ShowImageView:I_UICollectionViewProtocol{
 
 
 open class ShowImageVC:UIViewController{
-    public var datas:[String] = []
+    public var datas:[IMediaItem] = []
     var index:Int = 0
     
     lazy var closeBtn: UIButton = {
@@ -143,6 +163,18 @@ open class ShowImageVC:UIViewController{
     
     lazy var imageView: ShowImageView = {
         let value = ShowImageView.init(datas: datas,index: index)
+        value.longPressBlock = {cell in
+            guard let indexPath = self.imageView.collectionView.indexPath(for: cell) else {return}
+            let mediaItem = self.datas[indexPath.section]
+            var shareItems:[Any] = []
+            if let image = mediaItem.image{
+                shareItems.append(image)
+            }else if let image = cell.imageView.image{
+                shareItems.append(image)
+            }
+
+            self.share(shareItems)
+        }
         return value
     }()
     open override func viewDidLoad() {
@@ -171,46 +203,21 @@ open class ShowImageVC:UIViewController{
         
         
     }
+    func share(_ contends:[Any]){
+      
+        // 创建 UIActivityViewController
+        let activityViewController = UIActivityViewController(activityItems:contends, applicationActivities: nil)
+
+        // 设置要排除的分享选项
+        activityViewController.excludedActivityTypes = [.addToReadingList, .airDrop, .assignToContact]
+
+        // 显示 UIActivityViewController
+        if let popoverController = activityViewController.popoverPresentationController {
+            popoverController.sourceView = self.imageView
+            popoverController.sourceRect = self.view.bounds
+        }
+        self.present(activityViewController, animated: true, completion: nil)
+    }
 }
 
 
-struct ShowImageBrigeView: UIViewRepresentable {
-    
-    var index:Int = 0
-    var datas:[String] = []
-    
-    func makeUIView(context: Context) -> ShowImageView {
-        let view = ShowImageView(datas: datas,index: index)
-    
-        return view
-    }
-    
-    func updateUIView(_ uiView: ShowImageView, context: Context) {
-        
-    }
-}
-
-struct ShowImageBrigeVC: UIViewControllerRepresentable {
-    
-    var index:Int = 0
-    var datas:[String] = []
-
-    
-    func makeUIViewController(context: Context) -> ShowImageVC {
-        debugPrint(index)
-        let vc = ShowImageVC()
-        vc.datas = datas
-        vc.index = index
-        return vc
-    }
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        
-    }
-}
-@available(iOS, introduced: 15.0)
-struct ShowImageVC_Previews: PreviewProvider {
-    static var previews: some View {
-        ShowImageBrigeVC(index: 0)
-            .ignoresSafeArea()
-    }
-}

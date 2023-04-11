@@ -33,34 +33,39 @@ let tostHub = HUbView()
 
 public extension UIView{
     static func tost(title:String? = nil ,msg:String,level:TostLevel = .error){
-        UIApplication.shared.i_window?.tost(title:title ,msg:msg,level:level)
+        DispatchQueue.main.async {
+            UIApplication.shared.i_window?.tost(title:title ,msg:msg,level:level)
+        }
+        
     }
     func tost(title:String? = nil ,msg:String,level:TostLevel = .error){
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(tostDisappear), object: nil)
-        if let title = title{
-            tostHub.titleLab.isHidden = false
-            tostHub.titleLab.text = title
-        }else{
-            tostHub.titleLab.isHidden = true
-        }
-        tostHub.backgroundColor = level.backgroundColor
-        tostHub.msgLab.text = msg
-        self.addSubview(tostHub)
-        tostHub.snp.remakeConstraints { make in
-            make.top.equalToSuperview()
-            make.left.right.equalToSuperview()
-            make.height.equalTo(1)
-        }
-        self.layoutIfNeeded()
-        
-        UIView.animate(withDuration: 0.35) {
+        DispatchQueue.main.async {
+            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.tostDisappear), object: nil)
+            if let title = title{
+                tostHub.titleLab.isHidden = false
+                tostHub.titleLab.text = title
+            }else{
+                tostHub.titleLab.isHidden = true
+            }
+            tostHub.backgroundColor = level.backgroundColor
+            tostHub.msgLab.text = msg
+            self.addSubview(tostHub)
             tostHub.snp.remakeConstraints { make in
                 make.top.equalToSuperview()
                 make.left.right.equalToSuperview()
+                make.height.equalTo(1)
             }
             self.layoutIfNeeded()
+            
+            UIView.animate(withDuration: 0.35) {
+                tostHub.snp.remakeConstraints { make in
+                    make.top.equalToSuperview()
+                    make.left.right.equalToSuperview()
+                }
+                self.layoutIfNeeded()
+            }
+            self.perform(#selector(self.tostDisappear), afterDelay: 3)
         }
-        self.perform(#selector(tostDisappear), afterDelay: 3) 
     }
     
     @objc func tostDisappear(){
@@ -71,11 +76,13 @@ public extension UIView{
 }
 
 class HUbView:UIView{
+    
     lazy var stackView : UIStackView = {
         let value = UIStackView()
         value.axis = .vertical
         return value
     }()
+    
     lazy var titleLab: UILabel = {
         let value = UILabel()
         value.font = .boldSystemFont(ofSize: 18)
