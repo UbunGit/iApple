@@ -137,12 +137,26 @@ Pod::Spec.new do |spec|
     ]
   end
   
+  spec.subspec 'iMeidaImport' do |spec|
+
+    spec.dependency "iApple/iBox"
+    spec.source_files  =  [
+    "iMeidaImport/**/*.{h,m,swift}"
+    ]
+  end
+  
+  spec.subspec 'iInputTableViewCell' do |spec|
+    spec.dependency "SnapKit"
+    spec.dependency "IQKeyboardManagerSwift"
+    spec.dependency "iApple/iView"
+    spec.source_files  =  [
+    "iInputTableViewCell/**/*.{h,m,swift}"
+    ]
+  end
   
   
   
-  
-  
-  
+
   spec.prefix_header_contents = <<-EOS
   
   

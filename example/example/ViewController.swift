@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         let value = UITableView()
         value.dataSource = self
         value.delegate = self
-        value.i_registerCell(UITableViewCell.self)
+   
         return value
     }()
     
@@ -41,10 +41,15 @@ extension ViewController:I_UITableViewProtocol{
         return dataSouce.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.i_dequeueReusableCell(UITableViewCell.self, for: indexPath)
+        var cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier")
+        if cell == nil {
+            cell = UITableViewCell(style: .subtitle, reuseIdentifier: "reuseIdentifier")
+        }
+   
         let celldata = dataSouce[indexPath.row]
-        cell.textLabel?.text = celldata.title
-        return cell
+        cell!.textLabel?.text = celldata.title
+        cell!.detailTextLabel?.text = celldata.content
+        return cell!
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let celldata = dataSouce[indexPath.row]
@@ -61,7 +66,8 @@ extension ViewController{
         var vcurl:String
         
         static let cellDatas:[ViewController.CellData] = [
-            .init(title: "IAD",content: "聚合 穿山甲 与 google ADMob 的广告调用",vcurl:"app://ad.home")
+            .init(title: "IAD",content: "聚合 穿山甲 与 google ADMob 的广告调用", vcurl: VCRouter.adhome),
+            .init(title: "媒体导入",content: "根据url导入媒体文件", vcurl: VCRouter.mediaImportList),
         ]
     }
     

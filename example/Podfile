@@ -6,23 +6,27 @@ use_frameworks! :linkage => :static
 target 'example' do
 
 
-  pod "SnapKit"
-  
-  pod "iApple", :git=>"https://github.com/UbunGit/iApple"
-  pod "iApple/iAD", :git=>"https://github.com/UbunGit/iApple"
-  pod "iApple/iView", :git=>"https://github.com/UbunGit/iApple"
-  pod "iApple/iRouter", :git=>"https://github.com/UbunGit/iApple"
+#  pod "SnapKit"
+#  
+#  pod "iApple", :git=>"https://github.com/UbunGit/iApple"
+#  pod "iApple/iAD", :git=>"https://github.com/UbunGit/iApple"
+#  pod "iApple/iView", :git=>"https://github.com/UbunGit/iApple"
+#  pod "iApple/iRouter", :git=>"https://github.com/UbunGit/iApple"
  
 end
 
 target 'local' do
 
-#  pod "SnapKit"
-#
-#  pod "iApple", :path=>"../"
-#  pod "iApple/iAD", :path=>"../"
-#  pod "iApple/iView", :path=>"../"
-#  pod "iApple/iRouter", :path=>"../"
+  pod "SnapKit"
+  pod 'IQKeyboardManagerSwift'
+  
+  pod "iApple", :path=>"../"
+  pod "iApple/iAD", :path=>"../"
+  pod "iApple/iView", :path=>"../"
+  pod "iApple/iRouter", :path=>"../"
+  pod "iApple/iMeidaImport", :path=>"../"
+  pod "iApple/iInputTableViewCell", :path=>"../"
+  pod "iApple/iRealm", :path=>"../"
   
 end
 

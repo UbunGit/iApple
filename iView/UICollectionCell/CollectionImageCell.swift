@@ -12,7 +12,7 @@ open class CollectionImageCell: UICollectionViewCell {
         let value = UIImageView()
         return value
     }()
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         makeUI()
         makeLayout()
@@ -21,10 +21,10 @@ open class CollectionImageCell: UICollectionViewCell {
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    func makeUI(){
+    open func makeUI(){
         addSubview(imageView)
     }
-    func makeLayout(){
+    open func makeLayout(){
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }

@@ -52,7 +52,7 @@ public class RouterCenter:NSObject{
         guard let key = urlStrs.first else {
             return nil
         }
-        let aclass = routerMap[String(key)]
+        let aclass: AnyClass? = routerMap[String(key)]
         #if DEBUG
         debugPrint(String(format: "classWithUrl:%@ => %@", url.absoluteString,"\(aclass.self)"))
         #endif

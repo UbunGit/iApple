@@ -52,6 +52,11 @@ extension URL{
         let url = URL.init(string: "https://picsum.photos/600/\(UInt32.random(in: 600...1200))?id=\(UInt32.random(in: UInt32.min...UInt32.max))")!
         return url
     }
+    public static func i_randomImgUrl(size:CGSize,id:Int)->URL{
+        let url = URL.init(string: "https://picsum.photos/\(UInt32(size.width))/\(UInt32(size.height))?id=\(id)")!
+        return url
+    }
+   
 }
 
 extension String{

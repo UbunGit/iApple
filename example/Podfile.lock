@@ -1,17 +1,17 @@
 PODS:
-  - Ads-CN (5.1.0.5):
-    - Ads-CN/BUAdSDK (= 5.1.0.5)
-  - Ads-CN/BUAdSDK (5.1.0.5):
+  - Ads-CN (5.1.1.0):
+    - Ads-CN/BUAdSDK (= 5.1.1.0)
+  - Ads-CN/BUAdSDK (5.1.1.0):
     - Ads-CN/Dep_Accurate
-  - Ads-CN/Dep_Accurate (5.1.0.5):
+  - Ads-CN/Dep_Accurate (5.1.1.0):
     - BUAdSDK (= 0.2.0.1)
-    - BURelyFoundation/CSJ (= 0.1.0.7)
+    - BURelyFoundation/CSJ (= 0.1.0.17)
   - BUAdSDK (0.2.0.1):
     - BUAdSDK/BUAdSDK (= 0.2.0.1)
   - BUAdSDK/BUAdSDK (0.2.0.1)
-  - BURelyFoundation/AFNetworking (0.1.0.7)
-  - BURelyFoundation/BURelyFoundation (0.1.0.7)
-  - BURelyFoundation/CSJ (0.1.0.7):
+  - BURelyFoundation/AFNetworking (0.1.0.17)
+  - BURelyFoundation/BURelyFoundation (0.1.0.17)
+  - BURelyFoundation/CSJ (0.1.0.17):
     - BURelyFoundation/AFNetworking
     - BURelyFoundation/BURelyFoundation
     - BURelyFoundation/CSJLottie
@@ -24,45 +24,45 @@ PODS:
     - BURelyFoundation/YYModel
     - BURelyFoundation/ZFPlayer
     - BURelyFoundation/Zip
-  - BURelyFoundation/CSJLottie (0.1.0.7)
-  - BURelyFoundation/ELCoreTokenizer (0.1.0.7)
-  - BURelyFoundation/Foundation (0.1.0.7):
+  - BURelyFoundation/CSJLottie (0.1.0.17)
+  - BURelyFoundation/ELCoreTokenizer (0.1.0.17)
+  - BURelyFoundation/Foundation (0.1.0.17):
     - BURelyFoundation/NETWork
-  - BURelyFoundation/Gecko (0.1.0.7):
+  - BURelyFoundation/Gecko (0.1.0.17):
     - BURelyFoundation/Foundation
-  - BURelyFoundation/HM (0.1.0.7)
-  - BURelyFoundation/NETWork (0.1.0.7):
+  - BURelyFoundation/HM (0.1.0.17)
+  - BURelyFoundation/NETWork (0.1.0.17):
     - BURelyFoundation/AFNetworking
-  - BURelyFoundation/SDWebImage (0.1.0.7):
+  - BURelyFoundation/SDWebImage (0.1.0.17):
     - BURelyFoundation/Foundation
     - BURelyFoundation/ServiceCenter
-  - BURelyFoundation/ServiceCenter (0.1.0.7)
-  - BURelyFoundation/Ugen (0.1.0.7):
+  - BURelyFoundation/ServiceCenter (0.1.0.17)
+  - BURelyFoundation/Ugen (0.1.0.17):
     - BURelyFoundation/ELCoreTokenizer
-  - BURelyFoundation/YYModel (0.1.0.7)
-  - BURelyFoundation/ZFPlayer (0.1.0.7):
+  - BURelyFoundation/YYModel (0.1.0.17)
+  - BURelyFoundation/ZFPlayer (0.1.0.17):
     - BURelyFoundation/Foundation
     - BURelyFoundation/Zip
-  - BURelyFoundation/Zip (0.1.0.7):
+  - BURelyFoundation/Zip (0.1.0.17):
     - BURelyFoundation/Foundation
-  - Google-Mobile-Ads-SDK (10.1.0):
+  - Google-Mobile-Ads-SDK (10.3.0):
     - GoogleAppMeasurement (< 11.0, >= 7.0)
     - GoogleUserMessagingPlatform (>= 1.1)
-  - GoogleAppMeasurement (10.5.0):
-    - GoogleAppMeasurement/AdIdSupport (= 10.5.0)
+  - GoogleAppMeasurement (10.7.0):
+    - GoogleAppMeasurement/AdIdSupport (= 10.7.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
     - GoogleUtilities/MethodSwizzler (~> 7.8)
     - GoogleUtilities/Network (~> 7.8)
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleAppMeasurement/AdIdSupport (10.5.0):
-    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.5.0)
+  - GoogleAppMeasurement/AdIdSupport (10.7.0):
+    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.7.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
     - GoogleUtilities/MethodSwizzler (~> 7.8)
     - GoogleUtilities/Network (~> 7.8)
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleAppMeasurement/WithoutAdIdSupport (10.5.0):
+  - GoogleAppMeasurement/WithoutAdIdSupport (10.7.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
     - GoogleUtilities/MethodSwizzler (~> 7.8)
     - GoogleUtilities/Network (~> 7.8)
@@ -88,32 +88,73 @@ PODS:
     - GoogleUtilities/Logger
   - iApple (1.0.0):
     - iApple/iBox (= 1.0.0)
+    - YYCategories
   - iApple/iAD (1.0.0):
     - Ads-CN
     - Google-Mobile-Ads-SDK
     - iApple/iBox
+    - iApple/iHub
     - iApple/iLog
     - iApple/iView
-  - iApple/iBox (1.0.0)
+    - YYCategories
+  - iApple/iBox (1.0.0):
+    - YYCategories
+  - iApple/iHub (1.0.0):
+    - MBProgressHUD
+    - SnapKit
+    - YYCategories
+  - iApple/iInputTableViewCell (1.0.0):
+    - iApple/iView
+    - IQKeyboardManagerSwift
+    - SnapKit
+    - YYCategories
   - iApple/iLog (1.0.0):
     - iApple/iBox
+    - YYCategories
+  - iApple/iMeidaImport (1.0.0):
+    - iApple/iBox
+    - YYCategories
+  - iApple/iRealm (1.0.0):
+    - RealmSwift
+    - YYCategories
   - iApple/iRouter (1.0.0):
     - iApple/iBox
+    - YYCategories
   - iApple/iView (1.0.0):
     - iApple/iBox
+    - SDWebImage
+    - SnapKit
+    - YYCategories
+  - IQKeyboardManagerSwift (6.5.11)
+  - MBProgressHUD (1.2.0)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
     - nanopb/encode (= 2.30909.0)
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
   - PromisesObjC (2.2.0)
+  - Realm (10.37.1):
+    - Realm/Headers (= 10.37.1)
+  - Realm/Headers (10.37.1)
+  - RealmSwift (10.37.1):
+    - Realm (= 10.37.1)
+  - SDWebImage (5.15.5):
+    - SDWebImage/Core (= 5.15.5)
+  - SDWebImage/Core (5.15.5)
   - SnapKit (5.6.0)
+  - YYCategories (1.0.4):
+    - YYCategories/no-arc (= 1.0.4)
+  - YYCategories/no-arc (1.0.4)
 
 DEPENDENCIES:
-  - iApple (from `https://github.com/UbunGit/iApple`)
-  - iApple/iAD (from `https://github.com/UbunGit/iApple`)
-  - iApple/iRouter (from `https://github.com/UbunGit/iApple`)
-  - iApple/iView (from `https://github.com/UbunGit/iApple`)
+  - iApple (from `../`)
+  - iApple/iAD (from `../`)
+  - iApple/iInputTableViewCell (from `../`)
+  - iApple/iMeidaImport (from `../`)
+  - iApple/iRealm (from `../`)
+  - iApple/iRouter (from `../`)
+  - iApple/iView (from `../`)
+  - IQKeyboardManagerSwift
   - SnapKit
 
 SPEC REPOS:
@@ -125,32 +166,39 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleUserMessagingPlatform
     - GoogleUtilities
+    - IQKeyboardManagerSwift
+    - MBProgressHUD
     - nanopb
     - PromisesObjC
+    - Realm
+    - RealmSwift
+    - SDWebImage
     - SnapKit
+    - YYCategories
 
 EXTERNAL SOURCES:
   iApple:
-    :git: https://github.com/UbunGit/iApple
-
-CHECKOUT OPTIONS:
-  iApple:
-    :commit: 133aff2dabe8c7219396c7011c60dd624cb4f951
-    :git: https://github.com/UbunGit/iApple
+    :path: "../"
 
 SPEC CHECKSUMS:
-  Ads-CN: 342fba3a46d17fa395da7bba1d88893fe33905e6
+  Ads-CN: 396987a7511948ed83ec8d6503acf202ed0ccca2
   BUAdSDK: 002b735289815f703efc9108f66347ac61f1892a
-  BURelyFoundation: 0de7dbb9acc7f69a0a56b09949260f5dc5a4e0ab
-  Google-Mobile-Ads-SDK: 894be2e3e3e8281004bda14381f9af7ad73eeffd
-  GoogleAppMeasurement: 40c70a7d89013f0eca72006c4b9732163ea4cdae
+  BURelyFoundation: 32bdaa57bbbaf5732b55382490c9d2bf0af2f5f4
+  Google-Mobile-Ads-SDK: eba3109a9aa504596a207e4d18d433b329596b76
+  GoogleAppMeasurement: fe17c92a32207dd5cdd4e8d742767f2da74857f6
   GoogleUserMessagingPlatform: 5f8b30daf181805317b6b985bb51c1ff3beca054
   GoogleUtilities: c2bdc4cf2ce786c4d2e6b3bcfd599a25ca78f06f
-  iApple: fe689e7dbf095913fc3388da780ebec5771f9562
+  iApple: b50623b0c52b72f4f428da289435f1ebd827c2b8
+  IQKeyboardManagerSwift: c7955c0bdbf7b2eb29bb7daaa44e3d90f55a9a85
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
+  Realm: 4cb80914507a5e11ba0464cb861395d8257ca38c
+  RealmSwift: 08d20a99d3be2a2d7a717c2ccdc4910ba04b1854
+  SDWebImage: fd7e1a22f00303e058058278639bf6196ee431fe
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: cd084d2f503e4269f0cac0bb2527ea25e792e151
+PODFILE CHECKSUM: 18034470e0faadd002eeba068917c43ca96b4dfd
 
 COCOAPODS: 1.11.3

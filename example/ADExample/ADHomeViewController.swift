@@ -56,11 +56,7 @@ extension ADHomeViewController:I_UITableViewProtocol{
     
 }
 
-extension ADHomeViewController:I_RouterProtocol{
-    static func routerUrl() -> String {
-        return "app://ad.home"
-    }
-}
+
 
 extension ADHomeViewController{
     struct CellData{
@@ -75,14 +71,16 @@ extension ADHomeViewController{
         
     }
     @objc func showSplash(){
-        ADManage.defual.showSplash(vc: self) { state in
+        self.showSplash { state in
             
         }
+       
     }
     @objc func showRewarded(){
-        ADManage.defual.showRewarded(vc: self, fineshBlock:{ state in
+        self.showRewarded(isAlert: true, fineshBlock: { state in
             
         })
+       
     }
     
 }

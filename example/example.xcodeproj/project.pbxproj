@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040BA9E929EA83F9005F1399 /* iRouter+UIviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BA9E829EA83F9005F1399 /* iRouter+UIviewController.swift */; };
+		040BA9EA29EA84CA005F1399 /* iRouter+UIviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BA9E829EA83F9005F1399 /* iRouter+UIviewController.swift */; };
+		040BA9ED29EA8581005F1399 /* ad.json in Resources */ = {isa = PBXBuildFile; fileRef = 040BA9EB29EA8581005F1399 /* ad.json */; };
+		040BA9EE29EA8581005F1399 /* AD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BA9EC29EA8581005F1399 /* AD.swift */; };
+		040BA9EF29EA858A005F1399 /* AD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BA9EC29EA8581005F1399 /* AD.swift */; };
+		040BA9F029EA858C005F1399 /* ad.json in Resources */ = {isa = PBXBuildFile; fileRef = 040BA9EB29EA8581005F1399 /* ad.json */; };
+		040BA9F729EA87AD005F1399 /* MeidaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BA9F629EA87AD005F1399 /* MeidaModel.swift */; };
+		040BA9FF29EA8F68005F1399 /* MeidaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BA9F629EA87AD005F1399 /* MeidaModel.swift */; };
+		040BAA0429EA9CDB005F1399 /* DataCender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BAA0329EA9CDB005F1399 /* DataCender.swift */; };
+		040BAA0629EA9E7A005F1399 /* EXMeidaInportListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BAA0529EA9E7A005F1399 /* EXMeidaInportListVC.swift */; };
+		040BAA0729EAA050005F1399 /* EXMeidaInportListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BAA0529EA9E7A005F1399 /* EXMeidaInportListVC.swift */; };
+		040BAA0829EAA1BA005F1399 /* DataCender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BAA0329EA9CDB005F1399 /* DataCender.swift */; };
 		048B6ED429A99FBF0084D3F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048B6ED329A99FBF0084D3F8 /* AppDelegate.swift */; };
 		048B6ED629A99FBF0084D3F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048B6ED529A99FBF0084D3F8 /* SceneDelegate.swift */; };
 		048B6ED829A99FBF0084D3F8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048B6ED729A99FBF0084D3F8 /* ViewController.swift */; };
@@ -26,6 +38,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		040BA9E829EA83F9005F1399 /* iRouter+UIviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "iRouter+UIviewController.swift"; sourceTree = "<group>"; };
+		040BA9EB29EA8581005F1399 /* ad.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ad.json; sourceTree = "<group>"; };
+		040BA9EC29EA8581005F1399 /* AD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AD.swift; sourceTree = "<group>"; };
+		040BA9F629EA87AD005F1399 /* MeidaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeidaModel.swift; sourceTree = "<group>"; };
+		040BAA0329EA9CDB005F1399 /* DataCender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCender.swift; sourceTree = "<group>"; };
+		040BAA0529EA9E7A005F1399 /* EXMeidaInportListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXMeidaInportListVC.swift; sourceTree = "<group>"; };
 		048B6ED029A99FBE0084D3F8 /* example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		048B6ED329A99FBF0084D3F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		048B6ED529A99FBF0084D3F8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,9 +83,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		040BA9E729EA82F7005F1399 /* iRouter */ = {
+			isa = PBXGroup;
+			children = (
+				040BA9E829EA83F9005F1399 /* iRouter+UIviewController.swift */,
+			);
+			path = iRouter;
+			sourceTree = "<group>";
+		};
+		040BA9F129EA85B6005F1399 /* MediaImportExample */ = {
+			isa = PBXGroup;
+			children = (
+				040BA9F529EA8784005F1399 /* Model */,
+				040BAA0529EA9E7A005F1399 /* EXMeidaInportListVC.swift */,
+			);
+			path = MediaImportExample;
+			sourceTree = "<group>";
+		};
+		040BA9F529EA8784005F1399 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				040BA9F629EA87AD005F1399 /* MeidaModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		040BAA0229EA9CC6005F1399 /* DataManage */ = {
+			isa = PBXGroup;
+			children = (
+				040BAA0329EA9CDB005F1399 /* DataCender.swift */,
+			);
+			path = DataManage;
+			sourceTree = "<group>";
+		};
 		048B6EC729A99FBE0084D3F8 = {
 			isa = PBXGroup;
 			children = (
+				040BA9F129EA85B6005F1399 /* MediaImportExample */,
 				048B6F0629A9A5DE0084D3F8 /* ADExample */,
 				048B6ED229A99FBE0084D3F8 /* example */,
 				048B6EED29A9A0B60084D3F8 /* local */,
@@ -89,6 +141,8 @@
 		048B6ED229A99FBE0084D3F8 /* example */ = {
 			isa = PBXGroup;
 			children = (
+				040BAA0229EA9CC6005F1399 /* DataManage */,
+				040BA9E729EA82F7005F1399 /* iRouter */,
 				048B6ED329A99FBF0084D3F8 /* AppDelegate.swift */,
 				048B6ED529A99FBF0084D3F8 /* SceneDelegate.swift */,
 				048B6ED729A99FBF0084D3F8 /* ViewController.swift */,
@@ -111,6 +165,8 @@
 		048B6F0629A9A5DE0084D3F8 /* ADExample */ = {
 			isa = PBXGroup;
 			children = (
+				040BA9EB29EA8581005F1399 /* ad.json */,
+				040BA9EC29EA8581005F1399 /* AD.swift */,
 				048B6F0729A9A5FC0084D3F8 /* ADHomeViewController.swift */,
 			);
 			path = ADExample;
@@ -147,7 +203,6 @@
 				048B6ECC29A99FBE0084D3F8 /* Sources */,
 				048B6ECD29A99FBE0084D3F8 /* Frameworks */,
 				048B6ECE29A99FBE0084D3F8 /* Resources */,
-				021D5C741179B1F50F5942C6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -166,6 +221,7 @@
 				048B6EE829A9A0B60084D3F8 /* Sources */,
 				048B6EE929A9A0B60084D3F8 /* Frameworks */,
 				048B6EEA29A9A0B60084D3F8 /* Resources */,
+				57CB9A0D035AB46DCEF24E9F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -218,6 +274,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				040BA9ED29EA8581005F1399 /* ad.json in Resources */,
 				048B6EE029A99FC00084D3F8 /* LaunchScreen.storyboard in Resources */,
 				048B6EDD29A99FC00084D3F8 /* Assets.xcassets in Resources */,
 				048B6EDB29A99FBF0084D3F8 /* Main.storyboard in Resources */,
@@ -228,6 +285,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				040BA9F029EA858C005F1399 /* ad.json in Resources */,
 				048B6F0529A9A3240084D3F8 /* Main.storyboard in Resources */,
 				048B6F0429A9A3210084D3F8 /* Assets.xcassets in Resources */,
 				048B6F0329A9A28C0084D3F8 /* LaunchScreen.storyboard in Resources */,
@@ -237,23 +295,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		021D5C741179B1F50F5942C6 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-example/Pods-example-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-example/Pods-example-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-example/Pods-example-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		0875DF3479F9BA36E62B6439 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -274,6 +315,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		57CB9A0D035AB46DCEF24E9F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-local/Pods-local-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-local/Pods-local-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-local/Pods-local-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F454C27D48E9C166846CC0FC /* [CP] Check Pods Manifest.lock */ = {
@@ -307,8 +365,13 @@
 			files = (
 				048B6ED829A99FBF0084D3F8 /* ViewController.swift in Sources */,
 				048B6ED429A99FBF0084D3F8 /* AppDelegate.swift in Sources */,
+				040BAA0629EA9E7A005F1399 /* EXMeidaInportListVC.swift in Sources */,
+				040BA9EE29EA8581005F1399 /* AD.swift in Sources */,
+				040BA9F729EA87AD005F1399 /* MeidaModel.swift in Sources */,
+				040BAA0429EA9CDB005F1399 /* DataCender.swift in Sources */,
 				048B6F0829A9A5FC0084D3F8 /* ADHomeViewController.swift in Sources */,
 				048B6ED629A99FBF0084D3F8 /* SceneDelegate.swift in Sources */,
+				040BA9E929EA83F9005F1399 /* iRouter+UIviewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,8 +381,13 @@
 			files = (
 				048B6F0229A9A0FE0084D3F8 /* AppDelegate.swift in Sources */,
 				048B6F0029A9A0FE0084D3F8 /* ViewController.swift in Sources */,
+				040BAA0729EAA050005F1399 /* EXMeidaInportListVC.swift in Sources */,
+				040BA9EF29EA858A005F1399 /* AD.swift in Sources */,
+				040BAA0829EAA1BA005F1399 /* DataCender.swift in Sources */,
+				040BA9FF29EA8F68005F1399 /* MeidaModel.swift in Sources */,
 				048B6F0F29A9ADAA0084D3F8 /* ADHomeViewController.swift in Sources */,
 				048B6F0129A9A0FE0084D3F8 /* SceneDelegate.swift in Sources */,
+				040BA9EA29EA84CA005F1399 /* iRouter+UIviewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
