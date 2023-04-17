@@ -93,19 +93,18 @@ extension UIApplication:SKProductsRequestDelegate{
                            
 //                            UIApplication.shared.delegate?.window??.rootViewController?.alert(title: "成功", msg: "购买成功")
                         }else{
-//                            UIApplication.shared.delegate?.window??.rootViewController?.alert(title: "失败", msg: "验证支付凭证失败\(status)")
-                            debugPrint()
+                            UIApplication.shared.delegate?.window??.rootViewController?.view.tost(msg: "验证支付凭证失败\(status)")
                         }
                     }catch  {
-                   
-//                        UIApplication.shared.delegate?.window??.rootViewController?.alert(title: "失败", msg: "验证支付凭证失败\(error)")
+                        UIApplication.shared.delegate?.window??.rootViewController?.view.tost(msg: "验证支付凭证失败\(error)")
+//
                         return
                     }
                 }
                 
             }.resume()
         } catch  {
-//            UIApplication.shared.delegate?.window??.rootViewController?.alert(title: "失败", msg: "验证支付凭证失败\(error)")
+            UIApplication.shared.delegate?.window??.rootViewController?.view.tost(msg: "验证支付凭证失败\(error)")
             return
         }
     }
@@ -145,6 +144,7 @@ extension UIApplication:SKPaymentTransactionObserver{
     public func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
         UIView.loadingDismiss()
         UIView.tost(msg: "恢复成功")
+        NotificationCenter.default.post(name: .storeWillFinishTransaction, object:nil)
     }
     
     public func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
