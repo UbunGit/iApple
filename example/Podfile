@@ -18,6 +18,7 @@ end
 target 'local' do
 
   pod "SnapKit"
+  pod "Alamofire"
   pod 'IQKeyboardManagerSwift'
   
   pod "iApple", :path=>"../"

@@ -13,8 +13,8 @@
 		040BA9EE29EA8581005F1399 /* AD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BA9EC29EA8581005F1399 /* AD.swift */; };
 		040BA9EF29EA858A005F1399 /* AD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BA9EC29EA8581005F1399 /* AD.swift */; };
 		040BA9F029EA858C005F1399 /* ad.json in Resources */ = {isa = PBXBuildFile; fileRef = 040BA9EB29EA8581005F1399 /* ad.json */; };
-		040BA9F729EA87AD005F1399 /* MeidaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BA9F629EA87AD005F1399 /* MeidaModel.swift */; };
-		040BA9FF29EA8F68005F1399 /* MeidaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BA9F629EA87AD005F1399 /* MeidaModel.swift */; };
+		040BA9F729EA87AD005F1399 /* ResourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BA9F629EA87AD005F1399 /* ResourceModel.swift */; };
+		040BA9FF29EA8F68005F1399 /* ResourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BA9F629EA87AD005F1399 /* ResourceModel.swift */; };
 		040BAA0429EA9CDB005F1399 /* DataCender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BAA0329EA9CDB005F1399 /* DataCender.swift */; };
 		040BAA0629EA9E7A005F1399 /* EXMeidaInportListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BAA0529EA9E7A005F1399 /* EXMeidaInportListVC.swift */; };
 		040BAA0729EAA050005F1399 /* EXMeidaInportListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BAA0529EA9E7A005F1399 /* EXMeidaInportListVC.swift */; };
@@ -34,6 +34,10 @@
 		048B6F0829A9A5FC0084D3F8 /* ADHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048B6F0729A9A5FC0084D3F8 /* ADHomeViewController.swift */; };
 		048B6F0F29A9ADAA0084D3F8 /* ADHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048B6F0729A9A5FC0084D3F8 /* ADHomeViewController.swift */; };
 		431C9B390FCF8095AF765746 /* Pods_local.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B733815C69DFE9510DA572C2 /* Pods_local.framework */; };
+		84E3D55129EBD17C0093FEB4 /* MediaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3D55029EBD17C0093FEB4 /* MediaTableViewCell.swift */; };
+		84E3D55229EBD2A50093FEB4 /* MediaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3D55029EBD17C0093FEB4 /* MediaTableViewCell.swift */; };
+		84E3D55529EBE5800093FEB4 /* RealmResourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3D55429EBE5800093FEB4 /* RealmResourceModel.swift */; };
+		84E3D55629EBE58D0093FEB4 /* RealmResourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3D55429EBE5800093FEB4 /* RealmResourceModel.swift */; };
 		CB44C1605BF8B94C7B33E67B /* Pods_example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BBC258B2B2E2C617EC7CC92 /* Pods_example.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,7 +45,7 @@
 		040BA9E829EA83F9005F1399 /* iRouter+UIviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "iRouter+UIviewController.swift"; sourceTree = "<group>"; };
 		040BA9EB29EA8581005F1399 /* ad.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ad.json; sourceTree = "<group>"; };
 		040BA9EC29EA8581005F1399 /* AD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AD.swift; sourceTree = "<group>"; };
-		040BA9F629EA87AD005F1399 /* MeidaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeidaModel.swift; sourceTree = "<group>"; };
+		040BA9F629EA87AD005F1399 /* ResourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceModel.swift; sourceTree = "<group>"; };
 		040BAA0329EA9CDB005F1399 /* DataCender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCender.swift; sourceTree = "<group>"; };
 		040BAA0529EA9E7A005F1399 /* EXMeidaInportListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXMeidaInportListVC.swift; sourceTree = "<group>"; };
 		048B6ED029A99FBE0084D3F8 /* example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,6 +63,8 @@
 		2A5A22ED8115D1CD2C9E5796 /* Pods-local.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-local.release.xcconfig"; path = "Target Support Files/Pods-local/Pods-local.release.xcconfig"; sourceTree = "<group>"; };
 		2C51E0806449371075B0BC8C /* Pods-example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-example.release.xcconfig"; path = "Target Support Files/Pods-example/Pods-example.release.xcconfig"; sourceTree = "<group>"; };
 		49FE7CAD40671C1EB0EE30F6 /* Pods-local.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-local.debug.xcconfig"; path = "Target Support Files/Pods-local/Pods-local.debug.xcconfig"; sourceTree = "<group>"; };
+		84E3D55029EBD17C0093FEB4 /* MediaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTableViewCell.swift; sourceTree = "<group>"; };
+		84E3D55429EBE5800093FEB4 /* RealmResourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmResourceModel.swift; sourceTree = "<group>"; };
 		B733815C69DFE9510DA572C2 /* Pods_local.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_local.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFD228B7147EB2728AA30B4F /* Pods-example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-example.debug.xcconfig"; path = "Target Support Files/Pods-example/Pods-example.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -94,6 +100,7 @@
 		040BA9F129EA85B6005F1399 /* MediaImportExample */ = {
 			isa = PBXGroup;
 			children = (
+				84E3D54F29EBD1520093FEB4 /* TableviewCell */,
 				040BA9F529EA8784005F1399 /* Model */,
 				040BAA0529EA9E7A005F1399 /* EXMeidaInportListVC.swift */,
 			);
@@ -103,7 +110,7 @@
 		040BA9F529EA8784005F1399 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				040BA9F629EA87AD005F1399 /* MeidaModel.swift */,
+				040BA9F629EA87AD005F1399 /* ResourceModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -111,6 +118,7 @@
 		040BAA0229EA9CC6005F1399 /* DataManage */ = {
 			isa = PBXGroup;
 			children = (
+				84E3D55329EBE5680093FEB4 /* RealmModel */,
 				040BAA0329EA9CDB005F1399 /* DataCender.swift */,
 			);
 			path = DataManage;
@@ -181,6 +189,22 @@
 				2A5A22ED8115D1CD2C9E5796 /* Pods-local.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		84E3D54F29EBD1520093FEB4 /* TableviewCell */ = {
+			isa = PBXGroup;
+			children = (
+				84E3D55029EBD17C0093FEB4 /* MediaTableViewCell.swift */,
+			);
+			path = TableviewCell;
+			sourceTree = "<group>";
+		};
+		84E3D55329EBE5680093FEB4 /* RealmModel */ = {
+			isa = PBXGroup;
+			children = (
+				84E3D55429EBE5800093FEB4 /* RealmResourceModel.swift */,
+			);
+			path = RealmModel;
 			sourceTree = "<group>";
 		};
 		AA23F3B89943611109B69133 /* Frameworks */ = {
@@ -367,11 +391,13 @@
 				048B6ED429A99FBF0084D3F8 /* AppDelegate.swift in Sources */,
 				040BAA0629EA9E7A005F1399 /* EXMeidaInportListVC.swift in Sources */,
 				040BA9EE29EA8581005F1399 /* AD.swift in Sources */,
-				040BA9F729EA87AD005F1399 /* MeidaModel.swift in Sources */,
+				84E3D55129EBD17C0093FEB4 /* MediaTableViewCell.swift in Sources */,
+				040BA9F729EA87AD005F1399 /* ResourceModel.swift in Sources */,
 				040BAA0429EA9CDB005F1399 /* DataCender.swift in Sources */,
 				048B6F0829A9A5FC0084D3F8 /* ADHomeViewController.swift in Sources */,
 				048B6ED629A99FBF0084D3F8 /* SceneDelegate.swift in Sources */,
 				040BA9E929EA83F9005F1399 /* iRouter+UIviewController.swift in Sources */,
+				84E3D55529EBE5800093FEB4 /* RealmResourceModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,8 +409,10 @@
 				048B6F0029A9A0FE0084D3F8 /* ViewController.swift in Sources */,
 				040BAA0729EAA050005F1399 /* EXMeidaInportListVC.swift in Sources */,
 				040BA9EF29EA858A005F1399 /* AD.swift in Sources */,
+				84E3D55629EBE58D0093FEB4 /* RealmResourceModel.swift in Sources */,
+				84E3D55229EBD2A50093FEB4 /* MediaTableViewCell.swift in Sources */,
 				040BAA0829EAA1BA005F1399 /* DataCender.swift in Sources */,
-				040BA9FF29EA8F68005F1399 /* MeidaModel.swift in Sources */,
+				040BA9FF29EA8F68005F1399 /* ResourceModel.swift in Sources */,
 				048B6F0F29A9ADAA0084D3F8 /* ADHomeViewController.swift in Sources */,
 				048B6F0129A9A0FE0084D3F8 /* SceneDelegate.swift in Sources */,
 				040BA9EA29EA84CA005F1399 /* iRouter+UIviewController.swift in Sources */,

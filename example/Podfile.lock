@@ -6,6 +6,7 @@ PODS:
   - Ads-CN/Dep_Accurate (5.1.1.0):
     - BUAdSDK (= 0.2.0.1)
     - BURelyFoundation/CSJ (= 0.1.0.17)
+  - Alamofire (5.6.4)
   - BUAdSDK (0.2.0.1):
     - BUAdSDK/BUAdSDK (= 0.2.0.1)
   - BUAdSDK/BUAdSDK (0.2.0.1)
@@ -147,6 +148,7 @@ PODS:
   - YYCategories/no-arc (1.0.4)
 
 DEPENDENCIES:
+  - Alamofire
   - iApple (from `../`)
   - iApple/iAD (from `../`)
   - iApple/iInputTableViewCell (from `../`)
@@ -160,6 +162,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Ads-CN
+    - Alamofire
     - BUAdSDK
     - BURelyFoundation
     - Google-Mobile-Ads-SDK
@@ -182,6 +185,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Ads-CN: 396987a7511948ed83ec8d6503acf202ed0ccca2
+  Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
   BUAdSDK: 002b735289815f703efc9108f66347ac61f1892a
   BURelyFoundation: 32bdaa57bbbaf5732b55382490c9d2bf0af2f5f4
   Google-Mobile-Ads-SDK: eba3109a9aa504596a207e4d18d433b329596b76
@@ -199,6 +203,6 @@ SPEC CHECKSUMS:
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: 18034470e0faadd002eeba068917c43ca96b4dfd
+PODFILE CHECKSUM: d5b4c7b6aa9590a824f77caa6a01b4afdb1a78de
 
 COCOAPODS: 1.11.3
