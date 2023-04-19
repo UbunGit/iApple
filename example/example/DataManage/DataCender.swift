@@ -20,7 +20,6 @@ class DataCenter{
     var resources:[ResourceModel] = []
     
     init(){
-        
         reloadData()
     }
     func reloadData(){

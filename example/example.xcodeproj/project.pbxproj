@@ -7,18 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		040BA9E929EA83F9005F1399 /* iRouter+UIviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BA9E829EA83F9005F1399 /* iRouter+UIviewController.swift */; };
-		040BA9EA29EA84CA005F1399 /* iRouter+UIviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BA9E829EA83F9005F1399 /* iRouter+UIviewController.swift */; };
 		040BA9ED29EA8581005F1399 /* ad.json in Resources */ = {isa = PBXBuildFile; fileRef = 040BA9EB29EA8581005F1399 /* ad.json */; };
 		040BA9EE29EA8581005F1399 /* AD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BA9EC29EA8581005F1399 /* AD.swift */; };
 		040BA9EF29EA858A005F1399 /* AD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BA9EC29EA8581005F1399 /* AD.swift */; };
 		040BA9F029EA858C005F1399 /* ad.json in Resources */ = {isa = PBXBuildFile; fileRef = 040BA9EB29EA8581005F1399 /* ad.json */; };
-		040BA9F729EA87AD005F1399 /* ResourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BA9F629EA87AD005F1399 /* ResourceModel.swift */; };
-		040BA9FF29EA8F68005F1399 /* ResourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BA9F629EA87AD005F1399 /* ResourceModel.swift */; };
 		040BAA0429EA9CDB005F1399 /* DataCender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BAA0329EA9CDB005F1399 /* DataCender.swift */; };
-		040BAA0629EA9E7A005F1399 /* EXMeidaInportListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BAA0529EA9E7A005F1399 /* EXMeidaInportListVC.swift */; };
-		040BAA0729EAA050005F1399 /* EXMeidaInportListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BAA0529EA9E7A005F1399 /* EXMeidaInportListVC.swift */; };
 		040BAA0829EAA1BA005F1399 /* DataCender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BAA0329EA9CDB005F1399 /* DataCender.swift */; };
+		0413D2D029EF87BC00DBD8B4 /* APICenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413D2CF29EF87BC00DBD8B4 /* APICenter.swift */; };
+		0413D2D229EF8A7100DBD8B4 /* RealmAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413D2D129EF8A7100DBD8B4 /* RealmAPI.swift */; };
+		0413D2D329EF8BEF00DBD8B4 /* APICenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413D2CF29EF87BC00DBD8B4 /* APICenter.swift */; };
+		0413D2D429EF8BF100DBD8B4 /* RealmAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413D2D129EF8A7100DBD8B4 /* RealmAPI.swift */; };
 		048B6ED429A99FBF0084D3F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048B6ED329A99FBF0084D3F8 /* AppDelegate.swift */; };
 		048B6ED629A99FBF0084D3F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048B6ED529A99FBF0084D3F8 /* SceneDelegate.swift */; };
 		048B6ED829A99FBF0084D3F8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048B6ED729A99FBF0084D3F8 /* ViewController.swift */; };
@@ -33,9 +31,15 @@
 		048B6F0529A9A3240084D3F8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 048B6ED929A99FBF0084D3F8 /* Main.storyboard */; };
 		048B6F0829A9A5FC0084D3F8 /* ADHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048B6F0729A9A5FC0084D3F8 /* ADHomeViewController.swift */; };
 		048B6F0F29A9ADAA0084D3F8 /* ADHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048B6F0729A9A5FC0084D3F8 /* ADHomeViewController.swift */; };
+		04B7232B29EF7CB50037FB1F /* iRouter+UIviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BA9E829EA83F9005F1399 /* iRouter+UIviewController.swift */; };
+		04B7232C29EF7CB50037FB1F /* iRouter+UIviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BA9E829EA83F9005F1399 /* iRouter+UIviewController.swift */; };
+		04B7233529EF7D040037FB1F /* EXMeidaInportListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B7232E29EF7D040037FB1F /* EXMeidaInportListVC.swift */; };
+		04B7233629EF7D040037FB1F /* ResourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B7233029EF7D040037FB1F /* ResourceModel.swift */; };
+		04B7233829EF7D040037FB1F /* MediaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B7233429EF7D040037FB1F /* MediaTableViewCell.swift */; };
+		04B7233929EF7D090037FB1F /* EXMeidaInportListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B7232E29EF7D040037FB1F /* EXMeidaInportListVC.swift */; };
+		04B7233A29EF7D120037FB1F /* ResourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B7233029EF7D040037FB1F /* ResourceModel.swift */; };
+		04B7233B29EF7D160037FB1F /* MediaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B7233429EF7D040037FB1F /* MediaTableViewCell.swift */; };
 		431C9B390FCF8095AF765746 /* Pods_local.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B733815C69DFE9510DA572C2 /* Pods_local.framework */; };
-		84E3D55129EBD17C0093FEB4 /* MediaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3D55029EBD17C0093FEB4 /* MediaTableViewCell.swift */; };
-		84E3D55229EBD2A50093FEB4 /* MediaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3D55029EBD17C0093FEB4 /* MediaTableViewCell.swift */; };
 		84E3D55529EBE5800093FEB4 /* RealmResourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3D55429EBE5800093FEB4 /* RealmResourceModel.swift */; };
 		84E3D55629EBE58D0093FEB4 /* RealmResourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3D55429EBE5800093FEB4 /* RealmResourceModel.swift */; };
 		CB44C1605BF8B94C7B33E67B /* Pods_example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BBC258B2B2E2C617EC7CC92 /* Pods_example.framework */; };
@@ -45,9 +49,10 @@
 		040BA9E829EA83F9005F1399 /* iRouter+UIviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "iRouter+UIviewController.swift"; sourceTree = "<group>"; };
 		040BA9EB29EA8581005F1399 /* ad.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ad.json; sourceTree = "<group>"; };
 		040BA9EC29EA8581005F1399 /* AD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AD.swift; sourceTree = "<group>"; };
-		040BA9F629EA87AD005F1399 /* ResourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceModel.swift; sourceTree = "<group>"; };
 		040BAA0329EA9CDB005F1399 /* DataCender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCender.swift; sourceTree = "<group>"; };
-		040BAA0529EA9E7A005F1399 /* EXMeidaInportListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXMeidaInportListVC.swift; sourceTree = "<group>"; };
+		0413D2CD29EF84DF00DBD8B4 /* demo.m3u */ = {isa = PBXFileReference; lastKnownFileType = text; path = demo.m3u; sourceTree = "<group>"; };
+		0413D2CF29EF87BC00DBD8B4 /* APICenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICenter.swift; sourceTree = "<group>"; };
+		0413D2D129EF8A7100DBD8B4 /* RealmAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmAPI.swift; sourceTree = "<group>"; };
 		048B6ED029A99FBE0084D3F8 /* example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		048B6ED329A99FBF0084D3F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		048B6ED529A99FBF0084D3F8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,11 +64,13 @@
 		048B6EEC29A9A0B60084D3F8 /* local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = local.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		048B6EFC29A9A0B70084D3F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		048B6F0729A9A5FC0084D3F8 /* ADHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADHomeViewController.swift; sourceTree = "<group>"; };
+		04B7232E29EF7D040037FB1F /* EXMeidaInportListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EXMeidaInportListVC.swift; sourceTree = "<group>"; };
+		04B7233029EF7D040037FB1F /* ResourceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceModel.swift; sourceTree = "<group>"; };
+		04B7233429EF7D040037FB1F /* MediaTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaTableViewCell.swift; sourceTree = "<group>"; };
 		1BBC258B2B2E2C617EC7CC92 /* Pods_example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A5A22ED8115D1CD2C9E5796 /* Pods-local.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-local.release.xcconfig"; path = "Target Support Files/Pods-local/Pods-local.release.xcconfig"; sourceTree = "<group>"; };
 		2C51E0806449371075B0BC8C /* Pods-example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-example.release.xcconfig"; path = "Target Support Files/Pods-example/Pods-example.release.xcconfig"; sourceTree = "<group>"; };
 		49FE7CAD40671C1EB0EE30F6 /* Pods-local.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-local.debug.xcconfig"; path = "Target Support Files/Pods-local/Pods-local.debug.xcconfig"; sourceTree = "<group>"; };
-		84E3D55029EBD17C0093FEB4 /* MediaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTableViewCell.swift; sourceTree = "<group>"; };
 		84E3D55429EBE5800093FEB4 /* RealmResourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmResourceModel.swift; sourceTree = "<group>"; };
 		B733815C69DFE9510DA572C2 /* Pods_local.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_local.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFD228B7147EB2728AA30B4F /* Pods-example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-example.debug.xcconfig"; path = "Target Support Files/Pods-example/Pods-example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -97,24 +104,6 @@
 			path = iRouter;
 			sourceTree = "<group>";
 		};
-		040BA9F129EA85B6005F1399 /* MediaImportExample */ = {
-			isa = PBXGroup;
-			children = (
-				84E3D54F29EBD1520093FEB4 /* TableviewCell */,
-				040BA9F529EA8784005F1399 /* Model */,
-				040BAA0529EA9E7A005F1399 /* EXMeidaInportListVC.swift */,
-			);
-			path = MediaImportExample;
-			sourceTree = "<group>";
-		};
-		040BA9F529EA8784005F1399 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				040BA9F629EA87AD005F1399 /* ResourceModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		040BAA0229EA9CC6005F1399 /* DataManage */ = {
 			isa = PBXGroup;
 			children = (
@@ -124,10 +113,29 @@
 			path = DataManage;
 			sourceTree = "<group>";
 		};
+		0413D2CC29EF849000DBD8B4 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				0413D2CD29EF84DF00DBD8B4 /* demo.m3u */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
+		0413D2CE29EF879E00DBD8B4 /* APICenter */ = {
+			isa = PBXGroup;
+			children = (
+				0413D2CF29EF87BC00DBD8B4 /* APICenter.swift */,
+				0413D2D129EF8A7100DBD8B4 /* RealmAPI.swift */,
+			);
+			path = APICenter;
+			sourceTree = "<group>";
+		};
 		048B6EC729A99FBE0084D3F8 = {
 			isa = PBXGroup;
 			children = (
-				040BA9F129EA85B6005F1399 /* MediaImportExample */,
+				0413D2CE29EF879E00DBD8B4 /* APICenter */,
+				0413D2CC29EF849000DBD8B4 /* JSON */,
+				04B7232D29EF7D040037FB1F /* MediaImportExample */,
 				048B6F0629A9A5DE0084D3F8 /* ADExample */,
 				048B6ED229A99FBE0084D3F8 /* example */,
 				048B6EED29A9A0B60084D3F8 /* local */,
@@ -180,6 +188,32 @@
 			path = ADExample;
 			sourceTree = "<group>";
 		};
+		04B7232D29EF7D040037FB1F /* MediaImportExample */ = {
+			isa = PBXGroup;
+			children = (
+				04B7232E29EF7D040037FB1F /* EXMeidaInportListVC.swift */,
+				04B7232F29EF7D040037FB1F /* Model */,
+				04B7233329EF7D040037FB1F /* TableviewCell */,
+			);
+			path = MediaImportExample;
+			sourceTree = "<group>";
+		};
+		04B7232F29EF7D040037FB1F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				04B7233029EF7D040037FB1F /* ResourceModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		04B7233329EF7D040037FB1F /* TableviewCell */ = {
+			isa = PBXGroup;
+			children = (
+				04B7233429EF7D040037FB1F /* MediaTableViewCell.swift */,
+			);
+			path = TableviewCell;
+			sourceTree = "<group>";
+		};
 		54DBDF0F76E6E019DBDEC278 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,14 +223,6 @@
 				2A5A22ED8115D1CD2C9E5796 /* Pods-local.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		84E3D54F29EBD1520093FEB4 /* TableviewCell */ = {
-			isa = PBXGroup;
-			children = (
-				84E3D55029EBD17C0093FEB4 /* MediaTableViewCell.swift */,
-			);
-			path = TableviewCell;
 			sourceTree = "<group>";
 		};
 		84E3D55329EBE5680093FEB4 /* RealmModel */ = {
@@ -389,14 +415,16 @@
 			files = (
 				048B6ED829A99FBF0084D3F8 /* ViewController.swift in Sources */,
 				048B6ED429A99FBF0084D3F8 /* AppDelegate.swift in Sources */,
-				040BAA0629EA9E7A005F1399 /* EXMeidaInportListVC.swift in Sources */,
+				04B7233529EF7D040037FB1F /* EXMeidaInportListVC.swift in Sources */,
+				0413D2D229EF8A7100DBD8B4 /* RealmAPI.swift in Sources */,
 				040BA9EE29EA8581005F1399 /* AD.swift in Sources */,
-				84E3D55129EBD17C0093FEB4 /* MediaTableViewCell.swift in Sources */,
-				040BA9F729EA87AD005F1399 /* ResourceModel.swift in Sources */,
+				04B7232B29EF7CB50037FB1F /* iRouter+UIviewController.swift in Sources */,
+				04B7233629EF7D040037FB1F /* ResourceModel.swift in Sources */,
 				040BAA0429EA9CDB005F1399 /* DataCender.swift in Sources */,
 				048B6F0829A9A5FC0084D3F8 /* ADHomeViewController.swift in Sources */,
 				048B6ED629A99FBF0084D3F8 /* SceneDelegate.swift in Sources */,
-				040BA9E929EA83F9005F1399 /* iRouter+UIviewController.swift in Sources */,
+				0413D2D029EF87BC00DBD8B4 /* APICenter.swift in Sources */,
+				04B7233829EF7D040037FB1F /* MediaTableViewCell.swift in Sources */,
 				84E3D55529EBE5800093FEB4 /* RealmResourceModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -407,15 +435,17 @@
 			files = (
 				048B6F0229A9A0FE0084D3F8 /* AppDelegate.swift in Sources */,
 				048B6F0029A9A0FE0084D3F8 /* ViewController.swift in Sources */,
-				040BAA0729EAA050005F1399 /* EXMeidaInportListVC.swift in Sources */,
+				04B7233929EF7D090037FB1F /* EXMeidaInportListVC.swift in Sources */,
+				0413D2D429EF8BF100DBD8B4 /* RealmAPI.swift in Sources */,
 				040BA9EF29EA858A005F1399 /* AD.swift in Sources */,
 				84E3D55629EBE58D0093FEB4 /* RealmResourceModel.swift in Sources */,
-				84E3D55229EBD2A50093FEB4 /* MediaTableViewCell.swift in Sources */,
+				04B7233A29EF7D120037FB1F /* ResourceModel.swift in Sources */,
+				04B7232C29EF7CB50037FB1F /* iRouter+UIviewController.swift in Sources */,
 				040BAA0829EAA1BA005F1399 /* DataCender.swift in Sources */,
-				040BA9FF29EA8F68005F1399 /* ResourceModel.swift in Sources */,
 				048B6F0F29A9ADAA0084D3F8 /* ADHomeViewController.swift in Sources */,
+				0413D2D329EF8BEF00DBD8B4 /* APICenter.swift in Sources */,
 				048B6F0129A9A0FE0084D3F8 /* SceneDelegate.swift in Sources */,
-				040BA9EA29EA84CA005F1399 /* iRouter+UIviewController.swift in Sources */,
+				04B7233B29EF7D160037FB1F /* MediaTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

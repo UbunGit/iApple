@@ -28,6 +28,7 @@ target 'local' do
   pod "iApple/iMeidaImport", :path=>"../"
   pod "iApple/iInputTableViewCell", :path=>"../"
   pod "iApple/iRealm", :path=>"../"
+  pod "iApple/iProgressView", :path=>"../"
   
 end
 

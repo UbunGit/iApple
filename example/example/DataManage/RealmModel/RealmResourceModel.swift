@@ -91,7 +91,7 @@ struct MediaImageItem{
 
     init( image: UIImage, placeholderImage: URL? = nil, size: CGSize) {
         self.image = image
-        let locNmar = image.save()
+        let locNmar = try? image.save()
        
         self.urlKind = .location
         self.placeholderImage = placeholderImage
@@ -108,18 +108,18 @@ struct MediaImageItem{
     enum CodingKeys: String, CodingKey {
         case urlKind, url,size,placeholderImage
     }
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        
-        name = try values.decode(String.self, forKey: .name)
-        age = try values.decode(Int.self, forKey: .age)
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(name, forKey: .name)
-        try container.encode(age, forKey: .age)
-    }
+//    init(from decoder: Decoder) throws {
+//        let values = try decoder.container(keyedBy: CodingKeys.self)
+//        
+////        name = try values.decode(String.self, forKey: .name)
+////        age = try values.decode(Int.self, forKey: .age)
+//    }
+//    
+//    func encode(to encoder: Encoder) throws {
+//        var container = encoder.container(keyedBy: CodingKeys.self)
+////        try container.encode(name, forKey: .name)
+////        try container.encode(age, forKey: .age)
+//    }
 
 }
 

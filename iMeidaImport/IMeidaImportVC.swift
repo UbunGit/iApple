@@ -11,7 +11,7 @@ import IQKeyboardManagerSwift
 
 open class MeidaImportVC: UIViewController,I_UITableViewProtocol {
 
-   public var editData = EditData()
+    public var editData = EditData(id: UUID().uuidString)
     
     var dataSouce:[CellGroup] = [
         .init(name: "资源信息", items: [
@@ -100,17 +100,20 @@ open class MeidaImportVC: UIViewController,I_UITableViewProtocol {
         let sectionData = dataSouce[section]
         return sectionData.name
     }
-    
-
-
 }
 
 
 extension MeidaImportVC{
     @objcMembers
     public class EditData:NSObject{
+        public var id:String
         public  var name:String?
         public  var url:String?
+        public init(id: String, name: String? = nil, url: String? = nil) {
+            self.id = id
+            self.name = name
+            self.url = url
+        }
     }
     
     public struct CellGroup{

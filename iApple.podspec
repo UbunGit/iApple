@@ -154,6 +154,14 @@ Pod::Spec.new do |spec|
     ]
   end
   
+  spec.subspec 'iProgressView' do |spec|
+    spec.source_files  =  [
+    "iProgressView/**/*.{h,m,swift}"
+    ]
+  end
+  
+  
+  
   
   
 

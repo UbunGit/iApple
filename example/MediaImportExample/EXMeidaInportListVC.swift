@@ -59,8 +59,10 @@ class EXMeidaInportListVC: MediaImportListVC<ResourceModel> {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete{
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let item = dataSouce[indexPath.row]
+        let deleteItem = UIContextualAction(style: .destructive, title: "删除") {  (contextualAction, view, completion) in
             let alert = UIAlertController(title: "删除确认", message: "您是否确定要删除当前资源列表", preferredStyle: .alert)
             alert.addAction(.init(title: "确认删除", style: .default,handler: { _ in
                 let celldata = self.dataSouce[indexPath.row]
@@ -69,20 +71,38 @@ class EXMeidaInportListVC: MediaImportListVC<ResourceModel> {
                 tableView.deleteRow(at: indexPath, with: .automatic)
                 tableView.endUpdates()
                 DataCenter.share.delete(data: celldata)
-               
+                completion(true)
             }))
             alert.addAction(.init(title: "取消", style: .cancel))
             self.present(alert, animated: true)
-            return
+        }
+        let editItem = UIContextualAction(style: .normal, title: "编辑") {  (contextualAction, view, completion) in
+            let vc = EXMeidaImportVC()
+            let editdata = EXMeidaImportVC.EditData(id: item.id,name: item.name,url: item.sourceUrl.absoluteString)
+            vc.editData = editdata
+            self.navigationController?.pushViewController(vc, animated: true)
+            completion(true)
+        }
+        let refreshItem = UIContextualAction(style: .normal, title: "刷新") {  (contextualAction, view, completion) in
+            self.refresh(item: item)
+            completion(true)
+        }
+        let swipeActions = UISwipeActionsConfiguration(actions: [deleteItem,editItem,refreshItem])
+        
+        return swipeActions
+    }
+    
+    func refresh(item:ResourceModel){
+     
+        RealmAPI.shared.down(url: item.sourceUrl) { response in
             
         }
-        
     }
 }
 
 class EXMeidaImportVC:MeidaImportVC{
     override func viewDidLoad() {
-        editData.url = "https://www.baidu.com"
+        editData.url = "https://raw.githubusercontent.com/Kimentanm/aptv/master/m3u/aptv-playback.m3u"
         super.viewDidLoad()
         
     }
