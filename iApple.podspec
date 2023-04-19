@@ -169,6 +169,12 @@ Pod::Spec.new do |spec|
   end
   
   
+  spec.subspec 'iBander' do |spec|
+    spec.dependency "SnapKit"
+    spec.source_files  =  [
+    "iBander/**/*.{h,m,swift}"
+    ]
+  end
   
   
   

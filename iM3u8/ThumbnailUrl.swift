@@ -14,6 +14,8 @@ extension URL{
         switch pathExtension{
             case "m3u8":
             break
+        default:
+            break
         }
     }
 }
