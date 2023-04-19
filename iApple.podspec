@@ -160,6 +160,14 @@ Pod::Spec.new do |spec|
     ]
   end
   
+  spec.subspec 'iM3u8' do |spec|
+    
+    spec.dependency "Alamofire"
+    spec.source_files  =  [
+    "iM3u8/**/*.{h,m,swift}"
+    ]
+  end
+  
   
   
   
