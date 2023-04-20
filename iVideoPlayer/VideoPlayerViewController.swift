@@ -7,60 +7,61 @@
 
 import UIKit
 import AVFoundation
+import SJVideoPlayer
 
 
 
 open class VideoPlayerViewController: UIViewController {
     
-    var player: AVPlayer!
-    var playerLayer: AVPlayerLayer!
+    var player = SJVideoPlayer()
+
     
     public var videoURL: URL!
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // 添加背景图片
-        let backgroundImage = UIImageView(frame: view.bounds)
-        backgroundImage.image = UIImage(named: "background_image")
-        view.addSubview(backgroundImage)
-        
-        // 创建播放器
-        player = AVPlayer(url: videoURL)
-        playerLayer = AVPlayerLayer(player: player)
-        playerLayer.frame = self.view.bounds
-        view.layer.addSublayer(playerLayer)
-        
-        // 添加播放/暂停按钮
-        let playButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-        playButton.center = view.center
-        playButton.setImage(UIImage(systemName: "play.circle"), for: .normal)
-        playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
-        view.addSubview(playButton)
-        
-        // 监听播放结束
-        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
-    }
+        fd_prefersNavigationBarHidden = true
+        self.makeUI()
+        self.makeLayout()
+        player.urlAsset = .init(url: self.videoURL)
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.35){
+            self.player.rotate(.landscapeLeft, animated: true) { player in  
+            }
+        }
     
-    // 播放/暂停按钮点击事件
-    @objc func playButtonTapped() {
-        if player.rate == 0 {
-            player.play()
-        } else {
-            player.pause()
+    }
+    func makeUI(){
+        view.addSubview(player.view)
+    }
+    func makeLayout(){
+        player.view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
     
-    // 播放结束事件
-    @objc func playerDidFinishPlaying() {
-        player.seek(to: CMTime.zero)
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        player.vc_viewDidAppear()
+
     }
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        player.vc_viewWillDisappear()
+    }
+    open override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        player.vc_viewDidDisappear()
+    }
+    open override var prefersHomeIndicatorAutoHidden: Bool{
+        return true
+    }
+    open override var shouldAutorotate: Bool{
+        return false
+    }
+  
     
-    // 界面旋转时调整视频播放区域
-    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        playerLayer.frame = CGRect(x: 0, y: 0, width: size.width, height: size.width * 9 / 16)
-    }
+   
+
     
     
 }

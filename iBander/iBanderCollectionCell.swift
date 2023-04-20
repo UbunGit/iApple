@@ -39,10 +39,10 @@ open class IBanderCollectionCell<T:Any>:UICollectionViewCell,I_UICollectionViewP
         fatalError("init(coder:) has not been implemented")
     }
     
-    func makeUI(){
+    open func makeUI(){
         addSubview(collectionView)
     }
-    func makeLayout(){
+    open func makeLayout(){
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }

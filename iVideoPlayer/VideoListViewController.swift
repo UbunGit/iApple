@@ -8,144 +8,85 @@
 import UIKit
 import FDFullscreenPopGesture
 import AVFoundation
-
-open class VideoListViewController<T:Any>: UIViewController,I_UICollectionViewProtocol {
+import SJVideoPlayer
+public protocol VideoModelProtocol{
+    var url:String { get set }
+}
+open class VideoListViewController<T:VideoModelProtocol>: UIViewController,SJPlayerAutoplayDelegate {
     
-    open var items: [T] = []
-    public let player = AVPlayer()
-    lazy var backBrn: UIButton = {
-        let value = UIButton()
-        value.setImage(UIImage(systemName: "chevron.left"), for: .normal)
-        value.backgroundColor = .secondarySystemGroupedBackground
-        value.tintColor = .white
-        value.i_radius = 8
-        value.setBlockFor(.touchUpInside) { _ in
-            self.navigationController?.popViewController(animated: true)
-        }
-        return value
-    }()
-   
+    open var dataSouce: [T] = []
+  
+    public var player = SJVideoPlayer()
+    
     public lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 0
+        layout.minimumLineSpacing = 8
         layout.minimumInteritemSpacing = 0
         let value = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        value.dataSource = self
-        value.delegate = self
-        value.contentInsetAdjustmentBehavior = .never
-        value.i_register(cellType: DefualCell.self)
-        value.isPagingEnabled = true
+        value.i_register(cellType: DefualVideoCell.self)
+        // 开启滑动自动播放
+        let config = SJPlayerAutoplayConfig.init(playerSuperviewSelector: NSSelectorFromString("thumbnailImgiew"), autoplayDelegate: self)
+        value.sj_enableAutoplay(with: config)
+        value.backgroundColor = .clear
         return value
     }()
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        fd_prefersNavigationBarHidden  = true
+       
         makeUI()
         makeLayout()
-        
+        player.controlLayerNeedAppear()
     }
+  
  
-    func makeUI(){
+    open func makeUI(){
         view.addSubview(collectionView)
-        view.addSubview(backBrn)
+
     }
     
-    func makeLayout(){
+    open func makeLayout(){
         collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.edges.equalTo(0)
         }
-        backBrn.snp.makeConstraints { make in
-            make.size.equalTo(32)
-            make.top.equalToSuperview().offset(UIScreen.i_safeAreaInsets.top+20)
-            make.left.equalToSuperview().offset(UIScreen.i_safeAreaInsets.left+20)
-        }
+       
     }
-    open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items.count
-    }
-    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        fatalError("需要子类实现collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell")
-    }
-   
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return collectionView.bounds.size
-    }
-   
-    open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if decelerate{
-            return
-        }
-        reSetPlayer()
+  
+    
+// MARK: SJPlayerAutoplayDelegate
+    open func sj_playerNeedPlayNewAsset(at indexPath: IndexPath) {
+        let celldata = dataSouce[indexPath.row]
+        guard let playUrl = URL.init(string: celldata.url) else {return}
+        let playModen:SJPlayModel = .init(collectionView: collectionView, indexPath: indexPath,superviewSelector: NSSelectorFromString("thumbnailImgiew"))
+        player.urlAsset = .init(url: playUrl,
+                                playModel: playModen)
+                                
+        
     }
     
-    open func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        reSetPlayer()
+    
+    
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        player.vc_viewDidAppear()
     }
-    open func reSetPlayer(){
-   
-        
-        
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        player.vc_viewWillDisappear()
+    }
+    open override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        player.vc_viewDidDisappear()
+    }
+    open override var prefersHomeIndicatorAutoHidden: Bool{
+        return true
+    }
+    open override var shouldAutorotate: Bool{
+        return false
     }
     
 }
 
 
 
-extension VideoListViewController{
-    
-    open class DefualCell:UICollectionViewCell{
-        
-       public lazy var playerLayer: AVPlayerLayer = {
-            let playerLayer = AVPlayerLayer()
-            return playerLayer
-        }()
-        
-        public lazy var thumbnailImgiew: UIImageView = {
-            let value = UIImageView()
-            return value
-        }()
-        public lazy var videoContainerView: UIView = {
-            let value = UIView()
-            return value
-        }()
-        
-        public override init(frame: CGRect) {
-         
-            super.init(frame: frame)
-            makeUI()
-            makeLayout()
-            DispatchQueue.main.asyncAfter(deadline: .now()+0.35){
-                self.playerLayer.frame = self.videoContainerView.bounds
-                self.videoContainerView.layer.addSublayer(self.playerLayer)
-            }
-        }
-        
-        required public init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
-        open func makeUI(){
-            contentView.addSubview(thumbnailImgiew)
-            contentView.addSubview(videoContainerView)
-            
-        }
-        open func makeLayout(){
-            thumbnailImgiew.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
-            videoContainerView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
-        }
-        open override func prepareForReuse() {
-            super.prepareForReuse()
-            debugPrint(tag)
-            thumbnailImgiew.image = nil
-            playerLayer.player = nil
-          
-        }
-        
-        
-    }
-}
 

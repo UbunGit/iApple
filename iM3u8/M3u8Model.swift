@@ -41,7 +41,7 @@ public class M3u8Model{
         for i in 0..<lines.count{
             let line = lines[i]
             if line.hasPrefix("#EXTINF"){
-                let data = EXTINF(info: line, source: lines[i+1])
+                let data = EXTINF(info: line, url: lines[i+1])
                 extinfs.append(data)
             }
         }
@@ -51,17 +51,17 @@ public class M3u8Model{
 
 public struct EXTINF{
     
-    var info:String
-    var source:String
+    public var info:String
+    public var url:String
     
     public var duration:Double = -1
     public var title:String? = nil
     public var params:[String:String] = [:]
     
-    init(info: String, source: String) {
+    init(info: String, url: String) {
         
         self.info = info
-        self.source = source
+        self.url = url
         
         let infopase = info.components(separatedBy: ",")
         if infopase.count == 1{

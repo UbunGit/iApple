@@ -115,7 +115,9 @@ Pod::Spec.new do |spec|
     spec.dependency "SnapKit"
     spec.dependency "iApple/iBox"
     spec.dependency "FDFullscreenPopGesture"
-    
+    spec.dependency "SJVideoPlayer"
+  
+    spec.dependency  "PodIJKPlayer"
     spec.source_files  =  [
     "iVideoPlayer/**/*.{h,m,swift}"
     ]
