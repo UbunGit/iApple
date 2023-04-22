@@ -19,7 +19,7 @@ open class CollectionBaseHeader: UICollectionReusableView {
         value.horizontalMode = true
         return value
     }()
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         makeUI()
         makeLayout()
