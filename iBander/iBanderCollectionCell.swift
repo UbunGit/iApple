@@ -16,7 +16,7 @@ open class IBanderCollectionCell<T:Any>:UICollectionViewCell,I_UICollectionViewP
         }
     }
     
-    lazy var collectionView: UICollectionView = {
+   public lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumLineSpacing = 0
         flowLayout.minimumInteritemSpacing = 0
@@ -57,6 +57,10 @@ open class IBanderCollectionCell<T:Any>:UICollectionViewCell,I_UICollectionViewP
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.bounds.size
     }
+    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
+  
 }
 
 extension IBanderCollectionCell{
