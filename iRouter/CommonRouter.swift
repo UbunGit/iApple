@@ -39,6 +39,21 @@ extension UIViewController{
             self.present(sendMailErrorAlert, animated: true)
         }
     }
+    
+    // share
+    public func i_share(title:String? ,activityItems:[Any]){
+        let activityController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+        activityController.modalPresentationStyle = .fullScreen
+        activityController.completionWithItemsHandler = {
+            (type, flag, array, error) -> Void in
+            if flag == true {
+                //                    分享成功
+            } else {
+                //                    分享失败
+            }
+        }
+        self.present(activityController, animated: true, completion: nil)
+    }
 }
 
 extension UIViewController:MFMailComposeViewControllerDelegate{

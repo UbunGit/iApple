@@ -71,7 +71,7 @@ public struct EXTINF{
             title = infopase.last
         }else{
             duration = infopase.first.i_double()
-            title = infopase.last
+            title = infopase[2..<infopase.count].joined(separator: " ")
             let paramStr = infopase[1..<infopase.count-1].joined(separator: " ")
             paramStr.components(separatedBy: " ").forEach { item in
                 let items = item.components(separatedBy: "=")

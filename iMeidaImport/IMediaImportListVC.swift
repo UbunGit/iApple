@@ -43,7 +43,6 @@ open class MediaImportListVC<T>: UIViewController,I_UITableViewProtocol {
     open func makeUI(){
         title = "导入"
         navigationItem.rightBarButtonItems = [.init(customView: rightBtn)]
-        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.searchController = searchContainer
         view.addSubview(tableView)
     }

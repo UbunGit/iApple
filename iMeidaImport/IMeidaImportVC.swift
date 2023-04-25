@@ -47,7 +47,6 @@ open class MeidaImportVC: UIViewController,I_UITableViewProtocol {
     
     func makeUI(){
         navigationItem.rightBarButtonItem = .init(customView: rightBtn)
-        navigationController?.navigationBar.prefersLargeTitles = false
         view.addSubview(tableView)
     }
     
