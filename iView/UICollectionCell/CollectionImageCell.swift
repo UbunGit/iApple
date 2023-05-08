@@ -10,6 +10,8 @@ import UIKit
 open class CollectionImageCell: UICollectionViewCell {
     public lazy var imageView: UIImageView = {
         let value = UIImageView()
+        value.contentMode = .scaleAspectFill
+        value.i_radius = 0.1
         return value
     }()
     public override init(frame: CGRect) {

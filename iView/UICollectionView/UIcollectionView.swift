@@ -64,3 +64,18 @@ public extension UICollectionView{
         dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: type.i_className, for: indexPath) as! T
     }
 }
+
+
+public extension UICollectionView{
+    func cellWidth(space:CGFloat,column:Int) ->CGFloat{
+        let fcolumn = CGFloat(column)
+        let w = (self.size.width - space*(fcolumn+1))/fcolumn
+        return w
+    }
+    func cellSize(space:CGFloat,column:Int,ratio:CGFloat)->CGSize{
+        let w = cellWidth(space: space, column: column)
+        let h = w*ratio
+        return .init(width: w, height: h)
+    }
+    
+}
