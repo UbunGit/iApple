@@ -1,0 +1,12 @@
+""
+h
+m
+mm
+podspec
+Podfile
+pch
+plist
+swift
+xcworkspacedata
+xcbkptlist
+pbxproj

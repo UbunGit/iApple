@@ -1,0 +1,6 @@
+Pods/
+Build/
+.framework
+/.git
+.lock
+/.DS_Store

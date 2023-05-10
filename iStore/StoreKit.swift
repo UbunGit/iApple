@@ -89,22 +89,23 @@ extension UIApplication:SKProductsRequestDelegate{
                         let status =  jsondata["status"].i_int(-1)
 //                        let productid = transaction.payment.productIdentifier
                         if status == 0{
+                           
                             NotificationCenter.default.post(name: .storeWillFinishTransaction, object:nil,userInfo: ["info":StoreFinishTransaction.init(result: jsondata, transaction: transaction)])
                            
-//                            UIApplication.shared.delegate?.window??.rootViewController?.alert(title: "成功", msg: "购买成功")
+//                            UIApplication.shared.delegate?.window??.rootViewController?.view.tost(title: "成功", msg: "购买成功")
+                            SKPaymentQueue.default().finishTransaction(transaction)
                         }else{
                             UIApplication.shared.delegate?.window??.rootViewController?.view.tost(msg: "验证支付凭证失败\(status)")
                         }
                     }catch  {
                         UIApplication.shared.delegate?.window??.rootViewController?.view.tost(msg: "验证支付凭证失败\(error)")
-//
                         return
                     }
                 }
                 
             }.resume()
         } catch  {
-            UIApplication.shared.delegate?.window??.rootViewController?.view.tost(msg: "验证支付凭证失败\(error)")
+//            UIApplication.shared.delegate?.window??.rootViewController?.view.tost(msg: "验证支付凭证失败\(error)")
             return
         }
     }
@@ -165,7 +166,6 @@ extension UIApplication:SKPaymentTransactionObserver{
         case .purchased:
             //                unfinishedTransactions.append(transaction)
             debugPrint("购买成功，缓存这个事务")
-          
             clientValidationOrder(transaction)
             break
             
