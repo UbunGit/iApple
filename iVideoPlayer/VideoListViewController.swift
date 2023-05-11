@@ -33,7 +33,6 @@ open class VideoListViewController<T:VideoModelProtocol>: UIViewController,SJPla
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-       
         makeUI()
         makeLayout()
         player.controlLayerNeedAppear()
@@ -47,7 +46,7 @@ open class VideoListViewController<T:VideoModelProtocol>: UIViewController,SJPla
     
     open func makeLayout(){
         collectionView.snp.makeConstraints { make in
-            make.edges.equalTo(0)
+            make.edges.equalToSuperview()
         }
        
     }

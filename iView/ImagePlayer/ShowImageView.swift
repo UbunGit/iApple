@@ -208,7 +208,7 @@ open class ShowImageVC:UIViewController{
         // 创建 UIActivityViewController
         let activityViewController = UIActivityViewController(activityItems:contends, applicationActivities: nil)
 
-        // 设置要排除的分享选项
+        // Setting要排除的分享选项
         activityViewController.excludedActivityTypes = [.addToReadingList, .airDrop, .assignToContact]
 
         // 显示 UIActivityViewController

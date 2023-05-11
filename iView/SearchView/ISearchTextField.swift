@@ -115,7 +115,7 @@ open class ISearchTextField:UITextField{
         super.init(frame: frame)
         leftView = searchIcon
         leftViewMode = .always
-        placeholder = "输入搜索内容"
+        placeholder = "Enter search content"
         backgroundColor = .tertiarySystemFill
         
         

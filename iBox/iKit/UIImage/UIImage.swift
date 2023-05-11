@@ -15,7 +15,7 @@ extension UIImage{
     public func save(rootPath:String = UIApplication.shared.documentsPath) throws ->String {
         guard let data = jpegData
         else {
-            throw IUIImageExtension.init(msg: "保存失败")
+            throw IUIImageExtension.init(msg: "Save error")
         }
         let name = self.defualName
         let imgpath = rootPath.appending("/\(defualName)")

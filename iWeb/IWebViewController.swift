@@ -32,7 +32,7 @@ open class IWebViewController: UIViewController {
     }()
   
     private var observation: NSKeyValueObservation? = nil
-    public var url:URL = URL.init(string: "https://www.baidu.com")!
+    public var url:URL = URL.init(string: "https://apps.apple.com/app/id6449018364")!
     lazy var webView: WKWebView = {
         let value = WKWebView()
         value.backgroundColor = .systemBackground

@@ -25,15 +25,15 @@ extension UIViewController{
             let mailComposeVC = MFMailComposeViewController()
             mailComposeVC.mailComposeDelegate = self
             
-            //设置邮件地址、主题及正文
+            //Setting邮件地址、主题及正文
             mailComposeVC.setToRecipients([mail])
-            mailComposeVC.setSubject("APP意见反馈")
+            mailComposeVC.setSubject("APP Feedback")
             mailComposeVC.setMessageBody("正文:\n\n\n系统版本：\(UIApplication.shared.i_systemVersion)\n设备型号：\(UIApplication.shared.i_modenName) 应用id：\(UIApplication.shared.appBundleID)", isHTML: false)
       
             
             self.present(mailComposeVC, animated: true, completion: nil)
         } else {
-            let sendMailErrorAlert = UIAlertController(title: "无法发送邮件", message: "您的设备尚未设置邮箱，请在“邮件”应用中设置后再尝试发送。", preferredStyle: .alert)
+            let sendMailErrorAlert = UIAlertController(title: "无法发送邮件", message: "您的设备尚未Setting邮箱，请在“邮件”应用中Setting后再尝试发送。", preferredStyle: .alert)
             sendMailErrorAlert.addAction(UIAlertAction(title: "确定", style: .default) { _ in })
             
             self.present(sendMailErrorAlert, animated: true)
