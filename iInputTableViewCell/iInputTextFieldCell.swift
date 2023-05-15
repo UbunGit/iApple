@@ -30,11 +30,12 @@ open class IInputTextFieldCell<T:Any>: IInputBaseTableViewCell<T> {
     }
     open override func makeLayout() {
         placeholderLab.snp.makeConstraints { make in
-            make.bottom.equalTo(textField.snp.top)
-            make.left.equalToSuperview()
+            make.top.equalToSuperview()
+            make.left.equalToSuperview().offset(12)
         }
         textField.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(placeholderLab.snp.top).offset(-4)
            
         }
     }
