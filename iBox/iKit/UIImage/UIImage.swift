@@ -7,6 +7,7 @@
 
 import Foundation
 import YYCategories
+import CloudKit
 struct IUIImageExtension:Error{
     var msg:String
 }
@@ -29,6 +30,7 @@ extension UIImage{
         }
         return data
     }
+    
     public static func image(key:String,rootPath:String = UIApplication.shared.documentsPath)->UIImage?{
   
         let imgpath = rootPath.appending("/\(key)")
@@ -41,9 +43,22 @@ extension UIImage{
         }
         return md5Str
     }
-    
-  
-   
-    
-    
+}
+
+extension UIImage{
+    public var ckAsset:CKAsset?{
+        if let avatarData = self.pngData(),
+           let url = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString+".dat"){
+            
+            do {
+                try avatarData.write(to: url)
+                return CKAsset(fileURL: url)
+            } catch {
+                print("UIImage to ckAsset! \(error)");
+                return nil
+            }
+        }else{
+            return nil
+        }
+    }
 }
