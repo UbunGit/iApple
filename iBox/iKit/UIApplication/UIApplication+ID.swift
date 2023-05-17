@@ -64,7 +64,8 @@ public extension UIApplication{
     }
     
     var i_window:UIWindow?{
-        return UIApplication.shared.delegate?.window ?? nil
+        return UIApplication.shared.windows.filter({ $0.isKeyWindow }).last
+        
     }
    
 }

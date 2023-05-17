@@ -18,13 +18,13 @@ public enum TostLevel:Int{
     var backgroundColor:UIColor{
         switch self{
         case .debug:
-            return .blue
+            return .systemPink
         case .warning:
-            return .orange
+            return .systemOrange
         case .error:
-            return .red
+            return .systemRed
         case .succeed:
-            return .green
+            return .systemGreen
         }
     }
 }
@@ -38,7 +38,7 @@ public extension UIView{
         }
         
     }
-    func tost(title:String? = nil ,msg:String,level:TostLevel = .error){
+    func tost(title:String? = nil ,msg:String, level:TostLevel = .error){
         DispatchQueue.main.async {
             NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.tostDisappear), object: nil)
             if let title = title{
@@ -50,8 +50,9 @@ public extension UIView{
             tostHub.backgroundColor = level.backgroundColor
             tostHub.msgLab.text = msg
             self.addSubview(tostHub)
+            let safe = self.safeAreaInsets.top
             tostHub.snp.remakeConstraints { make in
-                make.top.equalToSuperview()
+                make.top.equalToSuperview().offset(safe)
                 make.left.right.equalToSuperview()
                 make.height.equalTo(1)
             }
@@ -59,8 +60,10 @@ public extension UIView{
             
             UIView.animate(withDuration: 0.35) {
                 tostHub.snp.remakeConstraints { make in
-                    make.top.equalToSuperview()
-                    make.left.right.equalToSuperview()
+                    make.top.equalToSuperview().offset(safe)
+                    make.left.equalToSuperview().offset(12)
+                    make.right.equalToSuperview().offset(-12)
+                    make.height.greaterThanOrEqualTo(64)
                 }
                 self.layoutIfNeeded()
             }
@@ -80,6 +83,8 @@ class HUbView:UIView{
     lazy var stackView : UIStackView = {
         let value = UIStackView()
         value.axis = .vertical
+        value.spacing = 6
+       
         return value
     }()
     
@@ -93,7 +98,7 @@ class HUbView:UIView{
     lazy var msgLab: UILabel = {
         let value = UILabel()
         value.numberOfLines = 0
-        value.font = .systemFont(ofSize: 14)
+        value.font = .systemFont(ofSize: 16)
         value.textColor = .white
         return value
     }()
@@ -111,27 +116,14 @@ class HUbView:UIView{
     }
     
     func makUI(){
+        i_radius = 16
         addSubview(stackView)
-        stackView.addSubview(titleLab)
-        stackView.addSubview(msgLab)
+        stackView.addArrangedSubview(titleLab)
+        stackView.addArrangedSubview(msgLab)
     }
     func makeLayout(){
         stackView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
-        }
-        
-        titleLab.snp.makeConstraints { make in
-            make.top.equalTo(self.snp_topMargin)
-            make.left.equalToSuperview().offset(12)
-            make.right.equalToSuperview().offset(-12)
-            make.bottom.equalTo(msgLab.snp.top).offset(-8)
-        }
-        msgLab.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(12)
-            make.right.equalToSuperview().offset(-12)
-            make.bottom.equalToSuperview().offset(-12)
+            make.edges.equalTo(UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12))
         }
     }
 }
