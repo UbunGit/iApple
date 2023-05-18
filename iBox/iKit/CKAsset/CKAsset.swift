@@ -9,12 +9,22 @@ import Foundation
 import CloudKit
 import UIKit
 extension CKAsset {
- 
-  public func toImage()-> UIImage? {
+    
+    public func toImage()-> UIImage? {
         guard let fileURL = self.fileURL else {return nil}
-        if let data = NSData(contentsOf: fileURL) {
+        if let data = self.toData() {
             return UIImage(data: data as Data)
         }
         return nil
+    }
+    
+    public func toData()-> Data? {
+        guard let fileURL = self.fileURL else {return nil}
+        do {
+            let data =  try Data(contentsOf: fileURL)
+            return data
+        } catch  {
+            return nil
+        }
     }
 }
