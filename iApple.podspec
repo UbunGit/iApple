@@ -177,6 +177,13 @@ Pod::Spec.new do |spec|
     "iBander/**/*.{h,m,swift}"
     ]
   end
+  spec.subspec 'iSCalendar' do |spec|
+    spec.source_files  =  [
+    "iSCalendar/**/*.{h,m,swift}"
+    ]
+  end
+  
+  
   
   
   
