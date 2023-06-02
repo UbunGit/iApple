@@ -50,7 +50,7 @@ open class IKitTextField:UITextField{
 open class IKitLeftLableTextField:IKitTextField{
     
     public lazy var letftLab: UILabel = {
-        let value = UILabel(frame: .init(origin: .zero, size: .init(width: 64, height: 44)))
+        let value = UILabel(frame: .init(origin: .zero, size: .init(width: 84, height: 44)))
         value.textColor = .label
         value.font = .boldSystemFont(ofSize: 16)
         value.textAlignment = .center
