@@ -182,6 +182,13 @@ Pod::Spec.new do |spec|
     "iSCalendar/**/*.{h,m,swift}"
     ]
   end
+  spec.subspec 'iCoreData' do |spec|
+    spec.source_files  =  [
+    "iCoreData/**/*.{h,m,swift}"
+    ]
+  end
+  
+  
   
   
   

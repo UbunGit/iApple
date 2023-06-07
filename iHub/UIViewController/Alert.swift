@@ -7,7 +7,8 @@
 
 import Foundation
 import YYCategories
-open class AlertBaseVC:UIViewController{
+
+open class AlertBaseViewController:UIViewController{
   
     open lazy var closeBtn: UIButton = {
         let value = UIButton(frame: .init(origin: .zero, size: .init(width: 44, height: 44)))
@@ -43,9 +44,7 @@ open class AlertBaseVC:UIViewController{
     open func makeLayout(){
         
         contentView.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(32)
-            make.right.equalToSuperview().offset(-32)
-            make.centerY.equalToSuperview()
+            make.left.right.bottom.equalToSuperview()
         }
         closeBtn.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
