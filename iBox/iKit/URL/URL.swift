@@ -15,6 +15,17 @@ public extension URL {
         }
     }
     
+    func appendParams(_ params:[String: String])->URL?{
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: true)
+        else { return nil }
+        var newQueryItems:[URLQueryItem] = components.queryItems ?? []
+        params.forEach { (name, value) in
+            newQueryItems.append(.init(name: name, value: value))
+        }
+        components.queryItems = newQueryItems
+        return components.url
+    }
+    
     var githubUrl:URL{
         let githuburlstr = String(format: "https://ghproxy.com/%@", self.absoluteString)
         return .init(string: githuburlstr)!
