@@ -62,3 +62,13 @@ extension UIImage{
         }
     }
 }
+
+
+extension UIImage{
+  public  static func i_image(name:String) -> UIImage?{
+        if let image = UIImage.init(systemName: name){
+            return image
+        }
+        return UIImage.init(named: name)
+    }
+}

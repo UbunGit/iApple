@@ -189,11 +189,13 @@ Pod::Spec.new do |spec|
   end
   
   
-  
-  
-  
-  
-  
+  spec.subspec 'DorKit' do |spec|
+    spec.dependency 'DoraemonKit/Core'
+    spec.source_files  =  [
+    "DorKit/**/*.{h,m,swift}"
+    ]
+  end
+ 
 
   spec.prefix_header_contents = <<-EOS
   

@@ -11,7 +11,7 @@ import UIKit
 extension CKAsset {
     
     public func toImage()-> UIImage? {
-        guard let fileURL = self.fileURL else {return nil}
+//        guard let fileURL = self.fileURL else {return nil}
         if let data = self.toData() {
             return UIImage(data: data as Data)
         }
