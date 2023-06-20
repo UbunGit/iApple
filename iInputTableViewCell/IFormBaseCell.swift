@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class IInputBaseTableViewCell<T:Any>: UITableViewCell {
+open class IFormBaseCell<T:Any>: UITableViewCell {
     
     public var celldata:T?{
         didSet{

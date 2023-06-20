@@ -58,7 +58,6 @@ open class IKitLeftLableTextField:IKitTextField{
     }()
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         makeUI()
         makeLayout()
     }

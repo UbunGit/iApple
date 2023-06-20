@@ -8,7 +8,7 @@
 import UIKit
 import IQKeyboardManagerSwift
 
-open class IInputTextViewCell<T:Any>: IInputBaseTableViewCell<T> {
+open class IFormTextViewCell<T:Any>: IFormBaseCell<T> {
     open lazy var placeholderLab:UILabel  = {
         let value = UILabel()
         value.font = .systemFont(ofSize: 12)

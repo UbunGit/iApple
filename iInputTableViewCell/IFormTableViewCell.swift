@@ -1,5 +1,5 @@
 //
-//  ISelectTableViewCell.swift
+//  IFormTableViewCell.swift
 //  iApple
 //
 //  Created by admin on 2023/5/15.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class ISelectTableViewCell<T:Any>: IInputBaseTableViewCell<T> {
+open class IFormTableViewCell<T:Any>: IFormBaseCell<T> {
  
     public lazy var titleLab: UILabel = {
         let value = UILabel()

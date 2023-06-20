@@ -150,6 +150,8 @@ Pod::Spec.new do |spec|
   spec.subspec 'iInputTableViewCell' do |spec|
     spec.dependency "SnapKit"
     spec.dependency "IQKeyboardManagerSwift"
+    spec.dependency "PGDatePicker"
+    
     spec.dependency "iApple/iView"
     spec.source_files  =  [
     "iInputTableViewCell/**/*.{h,m,swift}"
