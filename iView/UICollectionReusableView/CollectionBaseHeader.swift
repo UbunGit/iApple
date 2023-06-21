@@ -17,6 +17,7 @@ open class CollectionBaseHeader: UICollectionReusableView {
     public lazy var gradientView: GradientView = {
         let value = GradientView()
         value.horizontalMode = true
+        value.i_radius = 2
         return value
     }()
     public override init(frame: CGRect) {
@@ -38,12 +39,11 @@ open class CollectionBaseHeader: UICollectionReusableView {
             make.bottom.equalToSuperview()
             make.top.equalToSuperview().offset(8)
             make.left.equalToSuperview()
-            make.width.equalTo(titleLab).offset(64)
+            make.width.equalTo(titleLab).offset(4)
         }
         titleLab.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.left.equalToSuperview().offset(16)
-
+            make.left.equalToSuperview().offset(12)
         }
     }
 }

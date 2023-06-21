@@ -29,9 +29,9 @@ open class IKitTextField:UITextField{
         guard let leftView = leftView else{
             return super.leftViewRect(forBounds: bounds)
         }
-        let x:CGFloat = 0
-        let y = (bounds.size.height-(leftView.bounds.height))/2
-        return .init(origin: .init(x: x, y: y), size: leftView.bounds.size)
+        leftView.sizeToFit()
+        let w = leftView.frame.size.width
+        return  .init(origin: .zero, size: .init(width: w, height: bounds.height))
     }
     
     open override func rightViewRect(forBounds bounds: CGRect) -> CGRect {

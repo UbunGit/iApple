@@ -7,19 +7,18 @@
 
 import Foundation
 
-public enum Week:String,CaseIterable{
-    case monday = "Mon"
-    case tuesday = "Tue"
-    case wednesday = "Wed"
-    case thursday = "Thur"
-    case friday = "Fri"
-    case saturday = "Sat"
-    case sunday = "Sun"
-}
+
 
 open class IFromSelectWeeksCell<T:Any>:IFormBaseCell<T>,I_UICollectionViewProtocol{
-    var days:[Week] = Week.allCases
-    var selectDays:[Week] = []
+    lazy var calendar: Calendar = {
+        let value = Calendar(identifier: .gregorian)
+        return value
+    }()
+    public  lazy var days: [String] = {
+        calendar.weekdaySymbols
+    }()
+   
+    public  var selectDays:[String] = []
     public lazy var titleLab: UILabel = {
         let value = UILabel()
         value.font = .boldSystemFont(ofSize: 14)
@@ -73,7 +72,7 @@ open class IFromSelectWeeksCell<T:Any>:IFormBaseCell<T>,I_UICollectionViewProtoc
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.i_dequeueReusableCell(with: ItemCell.self, for: indexPath)
         let rowdata = days[indexPath.row]
-        cell.titleLab.text = rowdata.rawValue
+        cell.titleLab.text = rowdata
         let isSelect = selectDays.contains(rowdata)
         cell.selectImgView.image =  isSelect ? .i_image(name: "week.select") : nil
         return cell
