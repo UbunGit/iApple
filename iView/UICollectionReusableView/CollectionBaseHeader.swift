@@ -10,8 +10,8 @@ import UIKit
 open class CollectionBaseHeader: UICollectionReusableView {
    public lazy var titleLab: UILabel = {
         let value = UILabel()
-        value.font = .boldSystemFont(ofSize: 20)
-       value.textColor = .systemBackground
+        value.font = .boldSystemFont(ofSize: 14)
+        value.textColor = .label
         return value
     }()
     public lazy var gradientView: GradientView = {

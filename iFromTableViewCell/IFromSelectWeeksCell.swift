@@ -18,7 +18,7 @@ open class IFromSelectWeeksCell<T:Any>:IFormBaseCell<T>,I_UICollectionViewProtoc
         calendar.weekdaySymbols
     }()
    
-    public  var selectDays:[String] = []
+    public  var selectDays:[Int] = []
     public lazy var titleLab: UILabel = {
         let value = UILabel()
         value.font = .boldSystemFont(ofSize: 14)
@@ -73,7 +73,7 @@ open class IFromSelectWeeksCell<T:Any>:IFormBaseCell<T>,I_UICollectionViewProtoc
         let cell = collectionView.i_dequeueReusableCell(with: ItemCell.self, for: indexPath)
         let rowdata = days[indexPath.row]
         cell.titleLab.text = rowdata
-        let isSelect = selectDays.contains(rowdata)
+        let isSelect = selectDays.contains(indexPath.row)
         cell.selectImgView.image =  isSelect ? .i_image(name: "week.select") : nil
         return cell
     }
@@ -83,15 +83,14 @@ open class IFromSelectWeeksCell<T:Any>:IFormBaseCell<T>,I_UICollectionViewProtoc
     }
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let rowdata = days[indexPath.row]
-        if selectDays.contains(rowdata) {
+        if selectDays.contains(indexPath.row) {
             selectDays.remove(at: indexPath.row)
         }else{
-            selectDays.append(rowdata)
+            selectDays.append(indexPath.row)
         }
+    
         collectionView.reloadItems(at: [indexPath])
     }
-    
-    
 }
 
 

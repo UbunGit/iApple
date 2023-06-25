@@ -8,7 +8,7 @@
 import Foundation
 import PGDatePicker
 
-open class IFormSelectTimeCell<T:Any>:IFormBaseCell<T>{
+open class IFormSelectTimeCell<T:Any>:IFormBaseCell<T>,PGDatePickerDelegate{
    public lazy var titleLab: UILabel = {
         let value = UILabel()
         value.font = .boldSystemFont(ofSize: 14)
@@ -23,9 +23,8 @@ open class IFormSelectTimeCell<T:Any>:IFormBaseCell<T>{
         value.textColorOfSelectedRow = .label
         value.datePickerType = .segment
         value.lineBackgroundColor = .systemGroupedBackground
-//            value.delegate = self
-  
-//        value.preferredDatePickerStyle = .wheels
+        value.delegate = self
+        value.autoSelected = true
         return value
     }()
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -56,4 +55,8 @@ open class IFormSelectTimeCell<T:Any>:IFormBaseCell<T>{
             make.right.equalToSuperview().offset(-12)
         }
     }
+    open func datePicker(_ datePicker: PGDatePicker!, didSelectDate dateComponents: DateComponents!) {
+        
+    }
+
 }
