@@ -9,9 +9,7 @@ import Foundation
 import UIKit
 
 open class IKitTextField:UITextField{
-    
-    public var leftViewRectBlock:((IKitTextField)->CGRect)? = nil
-    public var rightViewRectBlock:((IKitTextField)->CGRect)? = nil
+
     open override var leftView: UIView?{
         didSet{
             leftViewMode = leftView == nil ? .never : .always
@@ -23,27 +21,25 @@ open class IKitTextField:UITextField{
         }
     }
     open override func leftViewRect(forBounds bounds: CGRect) -> CGRect {
-        if let block = leftViewRectBlock{
-            return block(self)
-        }
+        
         guard let leftView = leftView else{
             return super.leftViewRect(forBounds: bounds)
         }
-        leftView.sizeToFit()
         let w = leftView.frame.size.width
-        return  .init(origin: .zero, size: .init(width: w, height: bounds.height))
+        let h = bounds.size.height
+        return  .init(origin: .zero, size: .init(width: w, height: h))
     }
     
     open override func rightViewRect(forBounds bounds: CGRect) -> CGRect {
-        if let block = rightViewRectBlock{
-            return block(self)
-        }
+        
         guard let rightView = rightView else{
             return super.leftViewRect(forBounds: bounds)
         }
         let x = bounds.width-(rightView.bounds.width)
         let y = (bounds.size.height-(rightView.bounds.height))/2
-        return .init(origin: .init(x: x, y: y), size: rightView.bounds.size )
+        let h = bounds.size.height
+        let w = rightView.bounds.size.width
+        return .init(origin: .init(x: x, y: y), size: .init(width: w, height: h) )
     }
 }
 
@@ -69,8 +65,7 @@ open class IKitLeftLableTextField:IKitTextField{
     func makeLayout(){
         
     }
-    
-    
+
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

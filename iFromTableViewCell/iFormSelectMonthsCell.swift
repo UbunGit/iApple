@@ -64,7 +64,7 @@ open class iFormSelectMonthsCell<T:Any>:IFormBaseCell<T>,I_UICollectionViewProto
         let cell = collectionView.i_dequeueReusableCell(with: ItemCell.self, for: indexPath)
         let rowdata = days[indexPath.row]
         cell.titleLab.text = "\(rowdata)"
-        let isSelect = selectDays.contains(indexPath.row)
+        let isSelect = selectDays.contains(indexPath.row+1)
         cell.selectImgView.image =  isSelect ? .i_image(name: "week.select") : nil
         return cell
     }
@@ -73,11 +73,13 @@ open class iFormSelectMonthsCell<T:Any>:IFormBaseCell<T>,I_UICollectionViewProto
         return .init(width: size.width, height: size.width)
     }
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let rowdata = days[indexPath.row]
-        if selectDays.contains(indexPath.row) {
-            selectDays.remove(at: indexPath.row)
+        let day = indexPath.row+1
+        if selectDays.contains(day) {
+            selectDays.removeAll { item in
+                item == day
+            }
         }else{
-            selectDays.append(indexPath.row)
+            selectDays.append(day)
         }
         collectionView.reloadItems(at: [indexPath])
     }
