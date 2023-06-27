@@ -36,8 +36,9 @@ open class CollectionButtonCell: UICollectionViewCell {
     public lazy var button: UIButton = {
         let value = UIButton()
         value.setTitle("默认", for: .normal)
+        value.titleLabel?.font = .systemFont(ofSize: 12)
         value.setImage(.i_image(name: "tray.full.fill"), for: .normal)
-       
+        value.setEdgeInsets(with: .top, space: 4)
         return value
     }()
     public override init(frame: CGRect) {
