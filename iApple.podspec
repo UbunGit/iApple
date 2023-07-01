@@ -184,11 +184,23 @@ Pod::Spec.new do |spec|
     "iSCalendar/**/*.{h,m,swift}"
     ]
   end
-  spec.subspec 'iCoreData' do |spec|
+  spec.subspec 'iCloudKit' do |spec|
+    
+    spec.dependency "iApple/iSqlite"
     spec.source_files  =  [
-    "iCoreData/**/*.{h,m,swift}"
+    "iCloudKit/**/*.{h,m,swift}"
     ]
   end
+  
+  spec.subspec 'iSqlite' do |spec|
+    
+    spec.dependency "FMDB"
+    spec.source_files  =  [
+    "iSqlite/**/*.{h,m,swift}"
+    ]
+  end
+  
+  
   
   
   spec.subspec 'DorKit' do |spec|

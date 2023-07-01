@@ -7,11 +7,15 @@
 
 import Foundation
 import DoraemonKit
+import CloudKit
 extension UIApplication{
     public func seuUPdorkit(){
         DoraemonManager.shareInstance().addPlugin(withTitle: "自定义", icon: "doraemon_default", desc: "自定义", pluginName: "", atModule: "自定义"){_ in
             let vc = DotKitViewcontroller()
             DoraemonHomeWindow.openPlugin(vc)
+        }
+        DoraemonManager.shareInstance().addPlugin(withTitle: "自定义", icon: "doraemon_default", desc: "自定义", pluginName: "", atModule: "自定义") { _ in
+            
         }
         DoraemonManager.shareInstance().install()
     }
@@ -44,6 +48,7 @@ class DotKitViewcontroller:UIViewController{
         }
     }
 }
+
 extension DotKitViewcontroller:I_UITableViewProtocol{
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -66,3 +71,7 @@ extension DotKitViewcontroller:I_UITableViewProtocol{
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
+
+
+
+

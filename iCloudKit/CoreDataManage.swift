@@ -9,10 +9,10 @@ import Foundation
 import CloudKit
 import CoreData
 
-public class CoreDataManage{
+public class CloudKitCoreDataManage{
     
-    let modenName:String
-    let identifier:String
+   public let modenName:String
+   public let identifier:String
     
     public init(modenName: String, identifier: String) {
         self.modenName = modenName
@@ -25,10 +25,13 @@ public class CoreDataManage{
         
         let publicURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("public.sqlite")
         let cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: identifier)
+        if #available(iOS 14.0, *) {
+            cloudKitContainerOptions.databaseScope = .public
+        }
         let description = NSPersistentStoreDescription(url: publicURL)
         description.configuration = "public"
         description.cloudKitContainerOptions = cloudKitContainerOptions
-        description.cloudKitContainerOptions?.databaseScope = .public
+       
         container.viewContext.automaticallyMergesChangesFromParent = true
         container.persistentStoreDescriptions = [description]
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -46,11 +49,12 @@ public class CoreDataManage{
         let privateURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("private.sqlite")
         
         let cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: identifier)
-        
+        if #available(iOS 14.0, *) {
+            cloudKitContainerOptions.databaseScope = .private
+        }
         let description = NSPersistentStoreDescription(url: privateURL)
         description.configuration = "private"
         description.cloudKitContainerOptions = cloudKitContainerOptions
-        description.cloudKitContainerOptions?.databaseScope = .private
         container.viewContext.automaticallyMergesChangesFromParent = true
         container.persistentStoreDescriptions = [description]
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
