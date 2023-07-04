@@ -11,8 +11,8 @@ import CoreData
 
 public class CloudKitCoreDataManage{
     
-   public let modenName:String
-   public let identifier:String
+    public let modenName:String
+    public let identifier:String
     
     public init(modenName: String, identifier: String) {
         self.modenName = modenName
@@ -31,7 +31,7 @@ public class CloudKitCoreDataManage{
         let description = NSPersistentStoreDescription(url: publicURL)
         description.configuration = "public"
         description.cloudKitContainerOptions = cloudKitContainerOptions
-       
+        
         container.viewContext.automaticallyMergesChangesFromParent = true
         container.persistentStoreDescriptions = [description]
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in

@@ -15,6 +15,18 @@ enum ISqliteError:Error{
 }
 public extension FMDatabase{
     
+    func autoQuery(_ block: (_ db:FMDatabase)async throws -> FMResultSet) async throws ->FMResultSet{
+        guard self.open() else {
+            throw ISqliteError.sqlOpenError
+        }
+        
+        do {
+            return try await block(self)
+        } catch {
+            // 处理异常
+            throw error
+        }
+    }
     func autoExecute(_ block: (_ db:FMDatabase)async throws -> Void) async throws {
         guard self.open() else {
             throw ISqliteError.sqlOpenError
@@ -56,7 +68,8 @@ public extension FMDatabase{
         return isExists
     }
     
-    func addColumn(tableName:String,name:String,type:String = "TEXT") async throws{
+    func addColumn(tableName:String,name:String,type:String?) async throws{
+        guard let type = type else {return}
         try await self.autoExecute {  db in
             try db.executeUpdate("ALTER TABLE \(tableName) ADD COLUMN \(name) \(type)", values: nil)
         }
@@ -77,13 +90,28 @@ public extension FMDatabase{
         }
         return columnType
     }
+    func columnTypes(tableName:String) async throws -> [String:String?] {
+        var columnTypes:[String:String?] = [:]
+        try await self.autoExecute { db in
+            let sql = "PRAGMA table_info(\(tableName))"
+            let resultSet = try db.executeQuery(sql, values: nil)
+            while resultSet.next() {
+                if let existingColumnName = resultSet.string(forColumn: "name") {
+                    columnTypes[existingColumnName] = resultSet.string(forColumn: "type")
+                }
+            }
+        }
+        return columnTypes
+    }
 }
 
 public extension FMDatabase{
-    func select(tableName:String,predicate:String) async throws->FMResultSet{
-        var resultSet:FMResultSet!
-        try await self.autoExecute { db in
-            resultSet = try  db.executeQuery("SELECT * FROM \(tableName) WHERE \(predicate)", values: nil)
+    func fetch(tableName:String,predicate:String?) async throws->FMResultSet{
+        
+        let resultSet = try await self.autoQuery { db in
+            let sql = "SELECT * FROM \(tableName) " + ((predicate == nil) ? "" : .init(format: " WHERE %@ ", predicate!))
+            let resultSet = try db.executeQuery(sql, values: nil)
+            return resultSet
         }
         return resultSet
     }
@@ -96,36 +124,9 @@ public extension FMDatabase{
         }
         return isExists
     }
-   func setValuesForKeys(_ keyedValues: [String : SqlValueProtocol],tableName:String) async throws {
-       var keyedValues = keyedValues
-       keyedValues["modificationDate"] = Date()
-       for (key, value) in keyedValues {
-           if try await isColumn(tableName: tableName, columnName: key) == false {
-               try await addColumn(tableName: tableName, name: key, type: value.sqltype)
-           }
-           
-           let columnType = try await columnType(tableName: tableName, columnName: key)
-           if columnType != value.sqltype {
-               throw ISqliteError.sqlColumnTypeError
-           }
-          
-       }
-       let keys = keyedValues.map { (key: String, value: SqlValueProtocol) in
-           return key
-       }
-       let keysStr = keys.joined(separator: ",")
-       let valeustr = keys.map { item in
-           return ":"+item
-       }.joined(separator: ",")
-       try await self.autoExecute { db in
-           let sql = "INSERT OR REPLACE INTO \(tableName) (\(keysStr)) VALUES (\(valeustr))"
-           if db.executeUpdate(sql, withParameterDictionary: keyedValues) == false{
-               debugPrint(self.lastError())
-               throw ISqliteError.sqlUpdateError
-           }
-       }
-    }
     
+   
+  
 }
 
 

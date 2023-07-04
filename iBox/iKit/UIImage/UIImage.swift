@@ -45,23 +45,7 @@ extension UIImage{
     }
 }
 
-extension UIImage{
-    public var ckAsset:CKAsset?{
-        if let avatarData = self.pngData(),
-           let url = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString+".dat"){
-            
-            do {
-                try avatarData.write(to: url)
-                return CKAsset(fileURL: url)
-            } catch {
-                print("UIImage to ckAsset! \(error)");
-                return nil
-            }
-        }else{
-            return nil
-        }
-    }
-}
+
 
 
 extension UIImage{

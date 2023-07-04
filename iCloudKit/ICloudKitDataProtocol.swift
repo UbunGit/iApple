@@ -11,158 +11,200 @@ import FMDB
 import CoreData
 
 
-open class ICloudKitObject:NSObject{
-    private var _uuid:String? = nil
-    var uuid:String{
-        return _uuid ?? UUID().uuidString
+open class ICloudSqlObject{
+    
+    var keyValues:[String:SqlValueProtocol] = [:]
+    
+    public init(keyValues:[String:SqlValueProtocol]) {
+        self.keyValues = keyValues
     }
-    open var record:CKRecord{
-        fatalError(" Need subclass implementation ")
+    public var uuid:String{
+        return keyValues["uuid"] as! String
     }
-    // MARK: cloudkit
-    static var cloudkitIdentifier:String{
-        "iCloud."+(Bundle.main.bundleIdentifier ?? "")
-    }
-    static var zone:CKRecordZone.ID{
-        return .default
-    }
-    static var container:CKContainer{
-        return .init(identifier: cloudkitIdentifier)
+}
+
+
+
+extension FMDatabase{
+    
+    func setkeysValues(_ keyValues: [String : SqlValueProtocol?],tableName:String) async throws {
+
+        for (key, value) in keyValues {
+            if try await isColumn(tableName: tableName, columnName: key) == false {
+                try await addColumn(tableName: tableName, name: key, type: value.sqltype)
+            }
+           
+        }
+        let columnTypes = try await columnTypes(tableName: tableName)
+        let keys = keyValues.compactMap { (key: String, value: SqlValueProtocol?) in
+            if columnTypes[key] != nil{
+                return key
+            }
+            return nil
+        }
+        
+        let keysStr = keys.joined(separator: ",")
+        let valeustr = keys.map { item in
+            return ":"+item
+        }.joined(separator: ",")
+        try await self.autoExecute { db in
+            let sql = "INSERT OR REPLACE INTO \(tableName) (\(keysStr)) VALUES (\(valeustr))"
+            if db.executeUpdate(sql, withParameterDictionary: keyValues as [AnyHashable : Any]) == false{
+                debugPrint(self.lastError())
+                throw ISqliteError.sqlUpdateError
+            }
+        }
     }
     
-    class open var recordType: String{
-        return NSStringFromClass(self)
+    func lastModificationDate(tableName:String)async throws ->Date?{
+        var lastModificationDate:Date? = nil
+        let sql = "SELECT MAX(modificationDate) as max FROM \(tableName)"
+        try await autoExecute { db in
+            let resultSet = try db.executeQuery(sql, values: nil)
+            guard resultSet.next() else { return }
+            lastModificationDate = resultSet.date(forColumn: "max")
+        }
+        return lastModificationDate
     }
     
-    class open var database: CKDatabase{
-        container.publicCloudDatabase
-    }
     
+}
+
+extension FMResultSet{
+    
+}
+enum ICloudKitError:Error{
+    case sqlUpdateUUIDISNULL
+    case sqlUpdateDataISNULL
+}
+
+public class CloudSqlQuery:NSObject{
+    var recordType:String
+    
+    public init(recordType: String) {
+        self.recordType = recordType
+        
+    }
     // MARK:DB
     static var sqlFile: String{
         return "defual.sqlite"
     }
     
-    static var sqlPath:URL {
+    var sqlPath:URL {
         let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let url = documentDirectory.appendingPathComponent("sql")
         if FileManager.default.isExecutableFile(atPath: url.path) == false{
-           try! FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+            try! FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
         }
         return url.appendingPathComponent("defual.sql")
     }
     
-    static var sqlDatabase:FMDatabase {
-        let sqlpath = Self.sqlPath
-        return FMDatabase(url: sqlpath)
+    var sqlDatabase:FMDatabase {
+        return FMDatabase(url: sqlPath)
     }
     
-    static var sqlTableName:String{
-        return NSStringFromClass(self).components(separatedBy: ".").last!
+    func setUp()async throws{
+        try await createTable()
     }
     
-    public static func createSqlTable() async throws{
+    private func createTable() async throws{
+        
         let sql = """
-        CREATE TABLE IF NOT EXISTS \(sqlTableName) (
-            uuid TEXT PRIMARY KEY NOT NULL,
-            recordID TEXT,
-            creationDate DATE,
-            modificationDate DATE,
-            modifiedByDevice TEXT,
-            modifiedUser TEXT,
-            creatorUser TEXT
-        );
-        """
-      
+            CREATE TABLE IF NOT EXISTS \(recordType) (
+                uuid TEXT PRIMARY KEY NOT NULL,
+                recordID TEXT,
+                creationDate DATE,
+                modificationDate DATE,
+                asyncDate DATE,
+                modifiedByDevice TEXT,
+                modifiedUser TEXT,
+                creatorUser TEXT,
+                isdelete INTEGER
+            );
+            """
         try await sqlDatabase.autoExecute { db in
             db.executeStatements(sql)
         }
-    }
-
-//    open override func setValuesForKeys(_ keyedValues: [String : Any]) {
-//        super.setValuesForKeys(keyedValues)
-//        guard let keyedValues = keyedValues as? [String:CKRecordValueProtocol] else{
-//            return
-//        }
-//        Task {
-//            do {
-//                // 获取当前的记录对象
-//                var trecord = record
-//                // 更新指定的键值对
-//                for (key, value) in keyedValues {
-//                    trecord[key] = value
-//                }
-//                // 保存更新后的记录
-//                try await Self.database.save(trecord)
-//                
-//                try createColumn()
-//                
-//                try Self.sqlDatabase.autoExecute {
-//                    let sql = "INSERT OR REPLACE INTO my_table (key, value, uuid) VALUES (?, ?, ?)"
-//                    
-//                    for (key, value) in keyedValues {
-//                        let uuidValue: String = uuid
-//                        let values: [Any] = [key, value, uuidValue]
-//                        try Self.sqlDatabase.executeQuery(sql, values: values)
-//                    }
-//                    
-//                    Self.sqlDatabase.commit()
-//                }
-//            } catch {
-//                fatalError("Error:")
-//            }
-//        }
-//        
-//    }
-//    open override func setValue(_ value: Any?, forKey key: String) {
-//        super.setValue(value, forKey: key)
-//    
-//        guard let value = value as? CKRecordValueProtocol else{
-//            return
-//        }
-//        Task {
-//            do {
-//                
-//                let trecord = record
-//                trecord[key] = value
-//                try await Self.database.save(trecord)
-//                try createColumn()
-//                let sql = "INSERT OR REPLACE INTO my_table (key, value) VALUES (?, ?) WHERE uuid=?"
-//                try Self.sqlDatabase.autoExecute {
-//                    try Self.sqlDatabase.executeQuery(sql, values: [key,value,uuid])
-//                }
-//            } catch {
-//                fatalError("Error :\(self) valueDidchange \(key):\(value)")
-//            }
-//        }
-//    }
-//    
-  
-    open func save() async{
         
-        do {
-            let db = Self.sqlDatabase
-            if try await db.isTable(tableName: Self.sqlTableName) == false{
-                try await Self.createSqlTable()
+    }
+    
+    // 增
+    public func add(keyvalues:[String:SqlValueProtocol]) async throws{
+        try await setUp()
+        if keyvalues["uuid"] != nil {
+          try await update(keyvalues: keyvalues)
+            
+        }else{
+            var keyvalues = keyvalues
+            keyvalues["uuid"] = UUID().uuidString
+            keyvalues["creationDate"] = Date()
+            keyvalues["modificationDate"] = Date()
+            try await sqlDatabase.setkeysValues(keyvalues, tableName: recordType)
+        }
+    }
+    
+    // 删
+    
+    public func delete(uuid:String) async throws{
+        try await setUp()
+        let keyvalues = [
+            "uuid":uuid,
+            "isdelete":1
+        ] as [String : SqlValueProtocol]
+        try await update(keyvalues: keyvalues)
+    }
+    
+    // 改
+    public  func update(keyvalues:[String:SqlValueProtocol]) async throws{
+        try await setUp()
+        guard let uuid = keyvalues["uuid"] as? String else{
+            throw ICloudKitError.sqlUpdateUUIDISNULL
+        }
+        let predicate = String.init(format: " uuid = '%@' ", uuid)
+        let result = try await sqlDatabase.fetch(tableName: recordType, predicate: predicate)
+        var results:[[AnyHashable : Any]] = []
+        while result.next() {
+            if let data = result.resultDictionary{
+                results.append(data)
             }
-            try await Self.database.save(record)
-            let r = record
-//            try createColumn(record: r)
-            let f = record
-            var fields = f.makeIterator()
-            while let field = fields.next() {
-                let key = field.0
-                let value = field.1
-                let sql = "INSERT OR REPLACE INTO my_table (key, value) VALUES (?, ?) WHERE uuid=?"
-//                try Self.sqlDatabase.autoExecute {  db in
-//                    try db.executeQuery(sql, values: [key,value,uuid])
-//                }
+        }
+        guard var updateKeyvales = results.first else{
+            throw ICloudKitError.sqlUpdateDataISNULL
+        }
+        updateKeyvales["creationDate"] = Date()
+        updateKeyvales["modificationDate"] = Date()
+        updateKeyvales["asyncDate"] = nil
+        keyvalues.forEach { (key: String, value: SqlValueProtocol) in
+            updateKeyvales[key] = value
+        }
+        try await sqlDatabase.setkeysValues(keyvalues, tableName: recordType)
+    }
+    
+    // 查
+    public func fetch(predicate:String?) async throws ->[[String:SqlValueProtocol]]{
+        try await setUp()
+        let predicate = predicate ?? "" + ((predicate==nil) ? "isdelete is not 1 " : " and isdelete is not 1 ")
+        let result = try await sqlDatabase.fetch(tableName: recordType, predicate: predicate)
+        var results:[[String : SqlValueProtocol]] = []
+        while result.next() {
+            var r: [String: SqlValueProtocol] = [:]
+            
+            if let value = result.resultDictionary as? [String: Any] {
+                for (key, value) in value {
+                    debugPrint(key)
+                    debugPrint(value)
+                    let v = value as! SqlValueProtocol
+                    r[key] = v
+                }
             }
-        } catch {
-            fatalError("Error" )
+            results.append(r)
         }
         
+        return results
+        
     }
+    
+    public func pull()async throws
 }
 
 
