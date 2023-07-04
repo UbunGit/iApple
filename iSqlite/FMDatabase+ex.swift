@@ -5,7 +5,7 @@
 //  Created by mac on 2023/6/9.
 //
 
-import UIKit
+
 import FMDB
 enum ISqliteError:Error{
     case sqlOpenError
@@ -27,6 +27,7 @@ public extension FMDatabase{
             throw error
         }
     }
+   
     func autoExecute(_ block: (_ db:FMDatabase)async throws -> Void) async throws {
         guard self.open() else {
             throw ISqliteError.sqlOpenError
@@ -71,7 +72,8 @@ public extension FMDatabase{
     func addColumn(tableName:String,name:String,type:String?) async throws{
         guard let type = type else {return}
         try await self.autoExecute {  db in
-            try db.executeUpdate("ALTER TABLE \(tableName) ADD COLUMN \(name) \(type)", values: nil)
+            let sql = "ALTER TABLE \(tableName) ADD COLUMN '\(name)' \(type)"
+            try db.executeUpdate(sql, values: nil)
         }
     }
     
@@ -114,6 +116,14 @@ public extension FMDatabase{
             return resultSet
         }
         return resultSet
+    }
+    func delete(tableName:String,predicate:String?) async throws{
+        
+        try await self.autoExecute { db in
+            let sql = "DELETE FROM \(tableName) " + ((predicate == nil) ? "" : .init(format: " WHERE %@ ", predicate!))
+            return try db.executeUpdate(sql, values: nil)
+        }
+       
     }
     
     func isHave(tableName:String,predicate:String) async throws->Bool{

@@ -7,7 +7,11 @@
 
 import Foundation
 import CloudKit
+#if os(macOS)
+import AppKit
+#else
 import UIKit
+#endif
 
 public extension CKRecord{
     func value<T:Any>(forColumn column:String)->T?{
@@ -23,14 +27,22 @@ public extension CKRecord{
         }
         return ""
     }
-    
+#if os(iOS)
     func image(forColumn column:String)->UIImage?{
         guard let value = self[column] as? CKAsset else{
             return nil
         }
         return value.toImage()
     }
-    
+#endif
+#if os(macOS)
+    func image(forColumn column:String)->NSImage?{
+        guard let value = self[column] as? CKAsset else{
+            return nil
+        }
+        return value.toImage()
+    }
+#endif
     func int(forColumn column:String)->Int{
         if let value:Int = self.value(forColumn: column){
             return value

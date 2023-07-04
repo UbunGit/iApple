@@ -7,7 +7,11 @@
 
 import Foundation
 import CloudKit
-
+#if os(macOS)
+import AppKit
+#else
+import UIKit
+#endif
 public protocol SqlValueProtocol:CKRecordValueProtocol {
     var sqltype:String? {get}
 }
@@ -83,11 +87,21 @@ extension Date:SqlValueProtocol{
         return "DATE"
     }
 }
+#if os(macOS)
+extension NSImage:SqlValueProtocol{
+    public var sqltype:String?{
+        return "BLOB"
+    }
+}
+#endif
+#if os(iOS)
 extension UIImage:SqlValueProtocol{
     public var sqltype:String?{
         return "BLOB"
     }
 }
+#endif
+
 
 extension Double:SqlValueProtocol{
     public var sqltype:String?{

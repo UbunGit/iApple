@@ -13,16 +13,16 @@ Pod::Spec.new do |spec|
   
   spec.author             = { "静静地白色外套" => "296019487@qq.com" }
   
-  spec.ios.deployment_target = '11'
   
   spec.source       = { :git => "http://github/ubungit.git", :tag => "#{spec.version}" }
   
   
-  spec.dependency "YYCategories"
+  
   
   spec.default_subspec = 'iBox'
   
   spec.subspec 'iBox' do |spec|
+    spec.dependency "YYCategories"
     spec.source_files  =  [
     "iBox/**/*.{h,m,swift}"
     ]
