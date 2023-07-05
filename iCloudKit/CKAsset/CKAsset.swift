@@ -43,7 +43,7 @@ extension CKAsset {
 }
 #if os(iOS)
 public extension UIImage{
-     var ckAsset:CKAsset?{
+    var ckAsset:CKAsset?{
         if let avatarData = self.pngData(),
            let url = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString+".dat"){
             
@@ -58,6 +58,42 @@ public extension UIImage{
             return nil
         }
     }
+}
+
+public extension NSData{
+    var ckAsset:CKAsset?{
+        
+        if let url = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString+".dat"){
+            
+            do {
+                try self.write(to: url)
+                return CKAsset(fileURL: url)
+            } catch {
+                print("UIImage to ckAsset! \(error)");
+                return nil
+            }
+        }else{
+            return nil
+        }
+    }
+}
+public extension Data{
+    var ckAsset:CKAsset?{
+        
+        if let url = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString+".dat"){
+            
+            do {
+                try self.write(to: url)
+                return CKAsset(fileURL: url)
+            } catch {
+                print("UIImage to ckAsset! \(error)");
+                return nil
+            }
+        }else{
+            return nil
+        }
+    }
+    
 }
 #endif
 #if os(macOS)
@@ -81,5 +117,41 @@ public extension NSImage {
         }
     }
 }
+public extension Data{
+    var ckAsset:CKAsset?{
+        
+        do {
+            let fileManager = FileManager.default
+            let temporaryDirectory = fileManager.temporaryDirectory
+            let filename = UUID().uuidString + ".dat"
+            let fileURL = temporaryDirectory.appendingPathComponent(filename)
+            
+            try self.write(to: fileURL)
+            return CKAsset(fileURL: fileURL)
+        } catch {
+            print("NSImage to ckAsset! \(error)")
+            return nil
+        }
+    }
+}
 
+public extension NSData{
+    var ckAsset:CKAsset?{
+        
+        do {
+            let fileManager = FileManager.default
+            let temporaryDirectory = fileManager.temporaryDirectory
+            let filename = UUID().uuidString + ".dat"
+            let fileURL = temporaryDirectory.appendingPathComponent(filename)
+            
+            try self.write(to: fileURL)
+            return CKAsset(fileURL: fileURL)
+        } catch {
+            print("NSImage to ckAsset! \(error)")
+            return nil
+        }
+    }
+}
 #endif
+
+

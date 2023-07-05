@@ -14,7 +14,6 @@ import CoreData
 open class ICloudSqlObject{
     
     var keyValues:[String:SqlValueProtocol] = [:]
-    
     public init(keyValues:[String:SqlValueProtocol]) {
         self.keyValues = keyValues
     }
@@ -31,12 +30,12 @@ open class ICloudSqlObject{
 extension FMDatabase{
     
     func setkeysValues(_ keyValues: [String : SqlValueProtocol?],tableName:String) async throws {
-
+        
         for (key, value) in keyValues {
             if try await isColumn(tableName: tableName, columnName: key) == false {
                 try await addColumn(tableName: tableName, name: key, type: value.sqltype)
             }
-           
+            
         }
         let columnTypes = try await columnTypes(tableName: tableName)
         let keys = keyValues.compactMap { (key: String, value: SqlValueProtocol?) in
@@ -78,6 +77,7 @@ extension FMDatabase{
 extension FMResultSet{
     
 }
+
 enum ICloudKitError:Error{
     case sqlUpdateUUIDISNULL
     case sqlUpdateDataISNULL
@@ -103,7 +103,7 @@ public class CloudSqlQuery:NSObject{
         if FileManager.default.isExecutableFile(atPath: url.path) == false{
             try! FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
         }
-        return url.appendingPathComponent("defual.sql")
+        return url.appendingPathComponent("defual.db")
     }
     
     var sqlDatabase:FMDatabase {
@@ -138,9 +138,9 @@ public class CloudSqlQuery:NSObject{
     // 增
     public func add(keyvalues:[String:SqlValueProtocol]) async throws{
         try await setUp()
-        if keyvalues["uuid"] != nil {
-          try await update(keyvalues: keyvalues)
-            
+        
+        if keyvalues["uuid"] is String {
+            try await update(keyvalues: keyvalues)
         }else{
             var keyvalues = keyvalues
             keyvalues["uuid"] = UUID().uuidString
@@ -229,12 +229,13 @@ public class CloudSqlQuery:NSObject{
     // 查
     public func fetch(predicate:String? = nil,ignoreDelete:Bool = true) async throws ->[[String:SqlValueProtocol]]{
         try await setUp()
-        var predicate = predicate
+        let deletestr:String = (predicate==nil) ? " isdelete is not 1 " : " and isdelete is not 1 "
+        var newPredicate = predicate
         if ignoreDelete{
-            predicate = predicate ?? "" + ((predicate==nil) ? "isdelete is not 1 " : " and isdelete is not 1 ")
+            newPredicate = (predicate ?? "") + deletestr
         }
         
-        let result = try await sqlDatabase.fetch(tableName: recordType, predicate: predicate)
+        let result = try await sqlDatabase.fetch(tableName: recordType, predicate: newPredicate)
         var results:[[String : SqlValueProtocol]] = []
         while result.next() {
             if let value = result.resultDictionary as? [String: SqlValueProtocol] {
@@ -259,20 +260,22 @@ public class CloudSqlQuery:NSObject{
                 }else{
                     let record =  CKRecord.init(recordType: recordType,recordID: .init(recordName: recordID))
                     item.forEach { (key: String, value: SqlValueProtocol) in
-                        if ["creationDate","modificationDate","asyncDate","recordID","isdelete","creatorUser","modifiedByDevice"].contains(key) == false{
+                        if ["creationDate","modificationDate","asyncDate","recordID","creatorUser","modifiedByDevice"].contains(key) == false{
                             record["key"] = value
                         }
-                        
                     }
                     modified.append(record)
                 }
             }else{
                 let record =  CKRecord.init(recordType: recordType)
                 item.forEach { (key: String, value: SqlValueProtocol) in
-                    if ["creationDate","modificationDate","modifiedUser","asyncDate","recordID","isdelete","creatorUser","modifiedByDevice"].contains(key) == false{
-                        record[key] = value
+                    if ["creationDate","modificationDate","modifiedUser","asyncDate","recordID","creatorUser","modifiedByDevice"].contains(key) == false{
+                        if let value = value.cloudKitData as? __CKRecordObjCValue{
+                            record.setObject(value, forKey: key)
+                        }else{
+                            record.setObject(nil, forKey: key)
+                        }
                     }
-                    
                 }
                 modified.append(record)
             }
@@ -284,8 +287,6 @@ public class CloudSqlQuery:NSObject{
         }
         let content = CKContainer.init(identifier: identifier)
         let (modifiedResults,deleteResults) = try await content.publicCloudDatabase.modifyRecords(saving: modified, deleting: delete)
-       
-        
         var modifiedIterator = modifiedResults.makeIterator()
         while let modifiedItem = modifiedIterator.next() {
             
@@ -303,7 +304,7 @@ public class CloudSqlQuery:NSObject{
         while let deleteItem = deleteIterator.next() {
             try await realDelete(recordID: deleteItem.0.recordName)
         }
-       
+        
         
     }
     // 拉取远端数据
@@ -318,7 +319,10 @@ public class CloudSqlQuery:NSObject{
             let values = record.allKeys()
             var keyvalues:[String:SqlValueProtocol] = [:]
             values.forEach { key in
-                keyvalues[key] = record[key] as? any SqlValueProtocol
+                keyvalues[key] = record[key].sqlData as? any SqlValueProtocol
+            }
+            if record["uuid"] is String == false{
+                keyvalues["uuid"] = record.recordID.recordName
             }
             keyvalues["asyncDate"] = Date()
             keyvalues["recordID"] = record.recordID.recordName
@@ -326,7 +330,7 @@ public class CloudSqlQuery:NSObject{
             keyvalues["modificationDate"] = record.modificationDate
             keyvalues["modifiedUser"] = record.lastModifiedUserRecordID?.recordName
             keyvalues["creatorUser"] = record.creatorUserRecordID?.recordName
-          
+            
             try await merge(keyvalues: keyvalues)
         }
     }
