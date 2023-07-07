@@ -74,9 +74,7 @@ extension FMDatabase{
     
 }
 
-extension FMResultSet{
-    
-}
+
 
 enum ICloudKitError:Error{
     case sqlUpdateUUIDISNULL
@@ -251,21 +249,22 @@ public class CloudSqlQuery:NSObject{
         let predicate = " asyncDate is NULL "
         let results = try await fetch(predicate: predicate,ignoreDelete: false)
         var modified:[CKRecord] = []
-        var delete:[CKRecord.ID] = []
         var iterator = results.makeIterator()
         while let item  =  iterator.next(){
             if let recordID = item["recordID"] as? String{
-                if item["isdelete"] != nil{
-                    delete.append(.init(recordName: recordID))
-                }else{
-                    let record =  CKRecord.init(recordType: recordType,recordID: .init(recordName: recordID))
-                    item.forEach { (key: String, value: SqlValueProtocol) in
-                        if ["creationDate","modificationDate","asyncDate","recordID","creatorUser","modifiedByDevice"].contains(key) == false{
-                            record["key"] = value
+                
+                let record =  CKRecord.init(recordType: recordType,recordID: .init(recordName: recordID))
+                item.forEach { (key: String, value: SqlValueProtocol) in
+                    if ["creationDate","modificationDate","modifiedUser","asyncDate","recordID","creatorUser","modifiedByDevice"].contains(key) == false{
+                        if let value = value.cloudKitData as? __CKRecordObjCValue{
+                            record.setObject(value, forKey: key)
+                        }else{
+                            record.setObject(nil, forKey: key)
                         }
                     }
-                    modified.append(record)
                 }
+                modified.append(record)
+                
             }else{
                 let record =  CKRecord.init(recordType: recordType)
                 item.forEach { (key: String, value: SqlValueProtocol) in
@@ -281,12 +280,11 @@ public class CloudSqlQuery:NSObject{
             }
             
         }
-        if modified.count == 0 ,
-           delete.count == 0{
+        if modified.count == 0{
             return
         }
         let content = CKContainer.init(identifier: identifier)
-        let (modifiedResults,deleteResults) = try await content.publicCloudDatabase.modifyRecords(saving: modified, deleting: delete)
+        let (modifiedResults, _) = try await content.publicCloudDatabase.modifyRecords(saving: modified, deleting: [],savePolicy: .allKeys)
         var modifiedIterator = modifiedResults.makeIterator()
         while let modifiedItem = modifiedIterator.next() {
             
@@ -300,10 +298,7 @@ public class CloudSqlQuery:NSObject{
             keyvalues["recordID"] = record.recordID.recordName
             try await update(keyvalues: keyvalues)
         }
-        var deleteIterator = deleteResults.makeIterator()
-        while let deleteItem = deleteIterator.next() {
-            try await realDelete(recordID: deleteItem.0.recordName)
-        }
+       
         
         
     }

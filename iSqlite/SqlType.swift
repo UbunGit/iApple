@@ -23,6 +23,9 @@ public extension SqlValueProtocol{
     var sqlData: CKRecordValueProtocol? {
         return self
     }
+    var cloudKitData: CKRecordValueProtocol {
+        return self
+    }
 }
 
 extension Optional: SqlValueProtocol{
@@ -124,23 +127,12 @@ extension Bool:SqlValueProtocol{
         return self
     }
 }
-extension CKAsset:SqlValueProtocol{
-    public var sqltype:String?{
-        return "BLOB"
-    }
-    public var cloudKitData: CKRecordValueProtocol {
-        return self
-    }
-    public var sqlData: CKRecordValueProtocol?{
-        return self.toData()
-    }
-}
+
 extension Data:SqlValueProtocol{
+    
+    
     public var sqltype:String?{
         return "BLOB"
-    }
-    public var cloudKitData: CKRecordValueProtocol {
-        return self.ckAsset
     }
     
 }
@@ -157,9 +149,7 @@ extension NSData:SqlValueProtocol{
     public var sqltype:String?{
         return "DATE"
     }
-    public var cloudKitData: CKRecordValueProtocol {
-        return self.ckAsset
-    }
+  
 }
 
 

@@ -68,3 +68,7 @@ public class CloudKitCoreDataManage{
     
     
 }
+// 创建订阅
+extension CloudKitCoreDataManage{
+   
+}

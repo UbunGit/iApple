@@ -12,6 +12,7 @@ enum ISqliteError:Error{
     case tableDoesNotExist
     case sqlColumnTypeError
     case sqlUpdateError
+    case sqlUUIDISNULL
 }
 public extension FMDatabase{
     
@@ -134,6 +135,38 @@ public extension FMDatabase{
         }
         return isExists
     }
+    
+    func setkeysValues(_ keyValues: [String : SqlValueProtocol?],tableName:String) async throws {
+        
+        for (key, value) in keyValues {
+            if try await isColumn(tableName: tableName, columnName: key) == false {
+                try await addColumn(tableName: tableName, name: key, type: value.sqltype)
+            }
+            
+        }
+        let columnTypes = try await columnTypes(tableName: tableName)
+        let keys = keyValues.compactMap { (key: String, value: SqlValueProtocol?) in
+            if columnTypes[key] != nil{
+                return key
+            }
+            return nil
+        }
+        
+        let keysStr = keys.map { item in
+            return "'\(item)'"
+        }.joined(separator: ",")
+        let valeustr = keys.map { item in
+            return ":"+item
+        }.joined(separator: ",")
+        try await self.autoExecute { db in
+            let sql = "INSERT OR REPLACE INTO \(tableName) (\(keysStr)) VALUES (\(valeustr))"
+            if db.executeUpdate(sql, withParameterDictionary: keyValues as [AnyHashable : Any]) == false{
+                debugPrint(self.lastError())
+                throw ISqliteError.sqlUpdateError
+            }
+        }
+    }
+    
     
    
   
