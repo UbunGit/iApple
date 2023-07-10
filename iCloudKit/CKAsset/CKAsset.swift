@@ -166,14 +166,14 @@ extension CKAsset:SqlValueProtocol{
         return self.toData()
     }
 }
-extension Data:SqlValueProtocol{
+extension Data{
 
     public var cloudKitData: CKRecordValueProtocol {
         return self.ckAsset
     }
     
 }
-extension NSData:SqlValueProtocol{
+extension NSData{
    
     public var cloudKitData: CKRecordValueProtocol {
         return self.ckAsset

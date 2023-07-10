@@ -7,6 +7,7 @@
 
 import Foundation
 import CloudKit
+
 #if os(macOS)
 import AppKit
 #else
@@ -130,14 +131,18 @@ extension Bool:SqlValueProtocol{
 
 extension Data:SqlValueProtocol{
     
-    
     public var sqltype:String?{
         return "BLOB"
     }
-    
+}
+extension NSData:SqlValueProtocol{
+    public var sqltype:String?{
+        return "DATE"
+    }
 }
 
 extension Date:SqlValueProtocol{
+    
     public var sqltype:String?{
         return "DATE"
     }
@@ -145,12 +150,7 @@ extension Date:SqlValueProtocol{
         return self
     }
 }
-extension NSData:SqlValueProtocol{
-    public var sqltype:String?{
-        return "DATE"
-    }
-  
-}
+
 
 
 
