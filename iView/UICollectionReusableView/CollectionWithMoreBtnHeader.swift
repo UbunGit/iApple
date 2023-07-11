@@ -15,8 +15,7 @@ open class CollectionWithMoreBtnHeader: CollectionBaseHeader {
         value.setTitleColor(.secondaryLabel, for: .normal)
         value.titleLabel?.font = .boldSystemFont(ofSize: 14)
         value.setImage(.i_image(name: "chevron.forward")?.byResize(to: .init(width: 12, height: 12)), for: .normal)
-        value.setEdgeInsets(with: .right, space: 2)
-        value.contentEdgeInsets = .init(top: 2, left: 4, bottom: 2, right: 4)
+        value.setEdgeInsets(with: .trailing, space: 2)
         value.tintColor = .systemGroupedBackground
         return value
     }()
