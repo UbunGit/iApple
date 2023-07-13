@@ -27,7 +27,7 @@ open class CollectionImageCell: UICollectionViewCell {
     }
     open func makeLayout(){
         imageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.left.right.bottom.equalToSuperview()
         }
     }
 }

@@ -68,14 +68,22 @@ public extension UICollectionView{
 
 public extension UICollectionView{
     func cellWidth(space:CGFloat,column:Int) ->CGFloat{
+        var cw = self.size.width
+        var space = space
+        if let layout = self.collectionViewLayout as? UICollectionViewFlowLayout{
+            let sp = layout.sectionInset.left+layout.sectionInset.right
+            cw = cw-sp
+            space = max(space, layout.minimumInteritemSpacing)
+        }
         let fcolumn = CGFloat(column)
-        let w = (self.size.width - space*(fcolumn+1))/fcolumn
+        let w = (cw - space*(fcolumn-1))/fcolumn
         return w
     }
     func cellSize(space:CGFloat,column:Int,ratio:CGFloat)->CGSize{
+     
         let w = cellWidth(space: space, column: column)
         let h = w*ratio
         return .init(width: w, height: h)
-    }
-    
+    }  
 }
+

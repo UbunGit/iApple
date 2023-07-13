@@ -66,7 +66,9 @@ extension UGCircleTabBarController{
             
             standardAppearance = appearance
             
-            scrollEdgeAppearance = appearance
+            if #available(iOS 15.0, *) {
+                scrollEdgeAppearance = appearance
+            }
             
             
             tintColor = .white.alpha(1)

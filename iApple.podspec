@@ -196,6 +196,14 @@ Pod::Spec.new do |spec|
     ]
   end
   
+  spec.subspec 'iRichView' do |spec|
+    
+    spec.dependency "FMDB"
+    spec.source_files  =  [
+    "iRichView/**/*.{h,m,swift}"
+    ]
+  end
+  
   
   
   

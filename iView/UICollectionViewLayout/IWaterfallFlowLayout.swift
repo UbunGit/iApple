@@ -6,23 +6,30 @@
 //
 
 import Foundation
-protocol IWaterfallFlowLayoutDelegate: AnyObject {
+public protocol IWaterfallFlowLayoutDelegate: AnyObject {
+    
     func collectionView(_ collectionView: UICollectionView, heightForItemAt indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat
 }
-class IWaterfallFlowLayout : UICollectionViewFlowLayout {
+
+open class IWaterfallFlowLayout : UICollectionViewFlowLayout {
     // 在这里定义您的布局逻辑
-    // 重写以下方法来自定义布局
     private var cache: [UICollectionViewLayoutAttributes] = []
+    
     private var contentHeight: CGFloat = 0
-    weak var delegate:IWaterfallFlowLayoutDelegate? = nil
-    override func prepare() {
+    
+    public weak var waterfallDelegate:IWaterfallFlowLayoutDelegate? = nil
+    
+    public var numberOfColumns: Int = 2 // 设置列数为2
+    
+    open override func prepare() {
         // 在此方法中准备布局
         super.prepare()
         
         guard let collectionView = collectionView else { return }
         
-        let numberOfColumns: CGFloat = 2 // 设置列数为2
-        let itemWidth = (collectionView.frame.width - sectionInset.left - sectionInset.right - (minimumInteritemSpacing * (numberOfColumns - 1))) / numberOfColumns
+        let columnsCount = CGFloat(numberOfColumns)
+        let sp = minimumInteritemSpacing * (columnsCount - 1)
+        let itemWidth = (collectionView.frame.width - sectionInset.left - sectionInset.right - sp) / columnsCount
         
         var xOffset: [CGFloat] = []
         for column in 0..<Int(numberOfColumns) {
@@ -38,7 +45,7 @@ class IWaterfallFlowLayout : UICollectionViewFlowLayout {
             let indexPath = IndexPath(item: item, section: 0)
             
             let column = yOffset.firstIndex(of: yOffset.min() ?? 0) ?? 0
-            let height = delegate?.collectionView(collectionView, heightForItemAt: indexPath, withWidth: itemWidth) ?? 200 // 获取每个单元格的高度
+            let height = waterfallDelegate?.collectionView(collectionView, heightForItemAt: indexPath, withWidth: itemWidth) ?? 200 // 获取每个单元格的高度
             
             let frame = CGRect(x: xOffset[column], y: yOffset[column], width: itemWidth, height: height)
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
@@ -50,16 +57,16 @@ class IWaterfallFlowLayout : UICollectionViewFlowLayout {
         }
     }
     
-    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+    open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         return cache.filter { $0.frame.intersects(rect) }
     }
     
-    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         // 返回指定索引路径的单元格布局属性
         return nil
     }
     
-    override var collectionViewContentSize: CGSize {
+    open override var collectionViewContentSize: CGSize {
         return CGSize(width: collectionView?.frame.width ?? 0, height: contentHeight)
     }
 }

@@ -34,6 +34,39 @@ public protocol WaterfallMutiSectionDelegate: NSObjectProtocol {
     /// section头部header与上个section尾部footer间距（默认为0）
     func spacingWithLastSection(collectionView collection: UICollectionView, layout: WaterfallMutiSectionFlowLayout, section: Int) -> CGFloat
 }
+extension WaterfallMutiSectionDelegate{
+    /// 每个section 列数（默认2列）
+    func columnNumber(collectionView collection: UICollectionView, layout: WaterfallMutiSectionFlowLayout, section: Int) -> Int{
+        return 2
+    }
+    /// header高度（默认为0）
+    func referenceSizeForHeader(collectionView collection: UICollectionView, layout: WaterfallMutiSectionFlowLayout, section: Int) -> CGSize{
+        return .zero
+    }
+    /// footer高度（默认为0）
+    func referenceSizeForFooter(collectionView collection: UICollectionView, layout: WaterfallMutiSectionFlowLayout, section: Int) -> CGSize{
+        return .zero
+    }
+    /// 每个section 边距（默认为0）
+    func insetForSection(collectionView collection: UICollectionView, layout: WaterfallMutiSectionFlowLayout, section: Int) -> UIEdgeInsets{
+        .zero
+    }
+    
+    /// 每个section item上下间距（默认为0）
+    func lineSpacing(collectionView collection: UICollectionView, layout: WaterfallMutiSectionFlowLayout, section: Int) -> CGFloat{
+        .zero
+    }
+    
+    /// 每个section item左右间距（默认为0）
+    func interitemSpacing(collectionView collection: UICollectionView, layout: WaterfallMutiSectionFlowLayout, section: Int) -> CGFloat{
+        .zero
+    }
+    
+    /// section头部header与上个section尾部footer间距（默认为0）
+    func spacingWithLastSection(collectionView collection: UICollectionView, layout: WaterfallMutiSectionFlowLayout, section: Int) -> CGFloat{
+        .zero
+    }
+}
 
 public class WaterfallMutiSectionFlowLayout: UICollectionViewFlowLayout {
     public weak var delegate: WaterfallMutiSectionDelegate?
@@ -76,6 +109,7 @@ public class WaterfallMutiSectionFlowLayout: UICollectionViewFlowLayout {
             if let columnCount = self.delegate?.columnNumber(collectionView: self.collectionView!, layout: self, section: indexPath.section) {
                 self.columnCount = columnCount
             }
+            
             if let inset = self.delegate?.insetForSection(collectionView: self.collectionView!, layout: self, section: indexPath.section) {
                 self.sectionInsets = inset
             }
