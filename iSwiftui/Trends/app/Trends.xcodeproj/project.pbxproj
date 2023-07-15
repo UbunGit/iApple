@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		042537292A628D7400DCF2A3 /* IRefreshable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042537282A628D7400DCF2A3 /* IRefreshable.swift */; };
+		0425372D2A629D1F00DCF2A3 /* TrendsItemViewDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0425372C2A629D1F00DCF2A3 /* TrendsItemViewDetailsController.swift */; };
 		0436BD1C2A614CE400A02B94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0436BD1B2A614CE400A02B94 /* AppDelegate.swift */; };
 		0436BD1E2A614CE400A02B94 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0436BD1D2A614CE400A02B94 /* SceneDelegate.swift */; };
 		0436BD202A614CE400A02B94 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0436BD1F2A614CE400A02B94 /* ViewController.swift */; };
@@ -15,12 +17,24 @@
 		0436BD282A614CE600A02B94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0436BD262A614CE600A02B94 /* LaunchScreen.storyboard */; };
 		0436BD362A614D3E00A02B94 /* TrendsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0436BD342A614D3E00A02B94 /* TrendsItemView.swift */; };
 		0436BD372A614D3E00A02B94 /* TrendsItemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0436BD352A614D3E00A02B94 /* TrendsItemListView.swift */; };
-		0436BD392A614D6200A02B94 /* TrendsItemHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0436BD382A614D6200A02B94 /* TrendsItemHeader.swift */; };
 		04851BDF2A614DD9009BC2F7 /* TrendsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04851BDE2A614DD9009BC2F7 /* TrendsData.swift */; };
 		04851BE12A614E09009BC2F7 /* TrendsUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04851BE02A614E09009BC2F7 /* TrendsUser.swift */; };
+		04851BE42A622717009BC2F7 /* MemberItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04851BE32A622717009BC2F7 /* MemberItemView.swift */; };
+		04851BE72A622A15009BC2F7 /* UrlImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04851BE62A622A15009BC2F7 /* UrlImage.swift */; };
+		04851BE92A6257A3009BC2F7 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04851BE82A6257A3009BC2F7 /* AvatarView.swift */; };
+		04851BEB2A625871009BC2F7 /* Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04851BEA2A625871009BC2F7 /* Mock.swift */; };
+		04851BEE2A626AD3009BC2F7 /* SecondaryLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04851BED2A626AD3009BC2F7 /* SecondaryLabelStyle.swift */; };
+		04851BF02A626BA5009BC2F7 /* TrendsMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04851BEF2A626BA5009BC2F7 /* TrendsMemberView.swift */; };
+		04851BF22A6270EE009BC2F7 /* MemberListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04851BF12A6270EE009BC2F7 /* MemberListView.swift */; };
+		04851BF52A627C38009BC2F7 /* MediaGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04851BF42A627C38009BC2F7 /* MediaGridView.swift */; };
+		04851BF72A628818009BC2F7 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04851BF62A628818009BC2F7 /* TabbarViewController.swift */; };
+		04851BF92A62891C009BC2F7 /* TrendsItemViewListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04851BF82A62891C009BC2F7 /* TrendsItemViewListController.swift */; };
+		3FBD0619A1D943BAEE806495 /* Pods_Trends.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ED6881C38EA45E75F6EB46B /* Pods_Trends.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		042537282A628D7400DCF2A3 /* IRefreshable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRefreshable.swift; sourceTree = "<group>"; };
+		0425372C2A629D1F00DCF2A3 /* TrendsItemViewDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsItemViewDetailsController.swift; sourceTree = "<group>"; };
 		0436BD182A614CE400A02B94 /* Trends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0436BD1B2A614CE400A02B94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0436BD1D2A614CE400A02B94 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -31,9 +45,21 @@
 		0436BD292A614CE600A02B94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0436BD342A614D3E00A02B94 /* TrendsItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendsItemView.swift; sourceTree = "<group>"; };
 		0436BD352A614D3E00A02B94 /* TrendsItemListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendsItemListView.swift; sourceTree = "<group>"; };
-		0436BD382A614D6200A02B94 /* TrendsItemHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsItemHeader.swift; sourceTree = "<group>"; };
 		04851BDE2A614DD9009BC2F7 /* TrendsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsData.swift; sourceTree = "<group>"; };
 		04851BE02A614E09009BC2F7 /* TrendsUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsUser.swift; sourceTree = "<group>"; };
+		04851BE32A622717009BC2F7 /* MemberItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberItemView.swift; sourceTree = "<group>"; };
+		04851BE62A622A15009BC2F7 /* UrlImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlImage.swift; sourceTree = "<group>"; };
+		04851BE82A6257A3009BC2F7 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
+		04851BEA2A625871009BC2F7 /* Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mock.swift; sourceTree = "<group>"; };
+		04851BED2A626AD3009BC2F7 /* SecondaryLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryLabelStyle.swift; sourceTree = "<group>"; };
+		04851BEF2A626BA5009BC2F7 /* TrendsMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsMemberView.swift; sourceTree = "<group>"; };
+		04851BF12A6270EE009BC2F7 /* MemberListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberListView.swift; sourceTree = "<group>"; };
+		04851BF42A627C38009BC2F7 /* MediaGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaGridView.swift; sourceTree = "<group>"; };
+		04851BF62A628818009BC2F7 /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
+		04851BF82A62891C009BC2F7 /* TrendsItemViewListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsItemViewListController.swift; sourceTree = "<group>"; };
+		4ED6881C38EA45E75F6EB46B /* Pods_Trends.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trends.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6CFB5250333FB9FDBA5A8C78 /* Pods-Trends.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trends.debug.xcconfig"; path = "Target Support Files/Pods-Trends/Pods-Trends.debug.xcconfig"; sourceTree = "<group>"; };
+		D77384F8B5C65D2CB3A48B93 /* Pods-Trends.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trends.release.xcconfig"; path = "Target Support Files/Pods-Trends/Pods-Trends.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,17 +67,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FBD0619A1D943BAEE806495 /* Pods_Trends.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		016D81A1266AC9B175BF835E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6CFB5250333FB9FDBA5A8C78 /* Pods-Trends.debug.xcconfig */,
+				D77384F8B5C65D2CB3A48B93 /* Pods-Trends.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		0436BD0F2A614CE400A02B94 = {
 			isa = PBXGroup;
 			children = (
 				0436BD1A2A614CE400A02B94 /* Trends */,
 				0436BD192A614CE400A02B94 /* Products */,
+				016D81A1266AC9B175BF835E /* Pods */,
+				7FC072FA843B741CAEA6652A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,10 +104,12 @@
 		0436BD1A2A614CE400A02B94 /* Trends */ = {
 			isa = PBXGroup;
 			children = (
+				04851BE52A6229F9009BC2F7 /* unit */,
 				0436BD332A614D3E00A02B94 /* source */,
 				0436BD1B2A614CE400A02B94 /* AppDelegate.swift */,
 				0436BD1D2A614CE400A02B94 /* SceneDelegate.swift */,
 				0436BD1F2A614CE400A02B94 /* ViewController.swift */,
+				04851BF62A628818009BC2F7 /* TabbarViewController.swift */,
 				0436BD212A614CE400A02B94 /* Main.storyboard */,
 				0436BD242A614CE600A02B94 /* Assets.xcassets */,
 				0436BD262A614CE600A02B94 /* LaunchScreen.storyboard */,
@@ -81,10 +121,10 @@
 		0436BD332A614D3E00A02B94 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				04851BF32A6277E1009BC2F7 /* Trends */,
+				04851BEC2A626ABF009BC2F7 /* Style */,
+				04851BE22A6226F9009BC2F7 /* Member */,
 				04851BDD2A614DBF009BC2F7 /* Data */,
-				0436BD342A614D3E00A02B94 /* TrendsItemView.swift */,
-				0436BD352A614D3E00A02B94 /* TrendsItemListView.swift */,
-				0436BD382A614D6200A02B94 /* TrendsItemHeader.swift */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -94,8 +134,57 @@
 			children = (
 				04851BDE2A614DD9009BC2F7 /* TrendsData.swift */,
 				04851BE02A614E09009BC2F7 /* TrendsUser.swift */,
+				04851BEA2A625871009BC2F7 /* Mock.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		04851BE22A6226F9009BC2F7 /* Member */ = {
+			isa = PBXGroup;
+			children = (
+				04851BE32A622717009BC2F7 /* MemberItemView.swift */,
+				04851BF12A6270EE009BC2F7 /* MemberListView.swift */,
+				04851BE82A6257A3009BC2F7 /* AvatarView.swift */,
+			);
+			path = Member;
+			sourceTree = "<group>";
+		};
+		04851BE52A6229F9009BC2F7 /* unit */ = {
+			isa = PBXGroup;
+			children = (
+				04851BE62A622A15009BC2F7 /* UrlImage.swift */,
+				04851BF42A627C38009BC2F7 /* MediaGridView.swift */,
+			);
+			path = unit;
+			sourceTree = "<group>";
+		};
+		04851BEC2A626ABF009BC2F7 /* Style */ = {
+			isa = PBXGroup;
+			children = (
+				04851BED2A626AD3009BC2F7 /* SecondaryLabelStyle.swift */,
+				042537282A628D7400DCF2A3 /* IRefreshable.swift */,
+			);
+			path = Style;
+			sourceTree = "<group>";
+		};
+		04851BF32A6277E1009BC2F7 /* Trends */ = {
+			isa = PBXGroup;
+			children = (
+				0436BD342A614D3E00A02B94 /* TrendsItemView.swift */,
+				04851BEF2A626BA5009BC2F7 /* TrendsMemberView.swift */,
+				0436BD352A614D3E00A02B94 /* TrendsItemListView.swift */,
+				04851BF82A62891C009BC2F7 /* TrendsItemViewListController.swift */,
+				0425372C2A629D1F00DCF2A3 /* TrendsItemViewDetailsController.swift */,
+			);
+			path = Trends;
+			sourceTree = "<group>";
+		};
+		7FC072FA843B741CAEA6652A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4ED6881C38EA45E75F6EB46B /* Pods_Trends.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -105,6 +194,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0436BD2C2A614CE600A02B94 /* Build configuration list for PBXNativeTarget "Trends" */;
 			buildPhases = (
+				48E35895714D5BB057E9EBF3 /* [CP] Check Pods Manifest.lock */,
 				0436BD142A614CE400A02B94 /* Sources */,
 				0436BD152A614CE400A02B94 /* Frameworks */,
 				0436BD162A614CE400A02B94 /* Resources */,
@@ -134,7 +224,7 @@
 				};
 			};
 			buildConfigurationList = 0436BD132A614CE400A02B94 /* Build configuration list for PBXProject "Trends" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -164,19 +254,55 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		48E35895714D5BB057E9EBF3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Trends-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0436BD142A614CE400A02B94 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0425372D2A629D1F00DCF2A3 /* TrendsItemViewDetailsController.swift in Sources */,
+				04851BF72A628818009BC2F7 /* TabbarViewController.swift in Sources */,
 				0436BD202A614CE400A02B94 /* ViewController.swift in Sources */,
 				0436BD372A614D3E00A02B94 /* TrendsItemListView.swift in Sources */,
+				04851BE42A622717009BC2F7 /* MemberItemView.swift in Sources */,
+				04851BF52A627C38009BC2F7 /* MediaGridView.swift in Sources */,
 				04851BE12A614E09009BC2F7 /* TrendsUser.swift in Sources */,
+				04851BF92A62891C009BC2F7 /* TrendsItemViewListController.swift in Sources */,
+				04851BEE2A626AD3009BC2F7 /* SecondaryLabelStyle.swift in Sources */,
+				04851BE92A6257A3009BC2F7 /* AvatarView.swift in Sources */,
+				04851BF22A6270EE009BC2F7 /* MemberListView.swift in Sources */,
+				04851BF02A626BA5009BC2F7 /* TrendsMemberView.swift in Sources */,
 				0436BD362A614D3E00A02B94 /* TrendsItemView.swift in Sources */,
 				0436BD1C2A614CE400A02B94 /* AppDelegate.swift in Sources */,
 				04851BDF2A614DD9009BC2F7 /* TrendsData.swift in Sources */,
+				04851BE72A622A15009BC2F7 /* UrlImage.swift in Sources */,
 				0436BD1E2A614CE400A02B94 /* SceneDelegate.swift in Sources */,
-				0436BD392A614D6200A02B94 /* TrendsItemHeader.swift in Sources */,
+				04851BEB2A625871009BC2F7 /* Mock.swift in Sources */,
+				042537292A628D7400DCF2A3 /* IRefreshable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,6 +444,7 @@
 		};
 		0436BD2D2A614CE600A02B94 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6CFB5250333FB9FDBA5A8C78 /* Pods-Trends.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -331,6 +458,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -346,6 +474,7 @@
 		};
 		0436BD2E2A614CE600A02B94 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D77384F8B5C65D2CB3A48B93 /* Pods-Trends.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -359,6 +488,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

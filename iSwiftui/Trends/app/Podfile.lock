@@ -1,0 +1,43 @@
+PODS:
+  - iApple (1.0.0):
+    - iApple/iBox (= 1.0.0)
+  - iApple/iBox (1.0.0):
+    - YYCategories
+  - iApple/iRandom (1.0.0)
+  - SDWebImage (5.16.0):
+    - SDWebImage/Core (= 5.16.0)
+  - SDWebImage/Core (5.16.0)
+  - SDWebImageSwiftUI (2.2.3):
+    - SDWebImage (~> 5.10)
+  - SnapKit (5.6.0)
+  - YYCategories (1.0.4):
+    - YYCategories/no-arc (= 1.0.4)
+  - YYCategories/no-arc (1.0.4)
+
+DEPENDENCIES:
+  - iApple (from `../../../../iApple`)
+  - iApple/iRandom (from `../../../../iApple`)
+  - SDWebImageSwiftUI
+  - SnapKit
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - SDWebImage
+    - SDWebImageSwiftUI
+    - SnapKit
+    - YYCategories
+
+EXTERNAL SOURCES:
+  iApple:
+    :path: "../../../../iApple"
+
+SPEC CHECKSUMS:
+  iApple: 93b74972643118cdc0debf7dc0a3143451f36992
+  SDWebImage: 2aea163b50bfcb569a2726b6a754c54a4506fcf6
+  SDWebImageSwiftUI: 17396b7889f9abc27231caaeb64c537564284aab
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
+
+PODFILE CHECKSUM: 31e8afa0d637eec5cc39713d245d0b5feb01f83a
+
+COCOAPODS: 1.11.3
