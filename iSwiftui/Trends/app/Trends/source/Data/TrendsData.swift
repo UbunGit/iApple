@@ -7,7 +7,12 @@
 
 import Foundation
 
-final class TrendsData:ObservableObject,Identifiable{
+final class TrendsData:NSObject,ObservableObject,Identifiable{
+    static func == (lhs: TrendsData, rhs: TrendsData) -> Bool {
+       return lhs.uuid == rhs.uuid
+    }
+
+    var uuid:String!
     var member:Member!
     var content:String? = nil
     var images:[URL] = []
@@ -15,6 +20,7 @@ final class TrendsData:ObservableObject,Identifiable{
 extension TrendsData:Mock{
     public class func mock() -> TrendsData {
         let data = TrendsData()
+        data.uuid = UUID().uuidString
         data.member = .mock()
         data.content = .i_random_zh(count: Int.random(in: (20...200)))
         data.images = (0..<Int.random(in: (0...12))).map({ index in

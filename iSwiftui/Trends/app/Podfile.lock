@@ -1,30 +1,43 @@
 PODS:
+  - AliyunOSSiOS (2.10.18)
   - iApple (1.0.0):
     - iApple/iBox (= 1.0.0)
   - iApple/iBox (1.0.0):
     - YYCategories
   - iApple/iRandom (1.0.0)
+  - IQKeyboardManager (6.5.11)
   - SDWebImage (5.16.0):
     - SDWebImage/Core (= 5.16.0)
   - SDWebImage/Core (5.16.0)
   - SDWebImageSwiftUI (2.2.3):
     - SDWebImage (~> 5.10)
   - SnapKit (5.6.0)
+  - TZImagePickerController (3.8.3):
+    - TZImagePickerController/Basic (= 3.8.3)
+    - TZImagePickerController/Location (= 3.8.3)
+  - TZImagePickerController/Basic (3.8.3)
+  - TZImagePickerController/Location (3.8.3)
   - YYCategories (1.0.4):
     - YYCategories/no-arc (= 1.0.4)
   - YYCategories/no-arc (1.0.4)
 
 DEPENDENCIES:
+  - AliyunOSSiOS
   - iApple (from `../../../../iApple`)
   - iApple/iRandom (from `../../../../iApple`)
+  - IQKeyboardManager
   - SDWebImageSwiftUI
   - SnapKit
+  - TZImagePickerController
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - AliyunOSSiOS
+    - IQKeyboardManager
     - SDWebImage
     - SDWebImageSwiftUI
     - SnapKit
+    - TZImagePickerController
     - YYCategories
 
 EXTERNAL SOURCES:
@@ -32,12 +45,15 @@ EXTERNAL SOURCES:
     :path: "../../../../iApple"
 
 SPEC CHECKSUMS:
+  AliyunOSSiOS: e683c1b1faa0657b5cd02de733628cf996f4cd93
   iApple: 93b74972643118cdc0debf7dc0a3143451f36992
+  IQKeyboardManager: ef43ce1ba1e5aaf4adf222c0a46f39761f246879
   SDWebImage: 2aea163b50bfcb569a2726b6a754c54a4506fcf6
   SDWebImageSwiftUI: 17396b7889f9abc27231caaeb64c537564284aab
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  TZImagePickerController: e9909edbadf7381140efc5b5c9f5bdbfd630f7d4
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: 31e8afa0d637eec5cc39713d245d0b5feb01f83a
+PODFILE CHECKSUM: bdfba4945c1af637c14b4661cc0dcf0befd1d53a
 
 COCOAPODS: 1.11.3

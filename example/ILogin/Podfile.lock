@@ -1,0 +1,42 @@
+PODS:
+  - iApple (1.0.0):
+    - iApple/iBox (= 1.0.0)
+  - iApple/iAPI (1.0.0)
+  - iApple/iBox (1.0.0):
+    - YYCategories
+  - iApple/iLogin (1.0.0):
+    - IQKeyboardManagerSwift
+    - SnapKit
+  - iApple/iRouter (1.0.0):
+    - iApple/iBox
+  - IQKeyboardManagerSwift (6.5.11)
+  - SnapKit (5.6.0)
+  - YYCategories (1.0.4):
+    - YYCategories/no-arc (= 1.0.4)
+  - YYCategories/no-arc (1.0.4)
+
+DEPENDENCIES:
+  - iApple (from `../../`)
+  - iApple/iAPI (from `../../`)
+  - iApple/iLogin (from `../../`)
+  - iApple/iRouter (from `../../`)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - IQKeyboardManagerSwift
+    - SnapKit
+    - YYCategories
+
+EXTERNAL SOURCES:
+  iApple:
+    :path: "../../"
+
+SPEC CHECKSUMS:
+  iApple: fd7f88d9ffade9be6ce3db9e1ab6d9fa6ce4a3f1
+  IQKeyboardManagerSwift: c7955c0bdbf7b2eb29bb7daaa44e3d90f55a9a85
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
+
+PODFILE CHECKSUM: c93de9dfbacf4d558947340df05929a0c2d3148c
+
+COCOAPODS: 1.11.3

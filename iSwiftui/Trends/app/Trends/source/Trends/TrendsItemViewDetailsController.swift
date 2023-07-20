@@ -19,20 +19,23 @@ struct TrendsItemViewDetails:View{
             VStack{
                 List{
                     
-                    TrendsItemView(trend: trend, content_w:UIScreen.main.bounds.width-24)
+                    TrendsItemView(trend: trend, content_w: UIScreen.main.bounds.width-24, itemMoreTapGesture: {data in
+                    }
+                    )
                     
                     ForEach(0..<manage.trends.count, id:\.self) { index in
-                        TrendsItemView(trend: manage.trends[index], content_w:UIScreen.main.bounds.width-24)
-                            .onTapGesture {
-                                itemdidTapGesture(manage.trends[index])
+                        TrendsItemView(trend: manage.trends[index], content_w:UIScreen.main.bounds.width-24, itemMoreTapGesture: {data in
+                        })
+                        .onTapGesture {
+                            itemdidTapGesture(manage.trends[index])
+                        }
+                        .onAppear(){
+                            if manage.isLoading ||
+                                index<manage.trends.count-2 {
+                                return
                             }
-                            .onAppear(){
-                                if manage.isLoading ||
-                                    index<manage.trends.count-2 {
-                                    return
-                                }
-                                needLoadMoreData()
-                            }
+                            needLoadMoreData()
+                        }
                     }
                     
                 }
@@ -114,6 +117,4 @@ class TrendsItemViewDetailsController: BaseViewController {
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
         }
     }
-
-
 }

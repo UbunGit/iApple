@@ -24,6 +24,14 @@ Pod::Spec.new do |spec|
     ]
   end
   
+  spec.subspec 'iAPI' do |spec|
+    spec.source_files  =  [
+    "iAPI/**/*.{h,m,swift}"
+    ]
+  end
+  
+  
+  
   spec.subspec 'iLog' do |spec|
     spec.dependency "iApple/iBox"
     spec.source_files  =  [
@@ -204,7 +212,13 @@ Pod::Spec.new do |spec|
     ]
   end
   
-  
+  spec.subspec 'iLogin' do |spec|
+    spec.dependency "IQKeyboardManagerSwift"
+    spec.dependency "SnapKit"
+    spec.source_files  =  [
+    "iLogin/**/*.{h,m,swift}"
+    ]
+  end
   
   
   spec.subspec 'DorKit' do |spec|

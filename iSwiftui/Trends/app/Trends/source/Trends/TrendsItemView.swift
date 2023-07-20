@@ -4,11 +4,14 @@ import SwiftUI
 public struct TrendsItemView:View {
     @ObservedObject var trend:TrendsData
     var content_w:CGFloat
+    var itemMoreTapGesture:(_ data:TrendsData)->()
+    
+    
    
     public var body: some View{
         VStack(alignment: .leading){
             TrendsMemberView(member: trend.member) {
-                
+                itemMoreTapGesture(trend)
             }
             if let content = trend.content{
                 Text(content)
@@ -56,7 +59,10 @@ public struct TrendsItemView:View {
 struct TrendsItemView_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { proxy in
-            TrendsItemView(trend: .mock(),content_w: proxy.size.width)
+            TrendsItemView(trend: .mock(),
+                           content_w: proxy.size.width) { data in
+                
+            }
         }
         .padding()
         

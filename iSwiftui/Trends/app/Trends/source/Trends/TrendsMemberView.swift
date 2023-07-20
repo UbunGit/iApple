@@ -43,12 +43,19 @@ struct TrendsMemberInfoView: View {
                     )
              
                 Button(action:moreAction) {
-                    Image.init(systemName: "ellipsis")
-                        .resizable()
-                        .scaledToFit()
-                        .colorMultiply(.secondary)
-                        .frame(width: 12,height: 12)
+                    VStack{
+                        Image.init(systemName: "ellipsis")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 12,height: 12)
+                            .colorMultiply(.secondary)
+                        
+                    }
+                    .frame(width: 32,height: 32)
+                    
                 }
+                .buttonStyle(.plain)
+
             }
         }
     }

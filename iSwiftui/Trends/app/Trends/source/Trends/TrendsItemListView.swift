@@ -3,29 +3,33 @@ import SDWebImageSwiftUI
 
 import SwiftUI
 public struct TrendsItemListView:View {
-    @ObservedObject var manage:Manage = Manage()
+    @ObservedObject var manage:TrendsItemViewListController.Manage
     var itemdidTapGesture:(_ data:TrendsData)->()
-   
+    var itemMoreTapGesture:(_ data:TrendsData)->()
+    
     public var body: some View{
         
         GeometryReader { proxy in
             VStack{
                 List(0..<manage.trends.count, id:\.self) { index in
                     
-                    TrendsItemView(trend: manage.trends[index], content_w:  proxy.size.width-30)
-                        .onTapGesture {
-                            itemdidTapGesture(manage.trends[index])
+                    TrendsItemView(
+                        trend: manage.trends[index],
+                        content_w:  proxy.size.width-30, itemMoreTapGesture: itemMoreTapGesture
+                    )
+                    .onTapGesture {
+                        itemdidTapGesture(manage.trends[index])
+                    }
+                    .onAppear(){
+                        if manage.isLoading ||
+                            index<manage.trends.count-2 {
+                            return
                         }
-                        .onAppear(){
-                            if manage.isLoading ||
-                                index<manage.trends.count-2 {
-                                return
-                            }
-                            needLoadMoreData()
-                        }
+                        needLoadMoreData()
+                    }
                 }
                 .iRefreshable{
-                    await manage.loadData()
+                    await manage.reloadData()
                 }
                 if manage.isLoading{
                     VStack{
@@ -44,44 +48,23 @@ public struct TrendsItemListView:View {
         .onAppear(){
             manage.loadData()
         }
-        
     }
-    
-    
+
     func needLoadMoreData(){
         manage.loadMoreData()
     }
 }
 
 
-extension TrendsItemListView{
-    class Manage:ObservableObject{
-        @Published var trends:[TrendsData] = []
-        @Published var isLoading:Bool = false
-        func loadData(){
-            isLoading = true
-            DispatchQueue.main.asyncAfter(deadline: .now()+3){
-                self.trends = TrendsData.mocks(num: 10)
-                self.isLoading = false
-            }
-        }
-        func loadMoreData(){
-            isLoading = true
-            DispatchQueue.main.asyncAfter(deadline: .now()+3){
-                var datas = self.trends
-                datas.append(contentsOf: TrendsData.mocks(num: 10))
-                self.trends = datas
-                self.isLoading = false
-            }
-        }
-    }
-}
 
 struct TrendsItemListView_Previews: PreviewProvider {
     static var previews: some View {
         
-        TrendsItemListView { data in
+        TrendsItemListView(manage: TrendsItemViewListController.Manage()) { _ in
+            
+        } itemMoreTapGesture: { _ in
             
         }
+
     }
 }

@@ -3,25 +3,15 @@ platform :ios, '13.0'
 
 use_frameworks! :linkage => :static
 
-  
+target 'ILogin' do
 
-target 'Trends' do
-
-  pod "AliyunOSSiOS"
-  pod "TZImagePickerController"
-  pod "IQKeyboardManager"
-  pod "SDWebImageSwiftUI"
-  pod "SnapKit"
-  pod "iApple", :path=>"../../../../iApple"
-  pod "iApple/iRandom", :path=>"../../../../iApple"
+  pod "iApple", :path=>"../../"
+#  pod "iApple/", :path=>"../../"
+  pod "iApple/iAPI", :path=>"../../"
+  pod "iApple/iRouter", :path=>"../../"
+  pod "iApple/iLogin", :path=>"../../"
 
 end
-
-#target 'iHealthManage' do
-#
-#end
-
-
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|

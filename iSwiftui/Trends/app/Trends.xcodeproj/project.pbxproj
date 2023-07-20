@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		042537292A628D7400DCF2A3 /* IRefreshable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042537282A628D7400DCF2A3 /* IRefreshable.swift */; };
 		0425372D2A629D1F00DCF2A3 /* TrendsItemViewDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0425372C2A629D1F00DCF2A3 /* TrendsItemViewDetailsController.swift */; };
+		042537532A662BA100DCF2A3 /* TrendsMoreSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042537522A662BA100DCF2A3 /* TrendsMoreSheet.swift */; };
+		042537552A66680F00DCF2A3 /* TrendsReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042537542A66680F00DCF2A3 /* TrendsReportView.swift */; };
+		042537572A666E7500DCF2A3 /* TrendsPublishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042537562A666E7500DCF2A3 /* TrendsPublishViewController.swift */; };
+		0425375E2A66737800DCF2A3 /* BubbleTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0425375B2A66737800DCF2A3 /* BubbleTabBarController.swift */; };
+		0425375F2A66737800DCF2A3 /* BubbleTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0425375C2A66737800DCF2A3 /* BubbleTabBar.swift */; };
+		042537602A66737800DCF2A3 /* CBTabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0425375D2A66737800DCF2A3 /* CBTabBarButton.swift */; };
+		042537622A66916C00DCF2A3 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042537612A66916C00DCF2A3 /* Color.swift */; };
 		0436BD1C2A614CE400A02B94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0436BD1B2A614CE400A02B94 /* AppDelegate.swift */; };
 		0436BD1E2A614CE400A02B94 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0436BD1D2A614CE400A02B94 /* SceneDelegate.swift */; };
 		0436BD202A614CE400A02B94 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0436BD1F2A614CE400A02B94 /* ViewController.swift */; };
@@ -35,6 +42,13 @@
 /* Begin PBXFileReference section */
 		042537282A628D7400DCF2A3 /* IRefreshable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRefreshable.swift; sourceTree = "<group>"; };
 		0425372C2A629D1F00DCF2A3 /* TrendsItemViewDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsItemViewDetailsController.swift; sourceTree = "<group>"; };
+		042537522A662BA100DCF2A3 /* TrendsMoreSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsMoreSheet.swift; sourceTree = "<group>"; };
+		042537542A66680F00DCF2A3 /* TrendsReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsReportView.swift; sourceTree = "<group>"; };
+		042537562A666E7500DCF2A3 /* TrendsPublishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsPublishViewController.swift; sourceTree = "<group>"; };
+		0425375B2A66737800DCF2A3 /* BubbleTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleTabBarController.swift; sourceTree = "<group>"; };
+		0425375C2A66737800DCF2A3 /* BubbleTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleTabBar.swift; sourceTree = "<group>"; };
+		0425375D2A66737800DCF2A3 /* CBTabBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CBTabBarButton.swift; sourceTree = "<group>"; };
+		042537612A66916C00DCF2A3 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		0436BD182A614CE400A02B94 /* Trends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0436BD1B2A614CE400A02B94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0436BD1D2A614CE400A02B94 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +97,25 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		042537512A662B7F00DCF2A3 /* Sheet */ = {
+			isa = PBXGroup;
+			children = (
+				042537522A662BA100DCF2A3 /* TrendsMoreSheet.swift */,
+			);
+			path = Sheet;
+			sourceTree = "<group>";
+		};
+		042537582A666F3A00DCF2A3 /* Tabbar */ = {
+			isa = PBXGroup;
+			children = (
+				04851BF62A628818009BC2F7 /* TabbarViewController.swift */,
+				0425375C2A66737800DCF2A3 /* BubbleTabBar.swift */,
+				0425375B2A66737800DCF2A3 /* BubbleTabBarController.swift */,
+				0425375D2A66737800DCF2A3 /* CBTabBarButton.swift */,
+			);
+			path = Tabbar;
+			sourceTree = "<group>";
+		};
 		0436BD0F2A614CE400A02B94 = {
 			isa = PBXGroup;
 			children = (
@@ -109,7 +142,6 @@
 				0436BD1B2A614CE400A02B94 /* AppDelegate.swift */,
 				0436BD1D2A614CE400A02B94 /* SceneDelegate.swift */,
 				0436BD1F2A614CE400A02B94 /* ViewController.swift */,
-				04851BF62A628818009BC2F7 /* TabbarViewController.swift */,
 				0436BD212A614CE400A02B94 /* Main.storyboard */,
 				0436BD242A614CE600A02B94 /* Assets.xcassets */,
 				0436BD262A614CE600A02B94 /* LaunchScreen.storyboard */,
@@ -121,6 +153,8 @@
 		0436BD332A614D3E00A02B94 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				042537582A666F3A00DCF2A3 /* Tabbar */,
+				042537512A662B7F00DCF2A3 /* Sheet */,
 				04851BF32A6277E1009BC2F7 /* Trends */,
 				04851BEC2A626ABF009BC2F7 /* Style */,
 				04851BE22A6226F9009BC2F7 /* Member */,
@@ -154,6 +188,7 @@
 			children = (
 				04851BE62A622A15009BC2F7 /* UrlImage.swift */,
 				04851BF42A627C38009BC2F7 /* MediaGridView.swift */,
+				042537612A66916C00DCF2A3 /* Color.swift */,
 			);
 			path = unit;
 			sourceTree = "<group>";
@@ -175,6 +210,8 @@
 				0436BD352A614D3E00A02B94 /* TrendsItemListView.swift */,
 				04851BF82A62891C009BC2F7 /* TrendsItemViewListController.swift */,
 				0425372C2A629D1F00DCF2A3 /* TrendsItemViewDetailsController.swift */,
+				042537542A66680F00DCF2A3 /* TrendsReportView.swift */,
+				042537562A666E7500DCF2A3 /* TrendsPublishViewController.swift */,
 			);
 			path = Trends;
 			sourceTree = "<group>";
@@ -198,6 +235,7 @@
 				0436BD142A614CE400A02B94 /* Sources */,
 				0436BD152A614CE400A02B94 /* Frameworks */,
 				0436BD162A614CE400A02B94 /* Resources */,
+				EE54A299BE50970C1086F9C8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -277,6 +315,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		EE54A299BE50970C1086F9C8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Trends/Pods-Trends-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Trends/Pods-Trends-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Trends/Pods-Trends-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -286,22 +341,29 @@
 			files = (
 				0425372D2A629D1F00DCF2A3 /* TrendsItemViewDetailsController.swift in Sources */,
 				04851BF72A628818009BC2F7 /* TabbarViewController.swift in Sources */,
+				042537572A666E7500DCF2A3 /* TrendsPublishViewController.swift in Sources */,
 				0436BD202A614CE400A02B94 /* ViewController.swift in Sources */,
 				0436BD372A614D3E00A02B94 /* TrendsItemListView.swift in Sources */,
+				0425375F2A66737800DCF2A3 /* BubbleTabBar.swift in Sources */,
+				042537532A662BA100DCF2A3 /* TrendsMoreSheet.swift in Sources */,
 				04851BE42A622717009BC2F7 /* MemberItemView.swift in Sources */,
 				04851BF52A627C38009BC2F7 /* MediaGridView.swift in Sources */,
 				04851BE12A614E09009BC2F7 /* TrendsUser.swift in Sources */,
+				042537552A66680F00DCF2A3 /* TrendsReportView.swift in Sources */,
 				04851BF92A62891C009BC2F7 /* TrendsItemViewListController.swift in Sources */,
 				04851BEE2A626AD3009BC2F7 /* SecondaryLabelStyle.swift in Sources */,
 				04851BE92A6257A3009BC2F7 /* AvatarView.swift in Sources */,
 				04851BF22A6270EE009BC2F7 /* MemberListView.swift in Sources */,
 				04851BF02A626BA5009BC2F7 /* TrendsMemberView.swift in Sources */,
 				0436BD362A614D3E00A02B94 /* TrendsItemView.swift in Sources */,
+				042537622A66916C00DCF2A3 /* Color.swift in Sources */,
 				0436BD1C2A614CE400A02B94 /* AppDelegate.swift in Sources */,
 				04851BDF2A614DD9009BC2F7 /* TrendsData.swift in Sources */,
+				042537602A66737800DCF2A3 /* CBTabBarButton.swift in Sources */,
 				04851BE72A622A15009BC2F7 /* UrlImage.swift in Sources */,
 				0436BD1E2A614CE400A02B94 /* SceneDelegate.swift in Sources */,
 				04851BEB2A625871009BC2F7 /* Mock.swift in Sources */,
+				0425375E2A66737800DCF2A3 /* BubbleTabBarController.swift in Sources */,
 				042537292A628D7400DCF2A3 /* IRefreshable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
