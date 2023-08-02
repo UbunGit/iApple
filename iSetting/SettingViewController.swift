@@ -8,23 +8,24 @@
 import UIKit
 import SDWebImage
 import StoreKit
-open class SettingViewController: UIViewController {
+open class ISettingViewController: UIViewController {
     
     var email:String = "we2657932@163.com"
-    var dataSouce = CellType.allCases
+    var dataSouce:[GroupData] = []
     lazy var tableView: UITableView = {
-        let value = UITableView()
+        let value = UITableView(frame: .zero, style: .insetGrouped)
         value.delegate = self
         value.dataSource = self
-        value.registerCell(UITableViewCell.self)
-        value.registerCell(SettingSwitchCell.self)
-        value.registerCell(SettingRightArrowCell.self)
+        value.i_registerCell(UITableViewCell.self)
+        value.i_registerCell(SettingSwitchCell.self)
+        value.i_registerCell(SettingRightArrowCell.self)
         
         return value
     }()
     open override func viewDidLoad() {
         super.viewDidLoad()
         title = "关于"
+        reloadData()
         makeUI()
         makeLayout()
     }
@@ -41,55 +42,109 @@ open class SettingViewController: UIViewController {
             make.edges.equalToSuperview()
         }
     }
+    lazy var data_feedback: GroupData.ItemData = {
+        .init(title: "意见反馈", handle:  {
+            self.handle_feedback()
+        })
+    }()
+    lazy var data_user_agreement: GroupData.ItemData = {
+        .init(title: "用户协议", handle:  {
+            self.handle_user_agreement()
+        })
+    }()
+    lazy var data_private_agreement: GroupData.ItemData = {
+        .init(title: "隐私协议", handle:  {
+            self.handle_private_agreement()
+        })
+    }()
+    lazy var data_bannedUser: GroupData.ItemData = {
+        .init(title: "注销账号", handle:  {
+            self.handle_bannedUser()
+        })
+    }()
+    
+
+    lazy var data_clearCache: GroupData.ItemData = {
+        return .init(title:"清理缓存") {
+            self.fileSizeWithInterge()
+        } handle: {
+            self.clearCache {
+                self.view.tost(msg: "清理完成")
+                self.tableView.reloadData()
+            }
+        }
+    }()
+    func reloadData(){
+        dataSouce.append(
+            .init(title: "设置", items: [
+                data_clearCache,
+                .init(title: "给个好评", handle: {
+                    self.startApp()
+                }),
+                .init(title: "联系我", handle: {
+                    self.emialMe(self.email)
+                }),
+                .init(title: "版本号",value: {
+                    UIApplication.shared.appVersion
+                }),
+                data_bannedUser
+                
+            ])
+            
+            
+        )
+        dataSouce.append(
+            .init(title: "协议", items: [
+                
+                data_user_agreement,
+                data_private_agreement,
+                data_feedback,
+            ])
+        )
+        
+    }
+    
+    open func handle_feedback(){
+        let vc = ISettingFeedbackVC()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    open func handle_user_agreement(){
+        let url = "https://homewh.chaoxing.com/agree/userAgreement"
+        UIApplication.shared.open(URL(string: url)!, options: [:], completionHandler: nil)
+    }
+    open func handle_private_agreement(){
+        let url = "https://www.julyedu.com/agreement/priv"
+        UIApplication.shared.open(URL(string: url)!, options: [:], completionHandler: nil)
+    }
+    // 注销用户
+    open func handle_bannedUser(){
+        let vc = ISettingBannedUserVC()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }
 
-extension SettingViewController:UITableViewProtocol{
+extension ISettingViewController:I_UITableViewProtocol{
     open func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return dataSouce.count
     }
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section{
-        case 0:
-            return 1
-        case 1:
-            return CellType.allCases.count
-        default:
-            return 0
-        }
+        let sessionData = dataSouce[section]
+        return sessionData.items.count
     }
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
-        switch indexPath.section{
-        case 0:
-            let cell = tableView.dequeueReusableCell(SettingSwitchCell.self, for: indexPath)
-            cell.textLabel?.text = "智能高清图片"
-            cell.switchView.isOn = isHigh
-            cell.switchView.setBlockFor(.valueChanged) { _ in
-                self.isHigh.toggle()
-                tableView.reloadData()
-            }
-            return cell
-        case 1:
-         
-            let cell = tableView.dequeueReusableCell(SettingRightArrowCell.self, for: indexPath)
-            cell.textLabel?.text = CellType.allCases[indexPath.row].title
-            cell.valueLab.text = CellType.allCases[indexPath.row].value != nil ? CellType.allCases[indexPath.row].value : "▹"
-            return cell
-        default:
-            return UITableViewCell()
-        }
-     
+        let sessionData = dataSouce[indexPath.section]
+        let rownData = sessionData.items[indexPath.row]
+        
+        let cell = tableView.i_dequeueReusableCell(SettingRightArrowCell.self, for: indexPath)
+        cell.textLabel?.text = rownData.title
+        cell.valueLab.text = rownData.value?()
+        return cell  
     }
     
     public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section{
-        case 0:
-            return "设置"
-        case 1:
-            return "关于"
-        default:
-            return ""
-        }
+        let sessionData = dataSouce[section]
+        return sessionData.title
     }
     
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -97,93 +152,39 @@ extension SettingViewController:UITableViewProtocol{
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.section{
-        case 0:
-            return
-        case 1:
-            let type = dataSouce[indexPath.row]
-            if type == .email{
-                self.emialMe(email)
-            }else if type == .clearCache{
-                self.clearCache {
-                    tableView.reloadData()
-                }
-            }else if type == .star{
-                self.startApp()
-            }
-            
-        default:
-            break
-        }
+        let sessionData = dataSouce[indexPath.section]
+        let rownData = sessionData.items[indexPath.row]
+        rownData.handle?()
     }
 }
 
-extension SettingViewController{
-    var isHigh:Bool{
-        set{
-            UserDefaults.standard.set(newValue, forKey: "MineViewController.isHigh")
-        }
-        get{
-            UserDefaults.standard.bool(forKey: "MineViewController.isHigh")
-        }
-    }
 
-}
+
+
 
 extension UIViewController{
     
-    enum CellType:Int,CaseIterable{
-        case clearCache
-        case star
-        case email
-        case verstion
-        
-        var title:String{
-            switch self{
-            case .clearCache:
-                return "清理缓存"
-            case .star:
-                return "给个好评"
-            case .email:
-                return "联系我们"
-            case .verstion:
-                return "版本号"
-            }
-        }
-        
-        var value:String?{
-            switch self{
-            case .clearCache:
-                let sizestr = fileSizeWithInterge()
-                return sizestr
-            case .star:
-                return nil
-            case .email:
-                return nil
-            case .verstion:
-                return app.version
-            }
-        }
-        public func fileSizeWithInterge() -> String {
     
-            let size = Float(SDImageCache.shared.totalDiskSize())
-            // 1k = 1024, 1m = 1024k
-            if (size < 1024) { //小于1k
-                return String(format: "%ldB", size)
-            } else if (size < 1024 * 1024) { //小于1M
-                return String(format: "%.1fK",(size / 1024))
-            } else if (size < 1024 * 1024 * 1024) { //小于1G
-                return String(format: "%.1fM",size / (1024 * 1024.0))
-            } else { //大于1G
-                return String(format: "%.1fM",size / (1024 * 1024 * 1024.0))
-            }
+    // 获取缓存大小
+    public func fileSizeWithInterge() -> String {
+        
+        let size = Float(SDImageCache.shared.totalDiskSize())
+        // 1k = 1024, 1m = 1024k
+        if (size < 1024) { //小于1k
+            return String(format: "%ldB", size)
+        } else if (size < 1024 * 1024) { //小于1M
+            return String(format: "%.1fK",(size / 1024))
+        } else if (size < 1024 * 1024 * 1024) { //小于1G
+            return String(format: "%.1fM",size / (1024 * 1024.0))
+        } else { //大于1G
+            return String(format: "%.1fM",size / (1024 * 1024 * 1024.0))
         }
     }
     // 清理缓存
     func clearCache(finesh:@escaping(()->())){
         let alert = UIAlertController.init(title: "提示", message: "确定要删除缓存数据", preferredStyle: .alert)
         let commit = UIAlertAction.init(title: "确定", style: .default) {_ in
-
+            
             SDImageCache.shared.clearDisk()
             UIView.success("清理完成")
             finesh()
@@ -202,6 +203,8 @@ extension UIViewController{
     
     // 给个好评
     func startApp(){
-        SKStoreReviewController.requestReview()
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            SKStoreReviewController.requestReview(in: windowScene)
+        }
     }
 }

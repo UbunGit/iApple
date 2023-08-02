@@ -10,7 +10,7 @@ public extension Date{
     
     func i_dateString(_ format:String="yyyy-MM-dd HH:mm:ss") -> String {
         let formatter = DateFormatter()
-//        formatter.locale = locale
+        //        formatter.locale = locale
         formatter.dateFormat = format
         let date = formatter.string(from: self)
         return date
@@ -37,13 +37,19 @@ public extension Date{
         let dateObject = dateFormatter.date(from: (seperated.dropLast()).joined(separator: " "))
         return dateObject
     }
-       
-  
-   
+    
+    
+    var isToday:Bool{
+        
+        let now = Calendar.current.dateComponents([.year,.month,.day], from: Date())
+        let se = Calendar.current.dateComponents([.year,.month,.day], from: self)
+        return now == se
+    }
+    
 }
 
 public extension String{
-
+    
     func i_date(_ formatter:String = "yyyy-MM-dd HH:mm:ss") -> Date{
         
         let dateformatter = DateFormatter()

@@ -1,8 +1,8 @@
 PODS:
   - AliyunOSSiOS (2.10.18)
   - iApple (1.0.0):
-    - iApple/iBox (= 1.0.0)
-  - iApple/iBox (1.0.0):
+    - iApple/iKit (= 1.0.0)
+  - iApple/iKit (1.0.0):
     - YYCategories
   - iApple/iRandom (1.0.0)
   - IQKeyboardManager (6.5.11)
@@ -46,7 +46,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AliyunOSSiOS: e683c1b1faa0657b5cd02de733628cf996f4cd93
-  iApple: 93b74972643118cdc0debf7dc0a3143451f36992
+  iApple: af6a1868590fd41c2e588196b8d338fe1bd0fe5b
   IQKeyboardManager: ef43ce1ba1e5aaf4adf222c0a46f39761f246879
   SDWebImage: 2aea163b50bfcb569a2726b6a754c54a4506fcf6
   SDWebImageSwiftUI: 17396b7889f9abc27231caaeb64c537564284aab

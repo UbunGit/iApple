@@ -15,10 +15,16 @@ Pod::Spec.new do |spec|
   
   spec.source       = { :git => "http://github/ubungit.git", :tag => "#{spec.version}" }
 
-  spec.default_subspec = 'iBox'
+  spec.default_subspec = 'iKit'
   
-  spec.subspec 'iBox' do |spec|
+  spec.subspec 'iKit' do |spec|
     spec.dependency "YYCategories"
+    spec.source_files  =  [
+    "iKit/**/*.{h,m,swift}"
+    ]
+  end
+  spec.subspec 'iBox' do |spec|
+    spec.dependency "iApple/iKit"
     spec.source_files  =  [
     "iBox/**/*.{h,m,swift}"
     ]
@@ -29,9 +35,7 @@ Pod::Spec.new do |spec|
     "iAPI/**/*.{h,m,swift}"
     ]
   end
-  
-  
-  
+
   spec.subspec 'iLog' do |spec|
     spec.dependency "iApple/iBox"
     spec.source_files  =  [
@@ -220,6 +224,19 @@ Pod::Spec.new do |spec|
     ]
   end
   
+  spec.subspec 'iSetting' do |spec|
+
+    spec.dependency "SnapKit"
+    spec.source_files  =  [
+    "iSetting/**/*.{h,m,swift}"
+    ]
+  end
+  
+  spec.subspec 'iChart' do |spec|
+    spec.source_files  =  [
+    "iChart/**/*.{h,m,swift}"
+    ]
+  end
   
   spec.subspec 'DorKit' do |spec|
     spec.dependency 'DoraemonKit/Core'

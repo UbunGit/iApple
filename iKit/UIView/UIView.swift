@@ -32,6 +32,7 @@ public extension UIView{
                   bottomRight:CGFloat,
                   bottomLeft:CGFloat,
                   bounds:CGRect? = nil){
+        
         let tbounds:CGRect = bounds ?? self.bounds
         let path = UIBezierPath()
         path.move(to: CGPoint(x: 0, y: topLeft))

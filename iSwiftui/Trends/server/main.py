@@ -7,6 +7,7 @@ from sql import unit
 app = FastAPI()
 
 from sql.unit import ReqFeach
+
 @app.get("/feach")
 async def api_feach(data:ReqFeach):
     data = unit.feach(name=data.name,predicate=data.predicate)
@@ -26,19 +27,6 @@ async def api_datatypes_create(item:datatype.DataType):
         subTitle=item.subTitle
     )
     return {"code":0, "data":data } 
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":

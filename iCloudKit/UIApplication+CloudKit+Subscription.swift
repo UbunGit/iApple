@@ -8,7 +8,7 @@
 import Foundation
 import CloudKit
 
-public extension UIApplication{
+public extension CloudKitCoreDataManage{
     // 创建订阅
     func registSubscription(){
         ["RecordClassify","RecordField"].forEach { item in
@@ -81,7 +81,7 @@ public extension UIApplication{
     }
 }
 
-public extension UIApplication{
+public extension CloudKitCoreDataManage{
     
     // 处理订阅事件
     func handleCKRecordChanges( notification:CKNotification)async throws{

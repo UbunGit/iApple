@@ -216,6 +216,7 @@ public class CloudSqlQuery:NSObject{
     
     // 推送到 clould
     public func push()async throws{
+        debugPrint("推送到 clould begin")
         let predicate = " asyncDate is NULL "
         let results = try await fetch(predicate: predicate,ignoreDelete: false)
         var modified:[CKRecord] = []
@@ -251,13 +252,16 @@ public class CloudSqlQuery:NSObject{
             
         }
         if modified.count == 0{
+            debugPrint("推送到 clould end")
             return
         }
         let content = CKContainer.init(identifier: identifier)
         let (modifiedResults, _) = try await content.publicCloudDatabase.modifyRecords(saving: modified, deleting: [],savePolicy: .allKeys)
+        
         var modifiedIterator = modifiedResults.makeIterator()
+        var index = 0
         while let modifiedItem = modifiedIterator.next() {
-            
+            debugPrint("推送到 clould\(index)/\(modifiedResults.count)")
             let record = try modifiedItem.1.get()
             let values = record.allKeys()
             var keyvalues:[String:SqlValueProtocol] = [:]
@@ -267,13 +271,15 @@ public class CloudSqlQuery:NSObject{
             keyvalues["asyncDate"] = Date()
             keyvalues["recordID"] = record.recordID.recordName
             try await update(keyvalues: keyvalues)
+            index+=1
         }
-       
+        debugPrint("推送到 clould end")
         
         
     }
     // 拉取远端数据
     public func pull()async throws{
+        debugPrint("拉取远端数据 begin")
         let content = CKContainer.init(identifier: identifier)
         let preducate = NSPredicate(value: true)
         let query = CKQuery.init(recordType: recordType, predicate: preducate)
@@ -297,6 +303,7 @@ public class CloudSqlQuery:NSObject{
             keyvalues["creatorUser"] = record.creatorUserRecordID?.recordName
             
             try await merge(keyvalues: keyvalues)
+            debugPrint("拉取远端数据 end")
         }
     }
 }
