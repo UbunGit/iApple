@@ -42,6 +42,22 @@ Pod::Spec.new do |spec|
     "iLog/**/*.{h,m,swift}"
     ]
   end
+  
+  spec.subspec "iMD5" do |spec|
+   
+    spec.source_files  =  [
+    "iMD5/**/*.{h,m,swift}"
+    ]
+  end
+  
+  spec.subspec "iFileManager" do |spec|
+   
+    spec.source_files  =  [
+    "iFileManager/**/*.{h,m,swift}"
+    ]
+  end
+  
+  
   spec.subspec 'iAD' do |spec|
     
     spec.dependency "Ads-CN"
@@ -202,7 +218,7 @@ Pod::Spec.new do |spec|
   
   spec.subspec 'iSqlite' do |spec|
     
-    spec.dependency "FMDB"
+    spec.dependency "FMDB/SQLCipher"
     spec.source_files  =  [
     "iSqlite/**/*.{h,m,swift}"
     ]

@@ -13,12 +13,15 @@ import AppKit
 #else
 import UIKit
 #endif
+
 public protocol SqlValueProtocol:CKRecordValueProtocol {
     var sqltype:String? {get}
     
     var cloudKitData:CKRecordValueProtocol {get}
     
     var sqlData:CKRecordValueProtocol? {get}
+    
+    var ckAsset:CKAsset? {get}
 }
 public extension SqlValueProtocol{
     var sqlData: CKRecordValueProtocol? {
@@ -26,6 +29,21 @@ public extension SqlValueProtocol{
     }
     var cloudKitData: CKRecordValueProtocol {
         return self
+    }
+    var cacheUrl:URL{
+        let document = FileManager.documnetUrl
+        let cache = document.appendingPathComponent("iassert")
+        if FileManager.default.fileExists(atPath: cache.path) == false{
+           try! FileManager.default.createDirectory(at: cache, withIntermediateDirectories: false)
+        }
+        return cache
+    }
+    var ckAsset:CKAsset? {
+        guard let s = self as? String else{
+            return nil
+        }
+        let path = cacheUrl.appendingPathComponent(s)
+        return .init(fileURL:path)
     }
 }
 
@@ -129,15 +147,36 @@ extension Bool:SqlValueProtocol{
     }
 }
 
+
 extension Data:SqlValueProtocol{
     
     public var sqltype:String?{
         return "BLOB"
     }
+    public var cloudKitData: CKRecordValueProtocol {
+        return self.ckAsset
+    }
+    public var sqlData: CKRecordValueProtocol?{
+        let key:String = self.i_md5 ?? UUID().uuidString
+        let cacheurl = self.cacheUrl.appendingPathComponent(key)
+        try! self.write(to: cacheurl)
+        return key
+    }
 }
+
 extension NSData:SqlValueProtocol{
     public var sqltype:String?{
-        return "DATE"
+        return "BLOB"
+    }
+    public var cloudKitData: CKRecordValueProtocol {
+        return self.ckAsset
+    }
+    public var sqlData: CKRecordValueProtocol?{
+        let data = self as Data
+        let key:String = data.i_md5 ?? UUID().uuidString
+        let cacheurl = self.cacheUrl.appendingPathComponent(key)
+        try! self.write(to: cacheurl)
+        return key
     }
 }
 
@@ -149,6 +188,8 @@ extension Date:SqlValueProtocol{
     public var cloudKitData: CKRecordValueProtocol {
         return self
     }
+    
+    
 }
 
 
@@ -195,6 +236,45 @@ extension NSNull:SqlValueProtocol{
         return self
     }
 }
+#if os(iOS)
+
+extension UIImage:SqlValueProtocol{
+    public var sqltype:String?{
+        return "TEXT"
+    }
+    public var cloudKitData: CKRecordValueProtocol {
+        return self.ckAsset
+    }
+    public var sqlData: CKRecordValueProtocol?{
+        let key = UUID().uuidString.appending(".png")
+        let cacheurl = self.cacheUrl.appendingPathComponent(key)
+        guard let data = self.pngData() else {
+            return nil
+        }
+        try! data.write(to: cacheurl)
+        return key
+    }
+}
+#endif
+#if os(macOS)
+extension NSImage:SqlValueProtocol{
+    public var sqltype:String?{
+        return "TEXT"
+    }
+    public var cloudKitData: CKRecordValueProtocol {
+        return self.ckAsset
+    }
+    public var sqlData: CKRecordValueProtocol?{
+        let key = UUID().uuidString.appending(".tff")
+        let cacheurl = self.cacheUrl.appendingPathComponent(key)
+        guard let data = self.tiffRepresentation else {
+            return nil
+        }
+        try! data.write(to: cacheurl)
+        return key
+    }
+}
+#endif
 
 //#define SQLITE_INTEGER  1
 //#define SQLITE_FLOAT    2

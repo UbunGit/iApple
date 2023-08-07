@@ -48,7 +48,12 @@ public extension FMDatabase{
     func isTable(tableName:String) async throws->Bool{
         var isExists = false
             try await self.autoExecute { db in
-                let resultSet = try  db.executeQuery("SELECT name FROM sqlite_master WHERE type='table' AND name=?", values: [tableName])
+                let resultSet = try  db.executeQuery(
+                    """
+                    SELECT name FROM sqlite_master WHERE type='table' AND name=?
+                    """,
+                    values: [tableName]
+                )
                 isExists = resultSet.next()
             }
         return isExists
@@ -71,6 +76,11 @@ public extension FMDatabase{
     }
     
     func addColumn(tableName:String,name:String,type:String?) async throws{
+        if try await isColumn(tableName: tableName, columnName: name),
+           try await columnType(tableName: tableName, columnName: name) == type{
+            return
+        }
+           
         guard let type = type else {return}
         try await self.autoExecute {  db in
             let sql = "ALTER TABLE \(tableName) ADD COLUMN '\(name)' \(type)"
@@ -137,30 +147,36 @@ public extension FMDatabase{
     }
     
     func setkeysValues(_ keyValues: [String : SqlValueProtocol?],tableName:String) async throws {
-        
+        // 创建列表
         for (key, value) in keyValues {
             if try await isColumn(tableName: tableName, columnName: key) == false {
                 try await addColumn(tableName: tableName, name: key, type: value.sqltype)
             }
-            
         }
         let columnTypes = try await columnTypes(tableName: tableName)
-        let keys = keyValues.compactMap { (key: String, value: SqlValueProtocol?) in
+        
+        // 重新组装数据
+        var sqlDatas:[String:Any] = [:]
+        keyValues.forEach { (key: String, value: SqlValueProtocol?) in
+            sqlDatas[key] = value?.sqlData
+        }
+        let keys = sqlDatas.compactMap { (key: String, value: Any?) in
             if columnTypes[key] != nil{
                 return key
             }
             return nil
         }
-        
         let keysStr = keys.map { item in
             return "'\(item)'"
         }.joined(separator: ",")
+        
         let valeustr = keys.map { item in
             return ":"+item
         }.joined(separator: ",")
+        
         try await self.autoExecute { db in
             let sql = "INSERT OR REPLACE INTO \(tableName) (\(keysStr)) VALUES (\(valeustr))"
-            if db.executeUpdate(sql, withParameterDictionary: keyValues as [AnyHashable : Any]) == false{
+            if db.executeUpdate(sql, withParameterDictionary:sqlDatas) == false{
                 debugPrint(self.lastError())
                 throw ISqliteError.sqlUpdateError
             }
