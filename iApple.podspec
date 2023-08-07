@@ -19,6 +19,7 @@ Pod::Spec.new do |spec|
   
   spec.subspec 'iKit' do |spec|
     spec.dependency "YYCategories"
+    spec.dependency "iApple/iMD5"
     spec.source_files  =  [
     "iKit/**/*.{h,m,swift}"
     ]
