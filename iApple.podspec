@@ -226,7 +226,7 @@ Pod::Spec.new do |spec|
   
   spec.subspec 'iRichView' do |spec|
     
-    spec.dependency "FMDB"
+    spec.dependency "FMDB/SQLCipher"
     spec.source_files  =  [
     "iRichView/**/*.{h,m,swift}"
     ]

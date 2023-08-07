@@ -10,11 +10,11 @@ import CloudKit
 public class CloudSqlQuery:ISqlManage{
    
     var identifier:String
-    public init(dbUrl: URL,identifier:String) {
+    public init(dbpath: String,identifier:String, passWord: String? = nil) {
         self.identifier = identifier
-        super.init(dbUrl: dbUrl,passWord: "admin")
+        super.init(dbpath: dbpath,passWord: passWord)
     }
-  
+
     public override func createTable(recordType: String) async throws {
         
         try await super.createTable(recordType: recordType)

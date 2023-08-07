@@ -31,7 +31,7 @@ public extension SqlValueProtocol{
         return self
     }
     var cacheUrl:URL{
-        let document = FileManager.documnetUrl
+        let document = FileManager.documnetUrl!
         let cache = document.appendingPathComponent("iassert")
         if FileManager.default.fileExists(atPath: cache.path) == false{
            try! FileManager.default.createDirectory(at: cache, withIntermediateDirectories: false)
