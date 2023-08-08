@@ -36,6 +36,11 @@ open class IChartDataSet{
         }
         debugPrint(x_min,x_max,y_min,y_max)
     }
+    func normalizedPoint(entyr:IChartEntrie)->CGPoint{
+        let p_x = entyr.x.normalized(min: x_min, max: x_max)
+        let p_y = entyr.y.normalized(min: y_min, max: y_max)
+        return .init(x: p_x, y: p_y)
+    }
     
     open func point(entyr:IChartEntrie,rect:CGRect) -> CGPoint{
         

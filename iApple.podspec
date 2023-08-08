@@ -220,6 +220,8 @@ Pod::Spec.new do |spec|
   spec.subspec 'iSqlite' do |spec|
     
     spec.dependency "FMDB/SQLCipher"
+    spec.dependency "iApple/iFileManager"
+    spec.dependency "iApple/iMD5"
     spec.source_files  =  [
     "iSqlite/**/*.{h,m,swift}"
     ]
@@ -250,6 +252,7 @@ Pod::Spec.new do |spec|
   end
   
   spec.subspec 'iChart' do |spec|
+    spec.dependency "SnapKit"
     spec.source_files  =  [
     "iChart/**/*.{h,m,swift}"
     ]

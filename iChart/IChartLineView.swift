@@ -11,24 +11,48 @@ import SnapKit
 
 
 open class IChartLineView:IChartView{
-   
+    public lazy var left_AxisView:IAxisView = IAxisView()
     public override init(frame: CGRect) {
         super.init(frame: frame)
     }
   
     open override func makeUI() {
-        left_AxisView = IAxisView()
+      
         drawView = IChartLineDrawView()
         dataSet = IChartDataSet(entyrs: IChartEntrie.random())
         super.makeUI()
     }
     open override func makeLayoout() {
         super.makeLayoout()
+       
+        left_AxisView.snp.remakeConstraints { make in
+            make.left.equalToSuperview().offset(12)
+            make.top.equalToSuperview().offset(12)
+            make.width.equalTo(24)
+            make.bottom.equalToSuperview().offset(-24)
+        }
+        scrollerView.snp.remakeConstraints { make in
+            make.left.equalToSuperview().offset(36)
+            make.right.equalToSuperview().offset(-12)
+            make.top.bottom.equalToSuperview()
+        }
+        drawView.snp.remakeConstraints { make in
+            make.edges.equalToSuperview()
+            make.height.equalTo(self).offset(-4)
+            make.width.equalTo(0)
+        }
     }
   
     public override func reload(){
         super.reload()
-        
+       
+        drawView.snp.remakeConstraints { make in
+            make.edges.equalToSuperview()
+            make.height.equalTo(self)
+            make.width.equalTo(dataSet.cellWidth*CGFloat( dataSet.entyrs.count))
+        }
+        left_AxisView.dataSet = dataSet
+        left_AxisView.setNeedsDisplay()
     }
     
     required public init?(coder: NSCoder) {
@@ -40,8 +64,7 @@ open class IChartLineView:IChartView{
 
 open class IChartLineDrawView:IChartDrawView{
     var selectIndex:Int = 0
-    
- 
+
     lazy var textAttributes: [NSAttributedString.Key:Any] = {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center

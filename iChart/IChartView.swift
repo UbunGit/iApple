@@ -27,7 +27,7 @@ open class IChartDrawView:UIView{
 }
 open class IChartView: UIView {
     
-    public lazy var left_AxisView:IAxisView = IAxisView()
+
     public lazy var scrollerView = UIScrollView()
     public lazy var drawView:IChartDrawView = IChartDrawView()
     public lazy var dataSet:IChartDataSet = IChartDataSet(entyrs: [])
@@ -46,42 +46,35 @@ open class IChartView: UIView {
     open func makeUI(){
         scrollerView.showsVerticalScrollIndicator = false
         scrollerView.showsHorizontalScrollIndicator = false
-       
-        addSubview(left_AxisView)
+     
         addSubview(scrollerView)
         scrollerView.addSubview(drawView)
        
     }
     open func makeLayoout(){
-        left_AxisView.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(12)
-            make.top.equalToSuperview().offset(12)
-            make.width.equalTo(24)
-            make.bottom.equalToSuperview().offset(-24)
-        }
+       
         scrollerView.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(36)
-            make.right.equalToSuperview().offset(-12)
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
             make.top.bottom.equalToSuperview()
         }
         drawView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-            make.height.equalTo(self).offset(-4)
-            make.width.equalTo(0)
+            make.height.equalTo(self)
+            make.width.equalTo(self)
         }
+        
     }
     
     
     open func reload(){
         dataSet.reset()
-        left_AxisView.dataSet = dataSet
+     
         drawView.dataSet = dataSet
         dataSet.cellWidth = max((bounds.width-36-12)/CGFloat(dataSet.entyrs.count), 40)
-        drawView.snp.updateConstraints { make in
-            make.width.equalTo(dataSet.cellWidth*CGFloat( dataSet.entyrs.count))
-        }
+       
         drawView.setNeedsDisplay()
-        left_AxisView.setNeedsDisplay()
+   
     }
  
 }

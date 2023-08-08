@@ -1,0 +1,31 @@
+#source 'https://github.com/CocoaPods/Specs.git'
+source 'https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git'
+platform :ios, '13.0'
+
+use_frameworks! :linkage => :static
+
+  
+
+target 'EXIChart' do
+
+  pod "SnapKit"
+  pod "iApple", :path=>"../"
+  pod "iApple/iChart", :path=>"../"
+  pod "iApple/iRandom", :path=>"../"
+end
+
+
+
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+  
+    target.build_configurations.each do |config|
+      
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+      config.build_settings["DEVELOPMENT_TEAM"] = "QPSW766MZ5"
+      target.build_settings(config.name)['ONLY_ACTIVE_ARCH'] = 'NO'
+      
+    end
+  end
+end

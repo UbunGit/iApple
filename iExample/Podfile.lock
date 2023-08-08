@@ -1,0 +1,38 @@
+PODS:
+  - iApple (1.0.0):
+    - iApple/iKit (= 1.0.0)
+  - iApple/iChart (1.0.0):
+    - SnapKit
+  - iApple/iKit (1.0.0):
+    - iApple/iMD5
+    - YYCategories
+  - iApple/iMD5 (1.0.0)
+  - iApple/iRandom (1.0.0)
+  - SnapKit (5.6.0)
+  - YYCategories (1.0.4):
+    - YYCategories/no-arc (= 1.0.4)
+  - YYCategories/no-arc (1.0.4)
+
+DEPENDENCIES:
+  - iApple (from `../`)
+  - iApple/iChart (from `../`)
+  - iApple/iRandom (from `../`)
+  - SnapKit
+
+SPEC REPOS:
+  https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git:
+    - SnapKit
+    - YYCategories
+
+EXTERNAL SOURCES:
+  iApple:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  iApple: 24d7bad78cdd2ec5297e422f9cd459ec25ea786b
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
+
+PODFILE CHECKSUM: a07054e54b7e1679c148b1eff8c2f1c7c9872d99
+
+COCOAPODS: 1.12.1
