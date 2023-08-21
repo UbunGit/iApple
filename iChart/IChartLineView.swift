@@ -17,10 +17,11 @@ open class IChartLineView:IChartView{
     }
   
     open override func makeUI() {
-      
+        addSubview(left_AxisView)
         drawView = IChartLineDrawView()
         dataSet = IChartDataSet(entyrs: IChartEntrie.random())
         super.makeUI()
+        scrollerView.alwaysBounceVertical = false
     }
     open override func makeLayoout() {
         super.makeLayoout()
@@ -44,15 +45,18 @@ open class IChartLineView:IChartView{
     }
   
     public override func reload(){
-        super.reload()
+       
        
         drawView.snp.remakeConstraints { make in
             make.edges.equalToSuperview()
-            make.height.equalTo(self)
+            make.height.equalTo(self).offset(-4)
             make.width.equalTo(dataSet.cellWidth*CGFloat( dataSet.entyrs.count))
         }
+        layoutIfNeeded()
         left_AxisView.dataSet = dataSet
         left_AxisView.setNeedsDisplay()
+        drawView.setNeedsDisplay()
+        super.reload()
     }
     
     required public init?(coder: NSCoder) {

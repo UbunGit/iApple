@@ -21,16 +21,15 @@ public class CloudSqlQuery:ISqlManage{
         try await database.addColumn(tableName: recordType, name: "recordID", type: "TEXT")
         try await database.addColumn(tableName: recordType, name: "asyncDate", type: "DATE")
     }
-    public override func add(keyvalues: [String : SqlValueProtocol], recordType: String) async throws {
+    public func add(keyvalues: [String : SqlValueProtocol], recordType: String) async throws {
         var keyvalues = keyvalues
         keyvalues["asyncDate"] = nil
-        try await super.add(keyvalues: keyvalues, recordType: recordType)
+        try await super.setkeyValues(keyvalues, recordType: recordType)
     }
   
     
     // 删
-    public override func delete(uuid: String, recordType: String) async throws {
-        
+    public override func delete(uuid: String, recordType: String) async throws -> Bool {
         let predicate = String.init(format: " uuid = '%@' ", uuid)
         let result = try await database.fetch(tableName: recordType, predicate: predicate)
         var results:[[String : SqlValueProtocol]] = []
@@ -40,7 +39,7 @@ public class CloudSqlQuery:ISqlManage{
             }
         }
         guard let updateKeyvales = results.first else{
-            return
+            return true
         }
         if updateKeyvales["recordID"] is String{
             let keyvalues = [
@@ -49,15 +48,17 @@ public class CloudSqlQuery:ISqlManage{
             ] as [String : SqlValueProtocol]
             try await  self.update(keyvalues: keyvalues, recordType: recordType)
         }else{
-            try await  super.delete(uuid: uuid, recordType: recordType)
+            return try await super.delete(uuid: uuid, recordType: recordType)
         }
+        return true
     }
+   
   
     // 改
-    public override func update(keyvalues: [String : SqlValueProtocol], recordType: String) async throws {
+    public func update(keyvalues: [String : SqlValueProtocol], recordType: String) async throws {
         var keyvalues = keyvalues
         keyvalues["asyncDate"] = nil
-        try await super.update(keyvalues: keyvalues, recordType: recordType)
+        try await setkeyValues(keyvalues, recordType: recordType)
     }
    
    

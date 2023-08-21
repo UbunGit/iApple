@@ -32,7 +32,7 @@ extension UIViewController:UIPopoverPresentationControllerDelegate{
 }
 
 
-open class PopoverTableviewPresentView<T:Any>:UIViewController,I_UITableViewProtocol{
+open class PopoverTableviewPresentView<T:Any>:UIViewController,UITableViewDelegate,UITableViewDataSource{
     
     open var options:[T] = []
 
@@ -40,7 +40,7 @@ open class PopoverTableviewPresentView<T:Any>:UIViewController,I_UITableViewProt
         let value = UITableView(frame: .zero,style: .grouped)
         value.delegate = self
         value.dataSource = self
-        value.i_registerCell(UITableViewCell.self)
+        value.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         return value
     }()
     open override func viewDidLoad() {
@@ -67,7 +67,7 @@ open class PopoverTableviewPresentView<T:Any>:UIViewController,I_UITableViewProt
     }
     
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.i_dequeueNibCell(with: UITableViewCell.self, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! UITableViewCell
         cell.backgroundColor = .clear
         if let rowdata = options[indexPath.row] as? String{
             cell.textLabel?.text = rowdata

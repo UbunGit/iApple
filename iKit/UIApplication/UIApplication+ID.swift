@@ -64,7 +64,8 @@ public extension UIApplication{
     }
     
     var i_window:UIWindow?{
-        return UIApplication.shared.windows.filter({ $0.isKeyWindow }).last
+        let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).last
+        return window
         
     }
    

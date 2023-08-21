@@ -14,6 +14,7 @@ import CoreData
 open class ICloudSqlObject{
     
     var keyValues:[String:SqlValueProtocol] = [:]
+    
     public init(keyValues:[String:SqlValueProtocol]) {
         self.keyValues = keyValues
     }

@@ -24,6 +24,14 @@ Pod::Spec.new do |spec|
     "iKit/**/*.{h,m,swift}"
     ]
   end
+  
+  spec.subspec 'iBase' do |spec|
+    spec.dependency "SnapKit"
+    spec.source_files  =  [
+    "iBase/**/*.{h,m,swift}"
+    ]
+  end
+  
   spec.subspec 'iBox' do |spec|
     spec.dependency "iApple/iKit"
     spec.source_files  =  [
@@ -190,7 +198,7 @@ Pod::Spec.new do |spec|
   end
   
   spec.subspec 'iM3u8' do |spec|
-    
+    spec.dependency "SDWebImage"
     spec.dependency "Alamofire"
     spec.source_files  =  [
     "iM3u8/**/*.{h,m,swift}"

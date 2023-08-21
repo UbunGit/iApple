@@ -44,6 +44,12 @@ class ViewController: UIViewController {
             make.size.equalTo(CGSize(width: 200, height: 200))
         }
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let point1 = CGPoint(x: 0, y: 0)
+        let point2 = CGPoint(x: 0, y: 1)
+        IChartPieDrawView().angleDegrees(point1: point1, point2: point2)
+    }
 
 
 }

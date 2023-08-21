@@ -60,7 +60,7 @@ open class IChartView: UIView {
         }
         drawView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-            make.height.equalTo(self)
+            make.height.equalTo(self).offset(-1)
             make.width.equalTo(self)
         }
         
