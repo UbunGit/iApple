@@ -37,28 +37,23 @@ open class EncryptDatabase:FMDatabase{
         return false
     }
 }
-
 open class ISqlManage{
+   
     var dbpath:String
-    var passWord:String?
-    public lazy var database: EncryptDatabase = {
-        let value = EncryptDatabase.init(path: dbpath)
+  
+    public lazy var database: FMDatabase = {
+        let value = FMDatabase.init(path: dbpath)
         return value
     }()
     
-    public  lazy var databaseQueue: EncryptDatabaseQueue? = {
-        let value = EncryptDatabaseQueue.init(path: dbpath)
+    public  lazy var databaseQueue: FMDatabaseQueue? = {
+        let value = FMDatabaseQueue.init(path: dbpath)
         return value
     }()
     
-    public init(dbpath: String, passWord: String? = nil) {
-        self.dbpath = dbpath
-#if DEBUG
-        self.passWord = passWord
-#else
-        self.passWord = passWord?.i_md5
-#endif
+    public init(dbpath: String) {
         
+        self.dbpath = dbpath
     }
     
     func isTable(recordType:String) async throws->Bool{
@@ -85,6 +80,7 @@ open class ISqlManage{
             }
         }
     }
+    
     open func createTable(recordType: String) async throws{
         if try await isTable(recordType: recordType) {
             return
@@ -110,8 +106,8 @@ open class ISqlManage{
         }
     }
     
-    open  func setkeyValues(_ keyvalues: [String : SqlValueProtocol], recordType: String) async throws {
-        
+    open func setkeyValues(_ keyvalues: [String : SqlValueProtocol], recordType: String) async throws {
+        try await createTable(recordType: recordType)
         // 创建列表
         for (key, value) in keyvalues {
             if try await database.isColumn(tableName: recordType, columnName: key) == false {
@@ -125,6 +121,11 @@ open class ISqlManage{
         keyvalues.forEach { (key: String, value: SqlValueProtocol?) in
             sqlDatas[key] = value?.sqlData
         }
+        if sqlDatas["uuid"] == nil{
+            sqlDatas["uuid"] = UUID().uuidString
+            sqlDatas["creationDate"] = Date().sqlData
+        }
+        sqlDatas["modificationDate"] = Date().sqlData
         let keys = sqlDatas.compactMap { (key: String, value: Any?) in
             if columnTypes[key] != nil{
                 return key
@@ -138,7 +139,7 @@ open class ISqlManage{
         let valeustr = keys.map { item in
             return ":"+item
         }.joined(separator: ",")
-        
+ 
         try await database.autoExecute { db in
             
             let sql = "INSERT OR REPLACE INTO \(recordType) (\(keysStr)) VALUES (\(valeustr))"
@@ -192,6 +193,19 @@ open class ISqlManage{
                 }
             })
         })
+    }
+}
+open class ISqlEncryptManage:ISqlManage{
+    var passWord:String?
+    public init(dbpath: String, passWord: String? = nil) {
+        super.init(dbpath: dbpath)
+#if DEBUG
+        self.passWord = passWord
+#else
+        self.passWord = passWord?.i_md5
+#endif
+        self.database = EncryptDatabase.init(path: dbpath)
+        self.databaseQueue = EncryptDatabaseQueue.init(path: dbpath)
     }
     
 }

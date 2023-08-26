@@ -14,6 +14,8 @@ public extension FileManager{
     
     static let documnetUrl:URL? = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
     
+    static let documnetpath:String? = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
+    
     static var cloudEnable:Bool{
        return FileManager.default.ubiquityIdentityToken != nil
     }

@@ -12,6 +12,11 @@ public extension String{
         let s = self as NSString
         return s.range(of: of)
     }
+    
+    func i_replacing(str:String, to:String) -> String{
+        let s = self as NSString
+        return s.replacingOccurrences(of: str, with: to)
+    }
      
 }
 

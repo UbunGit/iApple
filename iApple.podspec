@@ -40,6 +40,9 @@ Pod::Spec.new do |spec|
   end
   
   spec.subspec 'iAPI' do |spec|
+  
+    spec.dependency "SwiftyJSON"
+    spec.dependency "Alamofire"
     spec.source_files  =  [
     "iAPI/**/*.{h,m,swift}"
     ]

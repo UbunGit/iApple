@@ -54,9 +54,8 @@ public extension UIView{
             tostHub.snp.remakeConstraints { make in
                 make.top.equalToSuperview().offset(safe)
                 make.left.right.equalToSuperview()
-                make.height.equalTo(1)
             }
-            self.layoutIfNeeded()
+          
             
             UIView.animate(withDuration: 0.35) {
                 tostHub.snp.remakeConstraints { make in
