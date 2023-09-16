@@ -8,6 +8,7 @@
 import UIKit
 import SDWebImage
 import StoreKit
+
 open class ISettingViewController: UIViewController {
     
     var email:String = "we2657932@163.com"
@@ -43,29 +44,29 @@ open class ISettingViewController: UIViewController {
         }
     }
     lazy var data_feedback: GroupData.ItemData = {
-        .init(title: "意见反馈", handle:  {
+        .init(title: "意见反馈",cellType: SettingRightArrowCell.self, handle:  {
             self.handle_feedback()
         })
     }()
     lazy var data_user_agreement: GroupData.ItemData = {
-        .init(title: "用户协议", handle:  {
+        .init(title: "用户协议",cellType: SettingRightArrowCell.self, handle:  {
             self.handle_user_agreement()
         })
     }()
     lazy var data_private_agreement: GroupData.ItemData = {
-        .init(title: "隐私协议", handle:  {
+        .init(title: "隐私协议",cellType: SettingRightArrowCell.self, handle:  {
             self.handle_private_agreement()
         })
     }()
     lazy var data_bannedUser: GroupData.ItemData = {
-        .init(title: "注销账号", handle:  {
+        .init(title: "注销账号",cellType: SettingRightArrowCell.self, handle:  {
             self.handle_bannedUser()
         })
     }()
     
 
     lazy var data_clearCache: GroupData.ItemData = {
-        return .init(title:"清理缓存") {
+        return .init(title:"清理缓存",cellType: SettingRightArrowCell.self) {
             self.fileSizeWithInterge()
         } handle: {
             self.clearCache {
@@ -78,13 +79,15 @@ open class ISettingViewController: UIViewController {
         dataSouce.append(
             .init(title: "设置", items: [
                 data_clearCache,
-                .init(title: "给个好评", handle: {
+                .init(title: "给个好评",cellType: SettingRightArrowCell.self, handle: {
                     self.startApp()
                 }),
-                .init(title: "联系我", handle: {
+                .init(title: "联系我",cellType: SettingRightArrowCell.self, handle: {
                     self.emialMe(self.email)
                 }),
-                .init(title: "版本号",value: {
+                .init(title: "版本号",
+                      cellType: SettingRightArrowCell.self,
+                      value: {
                     UIApplication.shared.appVersion
                 }),
                 data_bannedUser
@@ -204,7 +207,11 @@ extension UIViewController{
     // 给个好评
     func startApp(){
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            SKStoreReviewController.requestReview(in: windowScene)
+            if #available(iOS 14.0, *) {
+                SKStoreReviewController.requestReview(in: windowScene)
+            } else {
+                // Fallback on earlier versions
+            }
         }
     }
 }

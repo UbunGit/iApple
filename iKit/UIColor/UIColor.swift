@@ -42,9 +42,7 @@ public extension UIColor{
                       Int(components[3]*255)
         )
     }
-    
-    
-
+ 
     ///返回根据当前模式的color
     func i_autoColor(lightColor:UIColor, darkColor:UIColor) -> UIColor {
         if #available(iOS 13.0, *){
@@ -59,5 +57,21 @@ public extension UIColor{
         }else {
             return lightColor
         }
+    }
+    // 互补色
+    var i_complementary:UIColor{
+        let color = self
+
+        // Get the components of the color
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+
+        // Get the complementary color
+        return  UIColor(red: 1 - red, green: 1 - green, blue: 1 - blue, alpha: alpha)
+
+        
     }
 }

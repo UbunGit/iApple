@@ -47,7 +47,12 @@ Pod::Spec.new do |spec|
     "iAPI/**/*.{h,m,swift}"
     ]
   end
-
+  spec.subspec 'iImage' do |spec|
+    spec.dependency "iApple/iBox"
+    spec.source_files  =  [
+    "iImage/**/*.{h,m,swift}"
+    ]
+  end
   spec.subspec 'iLog' do |spec|
     spec.dependency "iApple/iBox"
     spec.source_files  =  [
@@ -255,7 +260,8 @@ Pod::Spec.new do |spec|
   end
   
   spec.subspec 'iSetting' do |spec|
-
+    spec.dependency "SDWebImage"
+    spec.dependency "IQKeyboardManagerSwift"
     spec.dependency "SnapKit"
     spec.source_files  =  [
     "iSetting/**/*.{h,m,swift}"

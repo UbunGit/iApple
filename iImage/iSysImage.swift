@@ -12,6 +12,7 @@ public extension UIImage{
     static let plus = UIImage(systemName: "plus")
     static let house = UIImage(systemName: "house")
     static let house_fill = UIImage(systemName: "house.fill")
+    static let xmark = UIImage(systemName: "xmark")
 }
 
 

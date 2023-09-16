@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-open class CollectionItemCell: UICollectionViewCell {
+open class ICollectionItemCell: UICollectionViewCell {
     lazy var stackView: UIStackView = {
         let value = UIStackView()
         value.axis = .vertical

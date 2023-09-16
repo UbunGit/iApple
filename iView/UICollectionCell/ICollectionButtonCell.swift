@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-open class CollectionButtonCell: UICollectionViewCell {
+open class ICollectionButtonCell: UICollectionViewCell {
     public lazy var button: UIButton = {
         let value = UIButton()
         value.setTitle("默认", for: .normal)

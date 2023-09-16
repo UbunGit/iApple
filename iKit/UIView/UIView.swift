@@ -8,11 +8,14 @@
 import Foundation
 @IBDesignable
 public extension UIView{
+    
     static func initWithNib() -> Self {
         let className = "\(self)"
         let nibName = className.split{$0 == "."}.map(String.init).last!
         return Bundle.main.loadNibNamed(nibName, owner: self)?.first as! Self
     }
+    
+    @MainActor
     @objc var i_radius: CGFloat {
         set {
             layer.cornerRadius = newValue
@@ -27,6 +30,7 @@ public extension UIView{
         }
     }
     
+    @MainActor
     func i_radius(topLeft:CGFloat,
                   topRight:CGFloat,
                   bottomRight:CGFloat,
@@ -48,5 +52,28 @@ public extension UIView{
         shapeLayer.path = path.cgPath
         self.layer.mask = shapeLayer
       
+    }
+    
+    // 添加阴影
+    @MainActor
+    func i_shadow(opacity:Float = 1,
+                              shadowColor:CGColor = UIColor.systemBackground.withAlphaComponent(0.35).cgColor,
+                              radius:CGFloat = 12,
+                              offset:CGSize = .init(width: 1, height: 1)){
+        
+        self.clipsToBounds = false
+        self.layer.shadowOpacity = opacity;///不透明度
+        self.layer.shadowColor = shadowColor;//阴影颜色
+        self.layer.shadowRadius = radius;//半径大小
+        self.layer.shadowOffset = offset
+        
+    }
+    // 移除阴影
+    @MainActor
+    func clearshadow(){
+        self.layer.shadowOpacity=0 //不透明度
+        self.layer.shadowColor = nil //阴影颜色
+        self.layer.shadowRadius = 0 //半径大小
+        self.layer.shadowOffset = .zero
     }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class CollectionImageCell: UICollectionViewCell {
+open class ICollectionImageCell: UICollectionViewCell {
     public lazy var imageView: UIImageView = {
         let value = UIImageView()
         value.i_radius = 0.1

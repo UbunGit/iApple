@@ -8,7 +8,7 @@
 import Foundation
 public extension String{
     
-    func range(of:String)->NSRange{
+    func i_range(of:String)->NSRange{
         let s = self as NSString
         return s.range(of: of)
     }
