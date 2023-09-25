@@ -53,6 +53,12 @@ Pod::Spec.new do |spec|
     "iImage/**/*.{h,m,swift}"
     ]
   end
+  spec.subspec 'iColor' do |spec|
+    spec.dependency "iApple/iBox"
+    spec.source_files  =  [
+    "iColor/**/*.{h,m,swift}"
+    ]
+  end
   spec.subspec 'iLog' do |spec|
     spec.dependency "iApple/iBox"
     spec.source_files  =  [

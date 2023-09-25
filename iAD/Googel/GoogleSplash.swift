@@ -7,7 +7,7 @@
 
 import Foundation
 import GoogleMobileAds
-
+// 谷歌开屏
 class GoogleSplash:NSObject{
     var id:String
     var fineshBlock:((_ status:ADFineshStatus)->())? = nil

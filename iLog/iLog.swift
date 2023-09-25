@@ -60,10 +60,7 @@ open class I_Log{
     func toConsole(level:Level = .debug, msg:String){
         #if DEBUG
         let format = "\(level.rawValue) \(msg)"
-        guard var msgdata = format.data(using: .utf8) else{
-            return
-        }
-        debugPrint(msgdata)
+        debugPrint(format)
         #endif
     }
 }

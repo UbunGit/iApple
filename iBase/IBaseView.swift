@@ -9,7 +9,7 @@ import UIKit
 
 open class IBaseView: UIView {
 
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         makeUI()
         makeLayout()

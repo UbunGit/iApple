@@ -7,6 +7,7 @@
 
 import Foundation
 import GoogleMobileAds
+// 谷歌激励
 class GoogleRewarded:NSObject{
    
    
