@@ -219,6 +219,15 @@ Pod::Spec.new do |spec|
     ]
   end
   
+  spec.subspec 'iMedia' do |spec|
+    spec.dependency "TZImagePickerController"
+    spec.source_files  =  [
+    "iMedia/**/*.{h,m,swift}"
+    ]
+  end
+  
+  
+  
   
   spec.subspec 'iBander' do |spec|
     spec.dependency "SnapKit"
@@ -269,6 +278,9 @@ Pod::Spec.new do |spec|
     spec.dependency "SDWebImage"
     spec.dependency "IQKeyboardManagerSwift"
     spec.dependency "SnapKit"
+    
+    spec.dependency "iApple/iHub"
+    spec.dependency "iApple/iView"
     spec.source_files  =  [
     "iSetting/**/*.{h,m,swift}"
     ]

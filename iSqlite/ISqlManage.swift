@@ -62,6 +62,7 @@ open class ISqlManage{
                 defer{
                     database.commit()
                     database.close()
+                  
                 }
                 var isExists = false
                 do{
@@ -106,7 +107,7 @@ open class ISqlManage{
         }
     }
     
-    open func setkeyValues(_ keyvalues: [String : SqlValueProtocol], recordType: String) async throws {
+    open func setkeyValues(_ keyvalues: [String : Sqlable], recordType: String) async throws {
         try await createTable(recordType: recordType)
         // 创建列表
         for (key, value) in keyvalues {
@@ -118,14 +119,14 @@ open class ISqlManage{
         
         // 重新组装数据
         var sqlDatas:[String:Any] = [:]
-        keyvalues.forEach { (key: String, value: SqlValueProtocol?) in
-            sqlDatas[key] = value?.sqlData
+        keyvalues.forEach { (key: String, value: Sqlable?) in
+            sqlDatas[key] = value?.sqlValue
         }
         if sqlDatas["uuid"] == nil{
             sqlDatas["uuid"] = UUID().uuidString
-            sqlDatas["creationDate"] = Date().sqlData
+            sqlDatas["creationDate"] = Date().sqlValue
         }
-        sqlDatas["modificationDate"] = Date().sqlData
+        sqlDatas["modificationDate"] = Date().sqlValue
         let keys = sqlDatas.compactMap { (key: String, value: Any?) in
             if columnTypes[key] != nil{
                 return key
@@ -158,41 +159,56 @@ open class ISqlManage{
                     database.close()
                 }
                 do{
-                   try database.executeUpdate("""
-                    DELETE FROM \(recordType) where uuid=? "
+                    try database.executeUpdate("""
+                    DELETE FROM \(recordType) where uuid=?
                     """,values: [uuid])
+                    continuation.resume(returning:true)
                 }catch{
+                    debugPrint("delete error: \(error)")
                     continuation.resume(throwing: error)
                 }
             })
         })
     }
    
-    
-    open func fetchToDic(recordType: String,predicate: String? = nil)async throws ->[[String:SqlValueProtocol]]{
+    open func fetchToResultSet(table: String,predicate: String? = nil)async throws ->FMResultSet{
         return try await withUnsafeThrowingContinuation({ continuation in
             databaseQueue?.inDatabase({ database in
-                defer{
-                    database.commit()
-                    database.close()
-                }
-                var results:[[String:SqlValueProtocol]] = []
+                
                 do{
-                    let result = try database.executeQuery("""
-                    select * from \(recordType)
-                    """,values: nil)
-                    while result.next(){
-                        if let value = result.resultDictionary as? [String: SqlValueProtocol] {
-                            results.append(value)
-                        }
+                    var sql = """
+                    select * from \(table)
+                    """
+                    if let predicate = predicate{
+                        sql = sql.appending(" where \(predicate) ")
                     }
-                    continuation.resume(returning: results)
+                    let result = try database.executeQuery(sql,values: nil)
+                    continuation.resume(returning: result)
                 }catch{
                     debugPrint(database.lastError())
                     continuation.resume(throwing: error)
                 }
             })
         })
+    }
+    open func fetchToDic(table: String,predicate: String? = nil)async throws ->[[String:Sqlable]]{
+        let result = try await fetchToResultSet(table: table,predicate: predicate)
+        var results:[[String:Sqlable]] = []
+        while result.next(){
+            if let value = result.resultDictionary as? [String: Sqlable] {
+                results.append(value)
+            }
+        }
+        return results
+    }
+    
+    open func fetchToModels<T:Codable>(_ type: T.Type,table:String,predicate: String? = nil) async throws ->[T]{
+        let result = try await fetchToDic(table: table,predicate: predicate)
+        return try result.compactMap { item in
+            let data = try JSONSerialization.data(withJSONObject: item, options: [])
+            let model = try JSONDecoder().decode(T.self, from: data)
+            return model
+        }  
     }
 }
 open class ISqlEncryptManage:ISqlManage{

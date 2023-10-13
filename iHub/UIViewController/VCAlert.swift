@@ -28,6 +28,7 @@ public extension UIViewController{
 		self.present(alertvc, animated: true, completion: nil)
 		
 	}
+    
 	func presentRemark(_ title:String? = nil,
 					  message:String? = nil,
 					   commit:String? = nil,
@@ -44,10 +45,10 @@ public extension UIViewController{
 		
 	}
 	
-	func presentAlert(	_ title:String? = nil,
+	func i_alert(_ title:String? = nil,
 					  message:String? = nil,
 					  actions:[UIAlertAction]){
-		let alertvc = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertvc = UIAlertController(title: title, message: message, preferredStyle: .alert)
 		actions.forEach { item in
 			alertvc.addAction(item)
 		}
@@ -55,4 +56,24 @@ public extension UIViewController{
 		alertvc.popoverPresentationController?.sourceRect = self.view.frame
 		self.present(alertvc, animated: true, completion: nil)
 	}
+    
+    func i_sheet(_ title:String? = nil,
+               message:String? = nil,
+               actions:[UIAlertAction]){
+        let alertvc = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        actions.forEach { item in
+            alertvc.addAction(item)
+        }
+        alertvc.popoverPresentationController?.sourceView = self.view
+        alertvc.popoverPresentationController?.sourceRect = self.view.frame
+        let popover = alertvc.popoverPresentationController
+        popover?.sourceView = view
+        popover?.sourceRect = CGRect(x: 32, y: 32, width: 64, height: 64)
+
+        self.present(alertvc, animated: true)
+    }
+    
+    func i_sheet(view:UIView){
+        
+    }
 }

@@ -1,0 +1,52 @@
+PODS:
+  - Alamofire (5.7.1)
+  - iApple (1.0.0):
+    - iApple/iKit (= 1.0.0)
+  - iApple/iBase (1.0.0):
+    - SnapKit
+  - iApple/iBox (1.0.0):
+    - iApple/iKit
+  - iApple/iKit (1.0.0):
+    - iApple/iMD5
+    - YYCategories
+  - iApple/iMD5 (1.0.0)
+  - iApple/iView (1.0.0):
+    - iApple/iBox
+    - SDWebImage
+    - SnapKit
+  - SDWebImage (5.17.0):
+    - SDWebImage/Core (= 5.17.0)
+  - SDWebImage/Core (5.17.0)
+  - SnapKit (5.6.0)
+  - YYCategories (1.0.4):
+    - YYCategories/no-arc (= 1.0.4)
+  - YYCategories/no-arc (1.0.4)
+
+DEPENDENCIES:
+  - Alamofire
+  - iApple (from `../../`)
+  - iApple/iBase (from `../../`)
+  - iApple/iView (from `../../`)
+  - SnapKit
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - SDWebImage
+    - SnapKit
+    - YYCategories
+
+EXTERNAL SOURCES:
+  iApple:
+    :path: "../../"
+
+SPEC CHECKSUMS:
+  Alamofire: 0123a34370cb170936ae79a8df46cc62b2edeb88
+  iApple: 06536847f4c998d2c48bb63c71935ebc2c812d40
+  SDWebImage: 750adf017a315a280c60fde706ab1e552a3ae4e9
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
+
+PODFILE CHECKSUM: 6331fbe06a13095ebef7f85fe8234b2e182548df
+
+COCOAPODS: 1.11.3

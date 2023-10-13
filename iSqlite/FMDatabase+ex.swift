@@ -13,6 +13,7 @@ enum ISqliteError:Error{
     case sqlColumnTypeError
     case sqlUpdateError
     case sqlUUIDISNULL
+    case sqlResultToModelError
 }
 public extension FMDatabase{
     
@@ -146,7 +147,7 @@ public extension FMDatabase{
         return isExists
     }
     
-    func setkeysValues(_ keyValues: [String : SqlValueProtocol?],tableName:String) async throws {
+    func setkeysValues(_ keyValues: [String : Sqlable?],tableName:String) async throws {
         // 创建列表
         for (key, value) in keyValues {
             if try await isColumn(tableName: tableName, columnName: key) == false {
@@ -157,8 +158,8 @@ public extension FMDatabase{
         
         // 重新组装数据
         var sqlDatas:[String:Any] = [:]
-        keyValues.forEach { (key: String, value: SqlValueProtocol?) in
-            sqlDatas[key] = value?.sqlData
+        keyValues.forEach { (key: String, value: Sqlable?) in
+            sqlDatas[key] = value?.sqlValue
         }
         let keys = sqlDatas.compactMap { (key: String, value: Any?) in
             if columnTypes[key] != nil{

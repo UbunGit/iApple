@@ -21,6 +21,7 @@ open class UGCircleTabBarController:UITabBarController{
 extension UGCircleTabBarController{
     
     open class INTabBar:UITabBar{
+        
         override init(frame: CGRect) {
             super.init(frame: frame)
             makeUI()
@@ -69,9 +70,7 @@ extension UGCircleTabBarController{
             if #available(iOS 15.0, *) {
                 scrollEdgeAppearance = appearance
             }
-            
-            
-            tintColor = .white.alpha(1)
+            tintColor = .white.i_alpha(1)
             unselectedItemTintColor = .red
         }
     }

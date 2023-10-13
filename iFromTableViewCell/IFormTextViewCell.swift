@@ -17,6 +17,7 @@ open class IFormTextViewCell<T:Any>: IFormBaseCell<T> {
     }()
     open lazy var textView: IQTextView = {
         let value = IQTextView()
+        value.placeholderTextColor = .tertiaryLabel
         value.placeholder = "请输入内容"
         value.font = .systemFont(ofSize: 16)
         value.textContainerInset = .init(top: 8, left: 8, bottom: 8, right: 8)
@@ -34,7 +35,8 @@ open class IFormTextViewCell<T:Any>: IFormBaseCell<T> {
             make.left.equalToSuperview()
         }
         textView.snp.makeConstraints { make in
-            make.left.right.bottom.equalToSuperview()
+            make.left.top.equalTo(8)
+            make.right.bottom.equalTo(-8)
            
         }
     }

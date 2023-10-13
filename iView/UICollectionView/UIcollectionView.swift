@@ -82,7 +82,7 @@ public extension UICollectionView{
     func cellSize(space:CGFloat,column:Int,ratio:CGFloat)->CGSize{
      
         let w = cellWidth(space: space, column: column)
-        let h = w*ratio
+        let h = w/ratio
         return .init(width: w, height: h)
     }  
 }

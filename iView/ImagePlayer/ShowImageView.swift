@@ -59,7 +59,7 @@ class ShowImageView:UIView {
         let value = UILabel()
         value.font = .boldSystemFont(ofSize: 20)
         value.textColor = .white
-      
+        value.i_shadow(radius: 2)
         return value
     }()
     
@@ -98,7 +98,8 @@ class ShowImageView:UIView {
         }
         countLab.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(UIScreen.i_safeAreaInsets.top+32)
+            make.top.equalTo(self.safeAreaLayoutGuide.snp.top)
+            make.height.equalTo(44)
         }
         
     }
@@ -144,7 +145,7 @@ extension ShowImageView:I_UICollectionViewProtocol{
 
 open class ShowImageVC:UIViewController{
     public var datas:[IMediaItem] = []
-    var index:Int = 0
+    public var index:Int = 0
     
     lazy var closeBtn: UIButton = {
         let value = UIButton(frame: .init(origin: .zero, size: .init(width: 32, height: 32)))
@@ -197,7 +198,7 @@ open class ShowImageVC:UIViewController{
         }
         closeBtn.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(12)
-            make.top.equalToSuperview().offset(UIScreen.i_safeAreaInsets.top+8)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.size.equalTo(32)
         }
         

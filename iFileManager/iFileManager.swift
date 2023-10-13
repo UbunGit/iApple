@@ -21,3 +21,10 @@ public extension FileManager{
     }
 
 }
+public extension FileManager{
+    func createDirectoryIfNotFound(path:String) throws{
+        if(self.fileExists(atPath: path)) == false{
+           try self.createDirectory(atPath: path, withIntermediateDirectories: true)
+        }
+    }
+}
