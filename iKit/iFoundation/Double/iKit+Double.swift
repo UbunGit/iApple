@@ -26,5 +26,9 @@ public extension Double{
             return formatter.string(from: NSNumber(value: self)) ?? ""
         }
     }
+    
+    func i_stringValue()->String{
+        return String(self)
+    }
 }
 

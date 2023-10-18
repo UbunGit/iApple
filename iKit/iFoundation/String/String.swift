@@ -10,6 +10,9 @@ public extension String{
     func i_double(_ defual:Double = 0) -> Double{
         return Double(self) ?? defual
     }
+    func i_doubleValue() -> Double?{
+        return Double(self)
+    }
     func i_range(of:String)->NSRange{
         let s = self as NSString
         return s.range(of: of)

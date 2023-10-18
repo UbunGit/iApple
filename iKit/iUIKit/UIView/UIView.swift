@@ -57,9 +57,9 @@ public extension UIView{
     // 添加阴影
     @MainActor
     func i_shadow(opacity:Float = 0.35,
-                  shadowColor:UIColor? = UIColor.systemBackground.withAlphaComponent(0.35),
+                  shadowColor:UIColor? = UIColor.systemGray3,
                   radius:CGFloat = 4,
-                  offset:CGSize = .init(width: 4, height: 4)){
+                  offset:CGSize = .init(width: 2, height: 2)){
         
         self.clipsToBounds = false
         self.layer.shadowOpacity = opacity;///不透明度

@@ -23,6 +23,9 @@ extension UIImage:Sqlable{
         }
         let key = md5.appending(".png")
         let cacheurl = self.i_cacheUrl.appendingPathComponent(key)
+        if FileManager.default.fileExists(atPath: cacheurl.path){
+            return key
+        }
         guard let data = self.pngData() else {
             return nil
         }

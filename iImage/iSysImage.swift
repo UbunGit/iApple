@@ -24,6 +24,8 @@ public extension UIImage{
     
     static let arrow_right = UIImage(systemName: "chevron.right")
     
+    static let select = UIImage.i_image(name: "checkmark.circle.fill")
+    
 }
 
 

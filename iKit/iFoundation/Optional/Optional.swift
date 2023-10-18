@@ -33,6 +33,18 @@ public extension Optional{
             return defual
         }
     }
+    func i_stringValue() -> String? {
+        switch self {
+        case .some(let value as String):
+            return value
+        case .some(let value as NSString):
+            return value as String
+        case .some(let value):
+            return "\(value)"
+        case .none:
+            return nil
+        }
+    }
     
     func i_int(_ defual:Int=0) -> Int {
         guard let value = self else {

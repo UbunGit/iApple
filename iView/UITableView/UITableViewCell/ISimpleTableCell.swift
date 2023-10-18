@@ -14,8 +14,9 @@ open class ISimpleTableCell: UITableViewCell {
 
     public lazy var iconView: UIImageView = {
         let value = UIImageView()
+       
         value.image = .init(systemName: "trophy.fill")
-   
+        value.contentMode = .scaleAspectFit
         return value
         
     }()
@@ -48,6 +49,7 @@ open class ISimpleTableCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         makeUI()
         makeLayout()
+        selectionStyle = .none
     }
     
     required public init?(coder: NSCoder) {

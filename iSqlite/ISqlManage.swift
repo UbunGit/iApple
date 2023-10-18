@@ -82,15 +82,15 @@ open class ISqlManage{
         }
     }
     
-    open func createTable(recordType: String) async throws{
-        if try await isTable(recordType: recordType) {
+    open func createTable(table: String) async throws{
+        if try await isTable(recordType: table) {
             return
         }
         return try await withUnsafeThrowingContinuation{ continuation in
             databaseQueue?.inDatabase{ database in
                 do {
                     let sql = """
-                            CREATE TABLE \(recordType) (
+                            CREATE TABLE \(table) (
                                 "uuid" TEXT NOT NULL,
                                 "creationDate"  DATE,
                                 "modificationDate"    DATE,
@@ -106,28 +106,28 @@ open class ISqlManage{
             }
         }
     }
-    
-    open func setkeyValues(_ keyvalues: [String : Sqlable], recordType: String) async throws {
-        try await createTable(recordType: recordType)
+    @discardableResult
+    open func setkeyValues(_ keyvalues: [String : Sqlable], table: String) async throws ->String {
+        try await createTable(table: table)
         // 创建列表
         for (key, value) in keyvalues {
-            if try await database.isColumn(tableName: recordType, columnName: key) == false {
-                try await database.addColumn(tableName: recordType, name: key, type: value.sqltype)
+            if try await database.isColumn(tableName: table, columnName: key) == false {
+                try await database.addColumn(tableName: table, name: key, type: value.sqltype)
             }
         }
-        let columnTypes = try await database.columnTypes(tableName: recordType)
+        let columnTypes = try await database.columnTypes(tableName: table)
         
         // 重新组装数据
-        var sqlDatas:[String:Any] = [:]
+        var sqlData:[String:Any] = [:]
         keyvalues.forEach { (key: String, value: Sqlable?) in
-            sqlDatas[key] = value?.sqlValue
+            sqlData[key] = value?.sqlValue
         }
-        if sqlDatas["uuid"] == nil{
-            sqlDatas["uuid"] = UUID().uuidString
-            sqlDatas["creationDate"] = Date().sqlValue
+        if sqlData["uuid"] == nil{
+            sqlData["uuid"] = UUID().uuidString
+            sqlData["creationDate"] = Date().sqlValue
         }
-        sqlDatas["modificationDate"] = Date().sqlValue
-        let keys = sqlDatas.compactMap { (key: String, value: Any?) in
+        sqlData["modificationDate"] = Date().sqlValue
+        let keys = sqlData.compactMap { (key: String, value: Any?) in
             if columnTypes[key] != nil{
                 return key
             }
@@ -142,15 +142,19 @@ open class ISqlManage{
         }.joined(separator: ",")
  
         try await database.autoExecute { db in
-            
-            let sql = "INSERT OR REPLACE INTO \(recordType) (\(keysStr)) VALUES (\(valeustr))"
-            if db.executeUpdate(sql, withParameterDictionary:sqlDatas) == false{
+            defer{
+                database.commit()
+                database.close()
+            }
+            let sql = "INSERT OR REPLACE INTO \(table) (\(keysStr)) VALUES (\(valeustr))"
+            if db.executeUpdate(sql, withParameterDictionary:sqlData) == false{
                 debugPrint(database.lastError())
                 throw ISqliteError.sqlUpdateError
             }
         }
+        return sqlData["uuid"].i_string()
     }
-    
+    @discardableResult
     open func delete(uuid: String, recordType: String) async throws ->Bool{
         return try await withUnsafeThrowingContinuation({ continuation in
             databaseQueue?.inDatabase({ database in
@@ -171,45 +175,7 @@ open class ISqlManage{
         })
     }
    
-    open func fetchToResultSet(table: String,predicate: String? = nil)async throws ->FMResultSet{
-        return try await withUnsafeThrowingContinuation({ continuation in
-            databaseQueue?.inDatabase({ database in
-                
-                do{
-                    var sql = """
-                    select * from \(table)
-                    """
-                    if let predicate = predicate{
-                        sql = sql.appending(" where \(predicate) ")
-                    }
-                    let result = try database.executeQuery(sql,values: nil)
-                    continuation.resume(returning: result)
-                }catch{
-                    debugPrint(database.lastError())
-                    continuation.resume(throwing: error)
-                }
-            })
-        })
-    }
-    open func fetchToDic(table: String,predicate: String? = nil)async throws ->[[String:Sqlable]]{
-        let result = try await fetchToResultSet(table: table,predicate: predicate)
-        var results:[[String:Sqlable]] = []
-        while result.next(){
-            if let value = result.resultDictionary as? [String: Sqlable] {
-                results.append(value)
-            }
-        }
-        return results
-    }
-    
-    open func fetchToModels<T:Codable>(_ type: T.Type,table:String,predicate: String? = nil) async throws ->[T]{
-        let result = try await fetchToDic(table: table,predicate: predicate)
-        return try result.compactMap { item in
-            let data = try JSONSerialization.data(withJSONObject: item, options: [])
-            let model = try JSONDecoder().decode(T.self, from: data)
-            return model
-        }  
-    }
+   
 }
 open class ISqlEncryptManage:ISqlManage{
     var passWord:String?

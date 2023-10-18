@@ -13,6 +13,7 @@ enum ISqliteError:Error{
     case sqlColumnTypeError
     case sqlUpdateError
     case sqlUUIDISNULL
+    case sqlResultToDataError
     case sqlResultToModelError
 }
 public extension FMDatabase{
