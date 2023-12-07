@@ -33,7 +33,7 @@ public class IADConfig:NSObject{
     }
     
     var splashType:ADTYPE? = nil //展示固定的广告商，如果为空，则执行auto
-    
+    var rewardedType:ADTYPE? = nil //展示固定的广告商，如果为空，则执行auto
     var lastSplashShowType:ADTYPE{
         set{
             UserDefaults.standard.set(newValue.rawValue, forKey: "IADConfig.lastSplashType")
@@ -107,6 +107,9 @@ private var csj_splash=CSJSplash()
 private var google_splash:GoogleSplash!
 public extension UIViewController{
   
+    /**
+     展示穿山甲开屏广告
+     */
     func csj_showSplash(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
         guard let _ = IADConfig.shared.csj_appID else{
             return fineshBlock(.error)
@@ -114,6 +117,9 @@ public extension UIViewController{
         csj_splash.show(vc: self, fineshBlock: fineshBlock)
     }
     
+    /**
+     展示googel开屏广告
+     */
     func googel_showSplash(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
         
         guard let splashid = IADConfig.shared.google_splashID else{
@@ -124,6 +130,12 @@ public extension UIViewController{
         
     }
     
+    /**
+     自动显示开屏广告
+        1:如果上次展示csj失败，就自动切换到google，直到某一次google失败，再切换到csj
+        2:如果没有配置google的开屏id，就展示csj的
+        3:第一次展示csj
+     */
     func auto_showSplash(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
         if IADConfig.shared.lastSplashErrorType == .csj,
            IADConfig.shared.google_splashID != nil,
@@ -135,6 +147,12 @@ public extension UIViewController{
         }
     }
     
+    /**
+     滚动显示开屏广告
+        1:如果上次展示csj，这次换到google，
+        2:如果没有配置google的开屏id，就展示csj的
+        3:第一次展示csj
+     */
     func roll_showSplash(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
         if IADConfig.shared.lastSplashRollType != .csj,
            IADConfig.shared.csj_splashID != nil,
@@ -148,6 +166,9 @@ public extension UIViewController{
         }
     }
     
+    /**
+     按配置 IADConfig.shared.splashType展示，如果==nil 按auto展示
+     */
     func showSplash(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
         switch IADConfig.shared.splashType{
         case .csj:
@@ -180,7 +201,10 @@ public extension UIViewController{
     }
     
     /**
-     自动展示，展示上次成功展示的，默认第一次是chj
+     自动显示激励广告
+        1:如果上次展示csj失败，就自动切换到google，直到某一次google失败，再切换到csj
+        2:如果没有配置google的开屏id，就展示csj的
+        3:第一次展示csj
      */
     func auto_showRewarded(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
         if IADConfig.shared.lastSplashErrorType == .csj,
@@ -194,7 +218,10 @@ public extension UIViewController{
     }
     
     /**
-     轮动展示，如果上次是chj，下次就是google
+     滚动显示
+        1:如果上次展示csj，这次换到google，
+        2:如果没有配置google的开屏id，就展示csj的
+        3:第一次展示csj
      */
     func roll_showRewarded(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
         if IADConfig.shared.lastRewardedRollType != .csj,
@@ -210,11 +237,11 @@ public extension UIViewController{
     }
     
     /**
-     按配置参数展示，如果配置参数为空，则自动展示
+     按配置 IADConfig.shared.rewardedType展示，如果==nil 按auto展示
      */
     func showRewarded(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
         
-        switch IADConfig.shared.splashType{
+        switch IADConfig.shared.rewardedType{
         case .csj:
             self.csj_showRewarded(fineshBlock: fineshBlock)
         case .none:

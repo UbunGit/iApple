@@ -63,17 +63,11 @@ PODS:
     - Ads-CN
     - Google-Mobile-Ads-SDK
     - iApple/iBox
-    - iApple/iHub
     - iApple/iLog
-    - iApple/iView
   - iApple/iBase (1.0.0):
     - SnapKit
   - iApple/iBox (1.0.0):
     - iApple/iKit
-  - iApple/iHub (1.0.0):
-    - MBProgressHUD
-    - SnapKit
-    - YYCategories
   - iApple/iKit (1.0.0):
     - iApple/iMD5
     - YYCategories
@@ -85,7 +79,6 @@ PODS:
     - iApple/iBox
     - SDWebImage
     - SnapKit
-  - MBProgressHUD (1.2.0)
   - nanopb (2.30909.1):
     - nanopb/decode (= 2.30909.1)
     - nanopb/encode (= 2.30909.1)
@@ -105,6 +98,7 @@ DEPENDENCIES:
   - iApple (from `../../`)
   - iApple/iAD (from `../../`)
   - iApple/iBase (from `../../`)
+  - iApple/iView (from `../../`)
   - SnapKit
 
 SPEC REPOS:
@@ -117,7 +111,6 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleUserMessagingPlatform
     - GoogleUtilities
-    - MBProgressHUD
     - nanopb
     - PromisesObjC
     - SDWebImage
@@ -137,14 +130,13 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 68afe759316673c6554dac35a0c7ae8f5d6cb4ed
   GoogleUserMessagingPlatform: dce302b8f1b84d6e945812ee7a15c3f65a102cbf
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
-  iApple: f7c44ad2c16c4ff70408a0bc72f4be6ef0a8ced3
-  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  iApple: 2325ab95fe9b34fb01fd380b5ffa780c04247219
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   SDWebImage: 3d8caa2430f3d674dbb3e515df4a100a2105af5f
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
 
-PODFILE CHECKSUM: a141841d325c53075718c3e4e26f00e567ad09f7
+PODFILE CHECKSUM: 766931b4436c157d6b2a55bed3ee2b35f6e77f8d
 
 COCOAPODS: 1.13.0
