@@ -14,20 +14,19 @@ class CSJSplash:NSObject{
     var didLoadingBlock:(()->())? = nil
     var subViewcontroller:UIViewController? = nil
  
-    lazy var adview: BUSplashAd = {
-       let size = UIScreen.main.bounds.size
-        let splashAdView = BUSplashAd(slotID: IADConfig.shared.csj_splashID!, adSize:size )
-        splashAdView.tolerateTimeout = 8
-        splashAdView.delegate = self
-        splashAdView.supportCardView = true
-        return splashAdView
-    }()
+    var adview: BUSplashAd!
     
     func show(vc:UIViewController,fineshBlock: @escaping (_: ADFineshStatus) -> Void){
         self.subViewcontroller = vc
         self.fineshBlock = fineshBlock
         willLoadingBlock?()
+        let size = UIScreen.main.bounds.size
+        self.adview = BUSplashAd(slotID: IADConfig.shared.csj_splashID!, adSize:size )
+        adview.tolerateTimeout = 8
+        adview.supportCardView = true
+        adview.delegate = self
         adview.loadData()
+        logging.debug("csj load splash splashID:",adview.slotID)
         
     }
 }

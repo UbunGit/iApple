@@ -8,6 +8,7 @@ target 'EXIAD' do
   pod "Alamofire"
   
   pod "iApple", :path=>"../../"
+  pod "iApple/iBase", :path=>"../../"
   pod "iApple/iAD", :path=>"../../"
   
 end

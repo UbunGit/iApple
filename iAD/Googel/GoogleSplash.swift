@@ -60,7 +60,7 @@ extension GoogleSplash:GADFullScreenContentDelegate{
    
     }
     func adDidRecordClick(_ ad: GADFullScreenPresentingAd) {
-        logging.debug("adDidDismissFullScreenContent")
+        logging.debug("adDidRecordClick")
     }
     func adWillDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
         logging.debug("adWillDismissFullScreenContent")

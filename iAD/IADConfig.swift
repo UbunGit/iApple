@@ -9,17 +9,17 @@ import Foundation
 import BUAdSDK
 
 public class IADConfig:NSObject{
-    static let shared = IADConfig()
+    public static let shared = IADConfig()
    
     // MARK: 穿山甲
-    var csj_appID:String? = "5452703"
-    var csj_splashID:String? = "888689796"
-    var csj_rewardedID:String? = "954637653"
+    public var csj_appID:String? = "5452703"
+    public var csj_splashID:String? = "888689796"
+    public var csj_rewardedID:String? = "954637653"
     
     // MARK: 谷歌
-    var google_splashID:String? = "ca-app-pub-8735546255287972/1575822425"
-    var google_rewardedID:String? = "ca-app-pub-3940256099942544/1712485313"
-    var google_expressID:String = "ca-app-pub-3940256099942544/1712485313"
+    public var google_splashID:String? = "ca-app-pub-8735546255287972/1575822425"
+    public var google_rewardedID:String? = "ca-app-pub-3940256099942544/1712485313"
+    public var google_expressID:String = "ca-app-pub-3940256099942544/1712485313"
     
     override init() {
         super.init()
@@ -43,15 +43,6 @@ public class IADConfig:NSObject{
             return .init(rawValue: raw) ?? ADTYPE.allCases.first!
         }
     }
-    var lastRewardedShowType:ADTYPE{
-        set{
-            UserDefaults.standard.set(newValue.rawValue, forKey: "IADConfig.lastRewardedType")
-        }
-        get{
-            let raw = UserDefaults.standard.integer(forKey: "IADConfig.lastRewardedType")
-            return .init(rawValue: raw) ?? ADTYPE.allCases.first!
-        }
-    }
     var lastSplashErrorType:ADTYPE{
         set{
             UserDefaults.standard.set(newValue.rawValue, forKey: "IADConfig.lastSplashErrorType")
@@ -61,12 +52,40 @@ public class IADConfig:NSObject{
             return .init(rawValue: raw) ?? ADTYPE.allCases.first!
         }
     }
+    var lastSplashRollType:ADTYPE{
+        set{
+            UserDefaults.standard.set(newValue.rawValue, forKey: "IADConfig.lastSplashRollType")
+        }
+        get{
+            let raw = UserDefaults.standard.integer(forKey: "IADConfig.lastSplashRollType")
+            return .init(rawValue: raw) ?? ADTYPE.allCases.first!
+        }
+    }
+    
+    var lastRewardedShowType:ADTYPE{
+        set{
+            UserDefaults.standard.set(newValue.rawValue, forKey: "IADConfig.lastRewardedType")
+        }
+        get{
+            let raw = UserDefaults.standard.integer(forKey: "IADConfig.lastRewardedType")
+            return .init(rawValue: raw) ?? ADTYPE.allCases.first!
+        }
+    }
     var lastRewardedErrorType:ADTYPE{
         set{
             UserDefaults.standard.set(newValue.rawValue, forKey: "IADConfig.lastRewardedErrorType")
         }
         get{
             let raw = UserDefaults.standard.integer(forKey: "IADConfig.lastRewardedErrorType")
+            return .init(rawValue: raw) ?? ADTYPE.allCases.first!
+        }
+    }
+    var lastRewardedRollType:ADTYPE{
+        set{
+            UserDefaults.standard.set(newValue.rawValue, forKey: "IADConfig.lastRewardedRollType")
+        }
+        get{
+            let raw = UserDefaults.standard.integer(forKey: "IADConfig.lastRewardedRollType")
             return .init(rawValue: raw) ?? ADTYPE.allCases.first!
         }
     }
@@ -85,6 +104,7 @@ public enum ADTYPE:Int,CaseIterable{
 
 // MARK: 开屏
 private var csj_splash=CSJSplash()
+private var google_splash:GoogleSplash!
 public extension UIViewController{
   
     func csj_showSplash(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
@@ -99,23 +119,43 @@ public extension UIViewController{
         guard let splashid = IADConfig.shared.google_splashID else{
             return fineshBlock(.error)
         }
-        let googlesplash = GoogleSplash(id: splashid)
-        googlesplash.show(vc: self, fineshBlock: fineshBlock)
+        google_splash = GoogleSplash(id: splashid)
+        google_splash.show(vc: self, fineshBlock: fineshBlock)
         
     }
     
     func auto_showSplash(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
-        if IADConfig.shared.lastSplashType == .csj{
-            self.csj_showSplash(fineshBlock: fineshBlock)
-        }else{
+        if IADConfig.shared.lastSplashErrorType == .csj,
+           IADConfig.shared.google_splashID != nil,
+           (IADConfig.shared.google_splashID?.count ?? 0 > 0)
+        {
             self.googel_showSplash(fineshBlock: fineshBlock)
+        }else{
+            self.csj_showSplash(fineshBlock: fineshBlock)
         }
     }
+    
     func roll_showSplash(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
-        if IADConfig.shared.lastSplashType != .csj{
+        if IADConfig.shared.lastSplashRollType != .csj,
+           IADConfig.shared.csj_splashID != nil,
+           (IADConfig.shared.csj_splashID?.count ?? 0 > 0)
+        {
             self.csj_showSplash(fineshBlock: fineshBlock)
+            IADConfig.shared.lastSplashRollType = .csj
         }else{
             self.googel_showSplash(fineshBlock: fineshBlock)
+            IADConfig.shared.lastSplashRollType = .google
+        }
+    }
+    
+    func showSplash(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
+        switch IADConfig.shared.splashType{
+        case .csj:
+            self.csj_showSplash(fineshBlock: fineshBlock)
+        case .none:
+            self.googel_showSplash(fineshBlock: fineshBlock)
+        case .some(.google):
+            auto_showSplash(fineshBlock: fineshBlock)
         }
     }
 }
@@ -143,10 +183,13 @@ public extension UIViewController{
      自动展示，展示上次成功展示的，默认第一次是chj
      */
     func auto_showRewarded(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
-        if IADConfig.shared.lastRewardedType == .csj{
-            self.csj_showRewarded(fineshBlock: fineshBlock)
-        }else{
+        if IADConfig.shared.lastSplashErrorType == .csj,
+           IADConfig.shared.google_rewardedID != nil,
+           (IADConfig.shared.google_rewardedID?.count ?? 0 > 0)
+        {
             self.googel_showRewarded(fineshBlock: fineshBlock)
+        }else{
+            self.csj_showRewarded(fineshBlock: fineshBlock)
         }
     }
     
@@ -154,10 +197,15 @@ public extension UIViewController{
      轮动展示，如果上次是chj，下次就是google
      */
     func roll_showRewarded(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
-        if IADConfig.shared.lastRewardedType != .csj{
+        if IADConfig.shared.lastRewardedRollType != .csj,
+           IADConfig.shared.google_rewardedID != nil,
+           (IADConfig.shared.google_rewardedID?.count ?? 0 > 0)
+        {
             self.csj_showRewarded(fineshBlock: fineshBlock)
+            IADConfig.shared.lastRewardedRollType = .csj
         }else{
             self.googel_showRewarded(fineshBlock: fineshBlock)
+            IADConfig.shared.lastRewardedRollType = .google
         }
     }
     
@@ -165,6 +213,7 @@ public extension UIViewController{
      按配置参数展示，如果配置参数为空，则自动展示
      */
     func showRewarded(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
+        
         switch IADConfig.shared.splashType{
         case .csj:
             self.csj_showRewarded(fineshBlock: fineshBlock)

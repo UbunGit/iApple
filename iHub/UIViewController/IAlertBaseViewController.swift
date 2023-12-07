@@ -8,6 +8,7 @@
 import Foundation
 import YYCategories
 
+
 open class IAlertBaseViewController:IBaseViewController{
   
     open lazy var closeBtn: UIButton = {

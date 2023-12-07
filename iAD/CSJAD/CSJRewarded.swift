@@ -14,18 +14,20 @@ class CSJRewarded:NSObject{
     var fineshBlock:((_ status:ADFineshStatus)->())? = nil
     var subViewcontroller:UIViewController? = nil
    
-    lazy var adView: BUNativeExpressRewardedVideoAd = {
+    var adView: BUNativeExpressRewardedVideoAd = {
         let model = BURewardedVideoModel()
         model.userId = UIApplication.shared.i_udid
         let value = BUNativeExpressRewardedVideoAd.init(slotID:IADConfig.shared.csj_rewardedID!, rewardedVideoModel: model)
-        value.delegate = self
         
         return value
     }()
     func show(vc: UIViewController,fineshBlock: @escaping (_: ADFineshStatus) -> Void){
         self.fineshBlock = fineshBlock
         self.subViewcontroller = vc
+        let adView = adView
+        adView.delegate = self
         adView.loadData()
+        logging.debug("csj load rewarded")
     }
 }
 extension CSJRewarded:BUNativeExpressRewardedVideoAdDelegate{
