@@ -26,6 +26,7 @@ class GoogleRewarded:NSObject{
         GADRewardedAd.load(withAdUnitID: id, request: GADRequest()) { ad, error in
             if let error = error {
                 print("Rewarded ad failed to load with error: \(error.localizedDescription)")
+                IADConfig.shared.lastRewardedErrorType = .google
                 self.fineshBlock?(.error)
                 return
             }
@@ -34,6 +35,7 @@ class GoogleRewarded:NSObject{
             ad?.fullScreenContentDelegate = self
           
             ad?.present(fromRootViewController: self.subViewcontroller!, userDidEarnRewardHandler: {
+                IADConfig.shared.lastRewardedShowType =  .google
                 self.fineshBlock?(.finish)
             })
         }
@@ -62,8 +64,8 @@ extension GoogleRewarded:GADFullScreenContentDelegate{
         didFailToPresentFullScreenContentWithError error: Error
     ) {
         print("Rewarded ad failed to present with error: \(error.localizedDescription).")
+        IADConfig.shared.lastRewardedErrorType = .google
         self.fineshBlock?(.error)
-       
     }
    
 }

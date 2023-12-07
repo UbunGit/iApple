@@ -28,8 +28,10 @@ class GoogleSplash:NSObject{
             self.didLoadingBlock?()
             if error != nil || appOpenAd == nil{
                 logging.debug("google splash Failed to load app open ad:",error)
+                IADConfig.shared.lastSplashErrorType = .google
                 fineshBlock(.error)
             }else{
+                
                 self.splashad = appOpenAd
                 appOpenAd?.fullScreenContentDelegate = self
                 appOpenAd?.present(fromRootViewController: vc)
@@ -43,24 +45,26 @@ extension GoogleSplash:GADFullScreenContentDelegate{
     /// Tells the delegate that the ad failed to present full screen content.
     func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
         logging.debug("google splash didFailToPresentFullScreenContentWithError:",error)
+        IADConfig.shared.lastSplashErrorType = .google
         fineshBlock?(.error)
     }
     /// Tells the delegate that the ad will present full screen content.
     func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
-        debugPrint("adWillPresentFullScreenContent")
+        logging.debug("adWillPresentFullScreenContent")
        
     }
 
     /// Tells the delegate that the ad dismissed full screen content.
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
-        debugPrint("adDidDismissFullScreenContent")
+        logging.debug("adDidDismissFullScreenContent")
    
     }
     func adDidRecordClick(_ ad: GADFullScreenPresentingAd) {
-        debugPrint("adDidDismissFullScreenContent")
+        logging.debug("adDidDismissFullScreenContent")
     }
     func adWillDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
-        debugPrint("adWillDismissFullScreenContent")
+        logging.debug("adWillDismissFullScreenContent")
+        IADConfig.shared.lastSplashShowType = .google
         fineshBlock?(.finish)
     }
   

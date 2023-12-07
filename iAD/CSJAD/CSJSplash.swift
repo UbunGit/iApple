@@ -37,6 +37,7 @@ extension CSJSplash:BUSplashAdDelegate{
     // 返回的错误码(error)表示广告加载失败的原因，所有错误码详情请见链接Link 。
     public func splashAdLoadFail(_ splashAd: BUSplashAd, error: BUAdError?) {
         logging.error("CSJ splashAdLoadFail",error?.localizedDescription)
+        IADConfig.shared.lastSplashErrorType = .csj
         didLoadingBlock?()
         fineshBlock?(.error)
     }
@@ -50,12 +51,15 @@ extension CSJSplash:BUSplashAdDelegate{
         
     }
     public func splashAdDidClick(_ splashAd: BUSplashAd) {
+        IADConfig.shared.lastRewardedShowType = .csj
         fineshBlock?(.finish)
     }
     public func splashAdDidClose(_ splashAd: BUSplashAd, closeType: BUSplashAdCloseType) {
+        IADConfig.shared.lastRewardedShowType = .csj
         fineshBlock?(.finish)
     }
     public func splashDidCloseOtherController(_ splashAd: BUSplashAd, interactionType: BUInteractionType) {
+        IADConfig.shared.lastRewardedShowType = .csj
         fineshBlock?(.finish)
     }
     // SDK渲染开屏广告渲染成功回调
@@ -64,10 +68,8 @@ extension CSJSplash:BUSplashAdDelegate{
     }
     // SDK渲染开屏广告渲染失败回调
     public func splashAdRenderFail(_ splashAd: BUSplashAd, error: BUAdError?) {
-#if DEBUG
-        debugPrint("穿山甲开屏广告错误\(error.debugDescription)")
-#endif
-        
+        logging.debug("splashAdRenderFail",error?.localizedDescription)
+        IADConfig.shared.lastSplashErrorType = .csj
         fineshBlock?(.error)
     }
     // 视频广告播放完毕回调
