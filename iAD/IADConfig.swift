@@ -8,6 +8,17 @@
 import Foundation
 import BUAdSDK
 
+public enum ADFineshStatus:Int{
+    case error = 100
+    case skip = 101
+    case finish = 102
+    case none
+}
+public enum ADTYPE:Int,CaseIterable{
+    case csj = 1
+    case google = 2
+}
+
 public class IADConfig:NSObject{
     public static let shared = IADConfig()
    
@@ -21,6 +32,9 @@ public class IADConfig:NSObject{
     public var google_rewardedID:String? = "ca-app-pub-3940256099942544/1712485313"
     public var google_expressID:String = "ca-app-pub-3940256099942544/1712485313"
     
+    public var splashType:ADTYPE? = nil //展示固定的广告商，如果为空，则执行auto
+    public var rewardedType:ADTYPE? = nil //展示固定的广告商，如果为空，则执行auto
+    
     override init() {
         super.init()
         let csjconfig = BUAdSDKConfiguration.configuration()
@@ -32,8 +46,7 @@ public class IADConfig:NSObject{
         })
     }
     
-    var splashType:ADTYPE? = nil //展示固定的广告商，如果为空，则执行auto
-    var rewardedType:ADTYPE? = nil //展示固定的广告商，如果为空，则执行auto
+
     var lastSplashShowType:ADTYPE{
         set{
             UserDefaults.standard.set(newValue.rawValue, forKey: "IADConfig.lastSplashType")
@@ -91,16 +104,6 @@ public class IADConfig:NSObject{
     }
 }
 
-public enum ADFineshStatus:Int{
-    case error = 100
-    case skip = 101
-    case finish = 102
-    case none
-}
-public enum ADTYPE:Int,CaseIterable{
-    case csj = 1
-    case google = 2
-}
 
 // MARK: 开屏
 private var csj_splash=CSJSplash()
@@ -183,6 +186,7 @@ public extension UIViewController{
 
 // MARK: 视频激励
 private var csj_rewarder=CSJRewarded()
+private var google_rewarded:GoogleRewarded!
 public extension UIViewController{
     
     func csj_showRewarded(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
@@ -197,7 +201,8 @@ public extension UIViewController{
         guard let rewardedID = IADConfig.shared.google_rewardedID else{
             return fineshBlock(.error)
         }
-        GoogleRewarded(id: rewardedID).show(vc: self, finesh: fineshBlock)
+        google_rewarded = GoogleRewarded(id: rewardedID)
+        google_rewarded.show(vc: self, finesh: fineshBlock)
     }
     
     /**
