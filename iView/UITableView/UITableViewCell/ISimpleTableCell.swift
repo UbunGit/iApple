@@ -14,7 +14,6 @@ open class ISimpleTableCell: UITableViewCell {
 
     public lazy var iconView: UIImageView = {
         let value = UIImageView()
-       
         value.image = .init(systemName: "trophy.fill")
         value.contentMode = .scaleAspectFit
         return value
@@ -31,6 +30,7 @@ open class ISimpleTableCell: UITableViewCell {
     public lazy var valueLab: UILabel = {
         let value = UILabel()
         value.text = "了解更多"
+        value.numberOfLines = 0
         value.textColor = .secondaryLabel
         value.font = .systemFont(ofSize: 14)
         return value

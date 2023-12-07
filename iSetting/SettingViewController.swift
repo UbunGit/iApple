@@ -11,9 +11,11 @@ import StoreKit
 
 open class ISettingViewController: UIViewController {
     
-    var email:String = "we2657932@163.com"
-    var dataSouce:[GroupData] = []
-    lazy var tableView: UITableView = {
+    public var email:String = "we2657932@163.com"
+    public var userurl:String = "https://homewh.chaoxing.com/agree/userAgreement"
+    public var privateurl:String = "https://www.julyedu.com/agreement/priv"
+    public var dataSouce:[GroupData] = []
+    public lazy var tableView: UITableView = {
         let value = UITableView(frame: .zero, style: .insetGrouped)
         value.delegate = self
         value.dataSource = self
@@ -34,38 +36,38 @@ open class ISettingViewController: UIViewController {
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
-    func makeUI(){
+    open func makeUI(){
         view.addSubview(tableView)
     }
     
-    func makeLayout(){
+    open func makeLayout(){
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
-    lazy var data_feedback: GroupData.ItemData = {
+    public  lazy var data_feedback: GroupData.ItemData = {
         .init(title: "意见反馈",cellType: SettingRightArrowCell.self, handle:  {
             self.handle_feedback()
         })
     }()
-    lazy var data_user_agreement: GroupData.ItemData = {
+    public lazy var data_user_agreement: GroupData.ItemData = {
         .init(title: "用户协议",cellType: SettingRightArrowCell.self, handle:  {
             self.handle_user_agreement()
         })
     }()
-    lazy var data_private_agreement: GroupData.ItemData = {
+    public lazy var data_private_agreement: GroupData.ItemData = {
         .init(title: "隐私协议",cellType: SettingRightArrowCell.self, handle:  {
             self.handle_private_agreement()
         })
     }()
-    lazy var data_bannedUser: GroupData.ItemData = {
+    public lazy var data_bannedUser: GroupData.ItemData = {
         .init(title: "注销账号",cellType: SettingRightArrowCell.self, handle:  {
             self.handle_bannedUser()
         })
     }()
     
-
-    lazy var data_clearCache: GroupData.ItemData = {
+    
+   public lazy var data_clearCache: GroupData.ItemData = {
         return .init(title:"清理缓存",cellType: SettingRightArrowCell.self) {
             self.fileSizeWithInterge()
         } handle: {
@@ -75,7 +77,7 @@ open class ISettingViewController: UIViewController {
             }
         }
     }()
-    func reloadData(){
+    open func reloadData(){
         dataSouce.append(
             .init(title: "设置", items: [
                 data_clearCache,
@@ -88,8 +90,8 @@ open class ISettingViewController: UIViewController {
                 .init(title: "版本号",
                       cellType: SettingRightArrowCell.self,
                       value: {
-                    UIApplication.shared.appVersion
-                }),
+                          UIApplication.shared.appVersion
+                      }),
                 data_bannedUser
                 
             ])
@@ -142,7 +144,7 @@ extension ISettingViewController:I_UITableViewProtocol{
         let cell = tableView.i_dequeueReusableCell(SettingRightArrowCell.self, for: indexPath)
         cell.textLabel?.text = rownData.title
         cell.valueLab.text = rownData.value?()
-        return cell  
+        return cell
     }
     
     public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -184,7 +186,7 @@ extension UIViewController{
         }
     }
     // 清理缓存
-    func clearCache(finesh:@escaping(()->())){
+    public func clearCache(finesh:@escaping(()->())){
         let alert = UIAlertController.init(title: "提示", message: "确定要删除缓存数据", preferredStyle: .alert)
         let commit = UIAlertAction.init(title: "确定", style: .default) {_ in
             
@@ -199,13 +201,13 @@ extension UIViewController{
     }
     
     // 联系我们
-    func emialMe(_ email:String = "we2657932@163.com"){
+    public func emialMe(_ email:String = "we2657932@163.com"){
         let emailUrl = "mailto:\(email)"
         UIApplication.shared.open(URL(string: emailUrl)!, options: [:], completionHandler: nil)
     }
     
     // 给个好评
-    func startApp(){
+    public func startApp(){
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
             if #available(iOS 14.0, *) {
                 SKStoreReviewController.requestReview(in: windowScene)
@@ -213,5 +215,17 @@ extension UIViewController{
                 // Fallback on earlier versions
             }
         }
+    }
+    
+    // 分享app
+    public func shareApp(appid:String){
+        // 用于分享的App链接
+        guard let appURL = URL(string: "https://apps.apple.com/us/app/id\(appid)")else{
+            return
+        }
+        let activityViewController = UIActivityViewController(activityItems: [appURL], applicationActivities: nil)
+        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.airDrop]
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController, animated: true, completion: nil)
     }
 }

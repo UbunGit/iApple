@@ -25,19 +25,19 @@ extension Int8:Sqlable{
         return self
     }
 }
-public extension Int16{
-    var sqltype:String?{
+extension Int16:Sqlable{
+    public var sqltype:String?{
         return "INTEGER"
     }
-    var cloudKitData: CKRecordValueProtocol {
+    public var cloudKitData: CKRecordValueProtocol {
         return self
     }
 }
-public extension Int32{
-    var sqltype:String?{
+extension Int32:Sqlable{
+    public var sqltype:String?{
         return "INTEGER"
     }
-    var cloudKitData: CKRecordValueProtocol {
+    public var cloudKitData: CKRecordValueProtocol {
         return self
     }
 }
@@ -49,3 +49,5 @@ extension Int64:Sqlable{
         return self
     }
 }
+
+

@@ -179,7 +179,7 @@ public extension FMDatabase{
         try await self.autoExecute { db in
             let sql = "INSERT OR REPLACE INTO \(tableName) (\(keysStr)) VALUES (\(valeustr))"
             if db.executeUpdate(sql, withParameterDictionary:sqlDatas) == false{
-                debugPrint(self.lastError())
+                logging.debug(self.lastError())
                 throw ISqliteError.sqlUpdateError
             }
         }

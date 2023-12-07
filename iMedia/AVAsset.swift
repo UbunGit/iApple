@@ -82,12 +82,12 @@ public extension AVAsset{
         })
         #if DEBUG
         Timer.scheduledTimer(withTimeInterval: 1, block: { timer in
-            debugPrint("转mp4 进度：\(exportSession.progress)")
+            logging.debug("转mp4 进度：\(exportSession.progress)")
             if exportSession.progress>0.95{
                 timer.invalidate()
             }
         }, repeats: true)
-        NSLog("%@", "")
+       
         #endif
     }
     
@@ -144,7 +144,7 @@ public extension AVAsset{
         #if DEBUG
         Timer.scheduledTimer(withTimeInterval: 1, block: { timer in
           
-            debugPrint("裁剪视频 进度：\(exportSession.progress)")
+            logging.debug("裁剪视频 进度：\(exportSession.progress)")
             if exportSession.progress>0.95{
                 timer.invalidate()
             }

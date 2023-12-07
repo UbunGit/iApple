@@ -27,7 +27,7 @@ class GoogleExpress:UIView{
 
     
     override init(frame: CGRect) {
-        self.id = ADManage.share.data.google.expressId
+        self.id = IADConfig.shared.google_expressID
         super.init(frame: frame)
         
     }

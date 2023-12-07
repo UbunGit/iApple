@@ -6,9 +6,24 @@
 //
 
 import Foundation
+
+public extension Double {
+    // max 最多小数位
+     func decimalStr(_ max: Int = 5) -> String {
+        let format = NumberFormatter.init()
+        format.numberStyle = .decimal
+        format.minimumFractionDigits = 0 // 最少小数位
+        format.maximumFractionDigits = max // 最多小数位
+        format.formatterBehavior = .default
+        format.roundingMode = .down // 小数位以截取方式。不同枚举的截取方式不同
+        return format.string(from: NSNumber(value: self)) ?? ""
+    }
+    
+   
+}
 public extension Double{
     
-    func formatter() -> String {
+    func i_formatter() -> String {
         let formatter = NumberFormatter()
         formatter.minimumFractionDigits = 0
         formatter.maximumFractionDigits = 2

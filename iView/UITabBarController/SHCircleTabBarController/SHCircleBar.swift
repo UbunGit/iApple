@@ -69,7 +69,7 @@ import UIKit
         NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     @objc func orientationDidChangeNotification(){
-        customView.frame = .init(x: 0, y: 0, width: i_screen_w, height: 49+UIScreen.i_safeAreaInsets.bottom)
+        customView.frame = .init(x: 0, y: 0, width: UIScreen.i_width, height: 49+UIScreen.i_safeAreaInsets.bottom)
     }
 }
 
@@ -116,7 +116,7 @@ extension SHCircleBar {
     
     private func customInit(){
         addSubview(customView)
-        customView.frame = .init(x: 0, y: 0, width: i_screen_w, height: 49+UIScreen.i_safeAreaInsets.bottom)
+        customView.frame = .init(x: 0, y: 0, width: UIScreen.i_width, height: 49+UIScreen.i_safeAreaInsets.bottom)
         self.tintColor = .red
         self.barTintColor = .red
         self.backgroundColor = .clear

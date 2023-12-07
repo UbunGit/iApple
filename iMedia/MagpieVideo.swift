@@ -81,15 +81,15 @@ public extension UIViewController{
         
         i_selectVideo(config: config) { image, avasset, error in
             statusChange?(.didSelect)
-            debugPrint("视频选择 图片选择完成")
+            logging.debug("视频选择 图片选择完成")
             if error != nil{
-                debugPrint("视频选择 出现错误\(error.debugDescription)")
+                logging.debug("视频选择 出现错误\(error.debugDescription)")
                 finesh(nil,nil,error)
                 return
             }
             guard let avasset = avasset else{
        
-                debugPrint("视频选择 出现错误\(error.debugDescription)")
+                logging.debug("视频选择 出现错误\(error.debugDescription)")
                 finesh(nil,nil,MediaError(code: -1, msg: "未选中图片"))
                 return
             }
@@ -99,7 +99,7 @@ public extension UIViewController{
                 let alert = UIAlertController(title: "提示", message: "视频时长大于\(cutend)秒将自动裁剪前\(cutend)秒进行上传", preferredStyle: .alert)
                 let cancelAction = UIAlertAction(title: "取消上传", style: .default) { alertAction in
                
-                    debugPrint("视频选择 出现错误\(error.debugDescription)")
+                    logging.debug("视频选择 出现错误\(error.debugDescription)")
                     finesh(nil,nil,MediaError(code: -1, msg: "用户取消上传"))
                     return
                 }
@@ -125,18 +125,18 @@ public extension UIViewController{
                   finesh:@escaping (_ coverImage:UIImage?,_ url:String?,_ error:Error?)->()
     ){
         statusChange?(.willMP4)
-        debugPrint("视频选择 转mp4")
+        logging.debug("视频选择 转mp4")
         let mp4 = avasset.i_toMp4(finesh: { mp4url, error in
             statusChange?(.didMP4)
             if error != nil{
-                debugPrint("视频选择 出现错误\(error.debugDescription)")
+                logging.debug("视频选择 出现错误\(error.debugDescription)")
                 finesh(nil,nil,error)
                 return
             }
             
             guard  let url = mp4url else{
               
-//                debugPrint("视频选择 出现错误\(error.debugDescription)",level: .error)
+//                logging.debug("视频选择 出现错误\(error.debugDescription)",level: .error)
                 finesh(nil,nil,MediaError(code: -1, msg: "视频为空"))
                 return
             }
@@ -153,43 +153,43 @@ public extension UIViewController{
                 }
                 guard  let url = cuturl else{
                   
-//                    debugPrint("视频选择 出现错误\(error.debugDescription)",level: .error)
+//                    logging.debug("视频选择 出现错误\(error.debugDescription)",level: .error)
                     finesh(nil,nil,MediaError(code: -1, msg: "视频为空"))
                     return
                 }
                 statusChange?(.willSTS)
-                debugPrint("视频选择 获取sts...")
+                logging.debug("视频选择 获取sts...")
 //                AF.api_mediaSts(type: ststype)
 //                    .i_response(type: [String:Any].self) { result in
 //                        statusChange?(.didSTS)
 //                        switch result{
 //                        case .failure(let error):
-//                            debugPrint("视频选择 获取sts错误",level: .error)
+//                            logging.debug("视频选择 获取sts错误",level: .error)
 //                            finesh(nil,nil,error)
 //                            break
 //                        case .success(let value):
 //                            guard let stsdata = STSModel.model(withJSON: value) else{
-//                                debugPrint("视频选择 获取sts转model错误", level: .error)
+//                                logging.debug("视频选择 获取sts转model错误", level: .error)
 //                                finesh(nil,nil,MediaError(code: -1, msg: "数据解析错误"))
 //                                return
 //                            }
 //                            do{
 //                                let cutdata = try Data(contentsOf: url)
 //                                statusChange?(.willUpload)
-//                                debugPrint("视频选择 oss 上传...")
+//                                logging.debug("视频选择 oss 上传...")
 //                                AF.api_ossUpload(stsdata, data: cutdata, filetype: ".mp4") { progress in
-//                                    debugPrint("视频选择 上传进度\(progress)", level: .info)
+//                                    logging.debug("视频选择 上传进度\(progress)", level: .info)
 //                                } finesh: { result, error in
 //                                    statusChange?(.didUpload)
 //                                    if error != nil{
 //                                        finesh(nil,nil,error)
-//                                        debugPrint("视频选择 上传错误:\(error.debugDescription)", level: .error)
+//                                        logging.debug("视频选择 上传错误:\(error.debugDescription)", level: .error)
 //                                        return
 //                                    }
 //                                    finesh(image,result,nil)
 //                                }
 //                            }catch{
-//                                debugPrint("视频选择 转data:\(error.debugDescription)", level: .error)
+//                                logging.debug("视频选择 转data:\(error.debugDescription)", level: .error)
 //                                finesh(nil,nil,MediaError(code: -1, msg: "视频文件为空"))
 //                            }
 //                        }

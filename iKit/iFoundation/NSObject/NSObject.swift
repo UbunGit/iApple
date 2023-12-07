@@ -12,4 +12,15 @@ public extension NSObject{
         return NSStringFromClass(self)
     }
     
+    static func i_properties()->[String]{
+        let mirror = Mirror(reflecting: self.init().self)
+        var properties: [String] = []
+        for child in mirror.children {
+            if let label = child.label {
+                properties.append(label)
+            }
+        }
+        return properties
+    }
+    
 }

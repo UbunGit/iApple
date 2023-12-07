@@ -6,18 +6,20 @@
 //
 
 import Foundation
-public let i_screen_w = UIScreen.main.bounds.size.width
-public let i_screen_h = UIScreen.main.bounds.size.height
+
 public extension UIScreen{
     
-    static  var i_safeAreaInsets:UIEdgeInsets{
+    static var i_safeAreaInsets:UIEdgeInsets{
         guard let safe = UIApplication.shared.delegate?.window??.safeAreaInsets else{
             return .zero
         }
         return  safe
     }
-    
-    
-    
+    static var i_width:CGFloat{
+        return main.bounds.size.width
+    }
+    static var i_height:CGFloat{
+        return main.bounds.size.height
+    }
 
 }

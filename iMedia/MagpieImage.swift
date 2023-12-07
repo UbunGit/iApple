@@ -16,7 +16,7 @@ import TZImagePickerController
     
     func i_selectImage(
         config:((_ imagePicker:TZImagePickerController)->())?,
-        finesh:@escaping (_ cover:[UIImage]?,_ asset:[Any]?,_ error:Error?)->()
+        finesh:@escaping (_ cover:[UIImage]?,_ asset:[PHAsset]?,_ error:Error?)->()
     ){
         guard let pickVC = TZImagePickerController(maxImagesCount: 9, columnNumber: 4, delegate: nil) else{
             finesh (nil,nil,MediaError(code: -1, msg: "图片选择出错"))
@@ -38,6 +38,9 @@ import TZImagePickerController
         }
         // photos 图片数组 assets资源数组 isOriginal 是否是原图
         pickVC.didFinishPickingPhotosHandle = ({ photos,assets,isOriginal in
+            guard let assets = (assets) as? [PHAsset]? else{
+                return finesh(nil,nil,nil)
+            }
             finesh(photos,assets,nil)
         })
         pickVC.modalPresentationStyle = .fullScreen

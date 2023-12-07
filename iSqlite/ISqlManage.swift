@@ -19,7 +19,7 @@ open class EncryptDatabase:FMDatabase{
     open override func open() -> Bool {
         if super.open(){
             if self.setKey("passWord") == false{
-                debugPrint(self.lastError())
+                logging.debug(self.lastError())
             }
             return true
         }
@@ -30,7 +30,7 @@ open class EncryptDatabase:FMDatabase{
     open override func open(withFlags flags: Int32, vfs vfsName: String?) -> Bool {
         if super.open(withFlags: flags, vfs: vfsName){
             if self.setKey("passWord") == false{
-                debugPrint(self.lastError())
+                logging.debug(self.lastError())
             }
             return true
         }
@@ -148,7 +148,7 @@ open class ISqlManage{
             }
             let sql = "INSERT OR REPLACE INTO \(table) (\(keysStr)) VALUES (\(valeustr))"
             if db.executeUpdate(sql, withParameterDictionary:sqlData) == false{
-                debugPrint(database.lastError())
+                logging.debug(database.lastError())
                 throw ISqliteError.sqlUpdateError
             }
         }
@@ -168,7 +168,7 @@ open class ISqlManage{
                     """,values: [uuid])
                     continuation.resume(returning:true)
                 }catch{
-                    debugPrint("delete error: \(error)")
+                    logging.debug("delete error: \(error)")
                     continuation.resume(throwing: error)
                 }
             })

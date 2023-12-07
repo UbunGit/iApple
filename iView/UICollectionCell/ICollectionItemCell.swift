@@ -40,9 +40,14 @@ open class ICollectionItemCell: UICollectionViewCell {
         contentView.addSubview(stackView)
         stackView.addArrangedSubview(imageView)
         stackView.addArrangedSubview(titleLab)
+        
     
     }
     open func makeLayout(){
+        titleLab.snp.makeConstraints { make in
+            make.size.lessThanOrEqualTo(self)
+            make.height.greaterThanOrEqualTo(24)
+        }
         stackView.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.width.lessThanOrEqualToSuperview()

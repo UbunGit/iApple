@@ -51,5 +51,14 @@ public extension UIButton{
         
         
     }
+    
+    var font:UIFont?{
+        set{
+            titleLabel?.font = newValue
+        }
+        get{
+            titleLabel?.font
+        }
+    }
 }
 

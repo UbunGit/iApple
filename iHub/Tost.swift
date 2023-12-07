@@ -39,6 +39,7 @@ public extension UIView{
         
     }
     func tost(title:String? = nil ,msg:String, level:TostLevel = .error){
+        logging.debug("tost:",msg)
         DispatchQueue.main.async {
             NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.tostDisappear), object: nil)
             if let title = title{

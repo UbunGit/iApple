@@ -13,15 +13,19 @@ private let appStoreUrl = URL(string:"https://sandbox.itunes.apple.com/verifyRec
 private let appStoreUrl = URL(string:"https://buy.itunes.apple.com/verifyReceipt")!
 #endif
 
+enum StoreError:Error{
+    case defual
+}
+
 
 extension Notification.Name{
-    public static let storeWillFinishTransaction:Notification.Name = .init("storeWillFinishTransaction")
+    public static let storeDidFinishTransaction:Notification.Name = .init("storeDidFinishTransaction")
 }
 public struct StoreFinishTransaction{
     public var result: [String : Any]
     public var transaction:SKPaymentTransaction
 }
-var g_proId:String? = nil
+
 
 extension UIApplication:SKProductsRequestDelegate{
     // MARK: 初始化
@@ -38,7 +42,6 @@ extension UIApplication:SKProductsRequestDelegate{
         UIView.loading()
         let set = Set<String>.init([proId])
         let request = SKProductsRequest.init(productIdentifiers: set)
-        g_proId = proId
         request.delegate = self
         request.start()
         
@@ -59,84 +62,64 @@ extension UIApplication:SKProductsRequestDelegate{
             return receiptData.base64EncodedString()
         }
     }
-   
-  
     
     // MARK: 客户端验证支付凭证
-    func clientValidationOrder(_ transaction: SKPaymentTransaction){
+    func clientValidationOrder(_ transaction: SKPaymentTransaction)async throws{
         guard let transactionString = receiptTransactionsString else{
-            debugPrint("获取支付凭证失败")
-            return
+            logging.error("获取支付凭证失败")
+            throw StoreError.defual
         }
         let password = UserDefaults.standard.object(forKey: "store.password")
         let parmas = ["receipt-data":transactionString,
                       "password":password
         ]
-        do {
-            let bodydata = try JSONSerialization.data(withJSONObject: parmas)
-            var request = URLRequest(url: appStoreUrl)
-            request.httpMethod = "post"
-            request.httpBody = bodydata
-            URLSession.shared.dataTask(with: request) { data, response, error in
-                debugPrint(response ?? "")
-                DispatchQueue.main.async {
-                    guard error == nil, let data = data else{ return }
-                    
-                    do{
-                        guard let jsondata = try JSONSerialization.jsonObject(with: data) as? [String:Any] else{
-                            return
-                        }
-                        let status =  jsondata["status"].i_int(-1)
-//                        let productid = transaction.payment.productIdentifier
-                        if status == 0{
-                           
-                            NotificationCenter.default.post(name: .storeWillFinishTransaction, object:nil,userInfo: ["info":StoreFinishTransaction.init(result: jsondata, transaction: transaction)])
-                           
-//                            UIApplication.shared.delegate?.window??.rootViewController?.view.tost(title: "成功", msg: "购买成功")
-                            SKPaymentQueue.default().finishTransaction(transaction)
-                        }else{
-                            UIApplication.shared.delegate?.window??.rootViewController?.view.tost(msg: "验证支付凭证失败\(status)")
-                        }
-                    }catch  {
-                        UIApplication.shared.delegate?.window??.rootViewController?.view.tost(msg: "验证支付凭证失败\(error)")
-                        return
-                    }
-                }
-                
-            }.resume()
-        } catch  {
-//            UIApplication.shared.delegate?.window??.rootViewController?.view.tost(msg: "验证支付凭证失败\(error)")
-            return
+        
+        let bodydata = try JSONSerialization.data(withJSONObject: parmas)
+        var request = URLRequest(url: appStoreUrl)
+        request.httpMethod = "post"
+        request.httpBody = bodydata
+        let (data, response) = try await URLSession.shared.data(for: request)
+        debugPrint(response)
+        
+        guard let jsondata = try JSONSerialization.jsonObject(with: data) as? [String:Any]else{
+            logging.error("支付凭证验证失败")
+            throw StoreError.defual
         }
+        logging.debug(jsondata)
+        if jsondata["status"].i_int(-1) != 0{
+            logging.error("支付凭证验证失败")
+            throw StoreError.defual
+        }
+        guard let datas = jsondata["latest_receipt_info"] as? [[String:Any]],
+              let data = datas.first else{
+            logging.error("支付结果验证失败")
+            throw StoreError.defual
+        }
+        let product_id = data["product_id"].i_string()
+        var values:[String:Any] = UserDefaults.standard.object(forKey: "TransactionModels") as? [String : Any] ?? [:]
+        values[product_id] = try data.toData()
+        UserDefaults.standard.setValue(values, forKey: "TransactionModels")
+        SKPaymentQueue.default().finishTransaction(transaction)
+        NotificationCenter.default.post(name: .storeDidFinishTransaction, object: nil)
+        
     }
     
-   
     // MARK: SKProductsRequestDelegate
     public func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        UIView.loadingDismiss()
-        let productArray = response.products
-          if productArray.count == 0 {
-              UIView.tost(msg: "未找到对应的商品信息")
-              return
-          }
-          var product:SKProduct!
-          for pro in productArray {
-              if pro.productIdentifier == g_proId {
-                  product = pro
-                  break
-              }
-          }
-         
-          let payment = SKMutablePayment.init(product: product)
-          payment.quantity = 1
-          SKPaymentQueue.default().add(payment)
+        logging.debug(response.products.map{$0.productIdentifier})
+        response.products.forEach { product in
+            let payment = SKMutablePayment.init(product: product)
+            payment.quantity = 1
+            SKPaymentQueue.default().add(payment)
+        }
     }
     
     public func request(_ request: SKRequest, didFailWithError error: Error) {
+        UIView.loadingDismiss()
         DispatchQueue.main.async {
-//            UIApplication.shared.delegate?.window??.rootViewController?.alert(title: "失败", msg: error.localizedDescription)
+            UIApplication.shared.delegate?.window??.rootViewController?.view.tost( msg: error.localizedDescription)
         }
-       
+        
     }
     
 }
@@ -144,8 +127,11 @@ extension UIApplication:SKProductsRequestDelegate{
 extension UIApplication:SKPaymentTransactionObserver{
     public func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
         UIView.loadingDismiss()
-        UIView.tost(msg: "恢复成功")
-        NotificationCenter.default.post(name: .storeWillFinishTransaction, object:nil)
+        if queue.transactions.count==0{
+            UIView.tost(msg: "未找到购买记录")
+        }else{
+            UIView.tost(msg: "恢复成功")
+        }
     }
     
     public func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
@@ -155,48 +141,103 @@ extension UIApplication:SKPaymentTransactionObserver{
     
     // 这里接收所有支付事务的状态：成功、失败或者正在支付
     public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        for transaction in transactions {
-            handleTransaction(transaction)
+        Task{
+            do{
+                for transaction in transactions {
+                    try await handleTransaction(transaction)
+                }
+                UIView.loadingDismiss()
+            }catch{
+                UIView.tost(msg: error.localizedDescription)
+            }
         }
+        
     }
     
-    func handleTransaction(_ transaction: SKPaymentTransaction) {
+    func handleTransaction(_ transaction: SKPaymentTransaction) async throws{
         switch transaction.transactionState {
             // 购买成功，缓存这个事务
         case .purchased:
             //                unfinishedTransactions.append(transaction)
             debugPrint("购买成功，缓存这个事务")
-            clientValidationOrder(transaction)
+            try await clientValidationOrder(transaction)
             break
             
             // 成功恢复购买，缓存这个事务
         case .restored:
-            UIView.error("恢复购买成功")
+           
             debugPrint("恢复购买成功")
-            clientValidationOrder(transaction)
+            try await  clientValidationOrder(transaction)
             break
             
         case .failed:
             SKPaymentQueue.default().finishTransaction(transaction)
             UIView.error("购买失败")
             break
-        
+            
         case .purchasing:
             UIView.error("请稍后...")
-//            UIApplication.shared.delegate?.window??.rootViewController?.alert(title: "请稍后", msg: "...")
+            
             fallthrough
         case .deferred:
-//            UIView.error("事务在队列中，但它的最终状态是等待外部操作。")
-//            UIApplication.shared.delegate?.window??.rootViewController?.alert(title: "失败", msg: "支付\(transaction.transactionState):事务在队列中，但它的最终状态是等待外部操作。")
+            
             fallthrough
         @unknown default:
-//            UIView.error("支付失败")
-//            UIApplication.shared.delegate?.window??.rootViewController?.alert(title: "失败", msg: "支付\(transaction.transactionState)")
+            
             break
         }
     }
     
     
+}
+
+extension UIApplication{
+    public struct AppleOrderModel:Codable{
+        
+        public var product_id:String
+        public var expires_date_ms:Double? // 结束时间戳
+        public var quantity:Int
+        
+        public var expires_date:Date?{
+            guard let ms = expires_date_ms else{
+                return nil
+            }
+            return .init(timeIntervalSince1970: ms/1000)
+        }
+        
+    }
+    
+    public func lastOrder(pro_id:String)throws ->AppleOrderModel?{
+
+        guard let values: [String: Data] = UserDefaults.standard.object(forKey: "TransactionModels") as? [String: Data] else{
+           return nil
+        }
+        guard let data = values[pro_id] else {
+            return nil
+        }
+        guard let value = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] else {
+            return nil
+        }
+        let product_id = value["product_id"].i_string()
+        let ms = value["expires_date_ms"].i_double()
+        let quantity = value["quantity"].i_int()
+        return .init(product_id: product_id, expires_date_ms: ms, quantity: quantity)
+    }
+    
+    public func isvip(pro_id:String)->Bool{
+        do {
+            if let storeData = try UIApplication.shared.lastOrder(pro_id: pro_id),
+               let date = storeData.expires_date{
+                if date.timeIntervalSince1970>Date().timeIntervalSince1970{
+                    return true
+                }
+            }
+            return false
+        } catch  {
+            return false
+        }
+        
+    }
 }
 
 

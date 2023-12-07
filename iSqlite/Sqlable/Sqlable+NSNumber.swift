@@ -12,3 +12,4 @@ extension NSNumber:Sqlable{
         return "FLOAT"
     }
 }
+

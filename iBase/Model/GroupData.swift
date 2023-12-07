@@ -8,10 +8,10 @@
 import Foundation
 public struct GroupData{
     
-    public var title:String
+    public var title:String?
     public var items:[ItemData]
     
-    public init(title: String, items: [ItemData]) {
+    public init(title: String?, items: [ItemData]) {
         self.title = title
         self.items = items
     }

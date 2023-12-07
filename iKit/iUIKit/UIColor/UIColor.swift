@@ -33,7 +33,7 @@ public extension UIColor{
         guard let components = color.cgColor.components else{
             return "#FFFFFF"
         }
-        debugPrint(components)
+        logging.debug(components)
         
         return String(format: "#%02X%02X%02X%02X",
                       Int(components[0]*255),

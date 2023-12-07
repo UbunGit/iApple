@@ -57,15 +57,17 @@ public extension UIView{
     // 添加阴影
     @MainActor
     func i_shadow(opacity:Float = 0.35,
-                  shadowColor:UIColor? = UIColor.systemGray3,
-                  radius:CGFloat = 4,
+                  shadowColor:UIColor? = UIColor.systemGroupedBackground,
+                  radius:CGFloat = 3,
                   offset:CGSize = .init(width: 2, height: 2)){
         
-        self.clipsToBounds = false
-        self.layer.shadowOpacity = opacity;///不透明度
-        self.layer.shadowColor = shadowColor?.cgColor;//阴影颜色
-        self.layer.shadowRadius = radius;//半径大小
-        self.layer.shadowOffset = offset
+       
+        layer.shadowOpacity = opacity;///不透明度
+        layer.shadowColor = shadowColor?.cgColor;//阴影颜色
+        layer.shadowRadius = radius;//半径大小
+        layer.shadowOffset = offset
+        
+        layer.masksToBounds = false
         
     }
     // 移除阴影

@@ -15,13 +15,14 @@ open class ISearchView:UIView{
     }()
     public lazy var cancelBtn: UIButton = {
         let value = UIButton()
+        
         value.setTitle("取消", for: .normal)
         value.titleLabel?.font = .systemFont(ofSize: 16)
         value.setTitleColor(.red, for: .normal)
         value.addTarget(self, action: #selector(cancelBtnClickDoit), for: .touchUpInside)
         return value
     }()
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         makeUI()
         makeLayout()
@@ -36,8 +37,12 @@ open class ISearchView:UIView{
     }
     
     func makeUI(){
+        i_radius = 12
+        self.backgroundColor = .systemGroupedBackground
+        i_shadow(opacity: 1,shadowColor: .systemBackground)
         addSubview(textField)
         addSubview(cancelBtn)
+        
         NotificationCenter.default.addObserver(forName: UITextField.keyboardWillShowNotification, object: nil, queue: .main) { _ in
             UIView.animate(withDuration: 0.35) {
                 self.textField.searchIcon.tintColor = .secondaryLabel
@@ -74,8 +79,8 @@ open class ISearchView:UIView{
                 make.right.equalTo(cancelBtn.snp.left).offset(-8)
                 make.bottom.equalToSuperview()
             }
-            cancelBtn.snp.makeConstraints { make in
-                make.right.equalToSuperview().offset(-2)
+            cancelBtn.snp.remakeConstraints { make in
+                make.right.equalToSuperview().offset(-8)
                 make.centerY.equalToSuperview()
                 make.width.equalTo(52)
             }
@@ -91,7 +96,7 @@ open class ISearchView:UIView{
                 make.right.equalToSuperview()
                 make.bottom.equalToSuperview().offset(-2)
             }
-            cancelBtn.snp.makeConstraints { make in
+            cancelBtn.snp.remakeConstraints { make in
                 make.left.equalTo(self.snp.right)
                 make.centerY.equalToSuperview()
             }
@@ -104,21 +109,21 @@ open class ISearchView:UIView{
 open class ISearchTextField:UITextField{
     lazy var searchIcon: UIImageView = {
         let value = UIImageView()
-        value.i_radius = 16
+        value.i_radius = 12
+        value.i_shadow(shadowColor: .systemBackground)
+        value.tintColor = .label
+        value.backgroundColor = .systemBackground
         value.image = .init(systemName: "magnifyingglass")
-        value.contentMode = .scaleAspectFit
-        value.tintColor = .separator
+        value.contentMode = .center
         return value
     }()
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         leftView = searchIcon
         leftViewMode = .always
         placeholder = "Enter search content"
-        backgroundColor = .tertiarySystemFill
-        
-        
+       
     }
     
     required public init?(coder: NSCoder) {
@@ -126,7 +131,13 @@ open class ISearchTextField:UITextField{
     }
     
     open override func leftViewRect(forBounds bounds: CGRect) -> CGRect {
-        return .init(x: 8, y: 0, width: 20, height: bounds.size.height)
+        return .init(x: 8, y: (bounds.height-32)/2, width: 32, height: 32)
+    }
+    open override func textRect(forBounds bounds: CGRect) -> CGRect {
+        return .init(x: 48, y: 0, width: bounds.width-48, height: bounds.height)
+    }
+    open override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        return .init(x: 48, y: 0, width: bounds.width-48, height: bounds.height)
     }
     
     

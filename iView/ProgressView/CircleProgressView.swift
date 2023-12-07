@@ -70,7 +70,7 @@ open class CircleProgressView: UIView {
         let center = CGPoint(x: bounds.midX, y: bounds.midY)
         
         let radius = (min(bounds.width, bounds.height) - lineWidth) / 2  // 圆环的半径
-        debugPrint(radius,lineWidth)
+        logging.debug(radius,lineWidth)
         let startAngle: CGFloat = CGFloat.pi*1.5
         let endAngle: CGFloat = 2 * CGFloat.pi + startAngle // 圆环的结束角度
         let path = UIBezierPath()

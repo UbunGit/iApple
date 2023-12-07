@@ -25,6 +25,15 @@ Pod::Spec.new do |spec|
     ]
   end
   
+  
+  spec.subspec 'iURL' do |spec|
+    spec.dependency "Alamofire"
+    spec.dependency "SSZipArchive"
+    
+    spec.source_files  =  [
+    "iURL/**/*.{h,m,swift}"
+    ]
+  end
   spec.subspec 'iBase' do |spec|
     spec.dependency "SnapKit"
     spec.source_files  =  [
@@ -61,6 +70,7 @@ Pod::Spec.new do |spec|
   end
   spec.subspec 'iLog' do |spec|
     spec.dependency "iApple/iBox"
+    spec.dependency 'CocoaLumberjack/Swift'
     spec.source_files  =  [
     "iLog/**/*.{h,m,swift}"
     ]
