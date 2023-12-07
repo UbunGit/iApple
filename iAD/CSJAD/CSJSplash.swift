@@ -35,7 +35,7 @@ extension CSJSplash:BUSplashAdDelegate{
  
     // 返回的错误码(error)表示广告加载失败的原因，所有错误码详情请见链接Link 。
     public func splashAdLoadFail(_ splashAd: BUSplashAd, error: BUAdError?) {
-        logging.error("CSJ splashAdLoadFail",error?.localizedDescription)
+        logging.error("CSJ splashAdLoadFail",error?.errorCode,error?.userInfo)
         IADConfig.shared.lastSplashErrorType = .csj
         didLoadingBlock?()
         fineshBlock?(.error)
@@ -67,7 +67,7 @@ extension CSJSplash:BUSplashAdDelegate{
     }
     // SDK渲染开屏广告渲染失败回调
     public func splashAdRenderFail(_ splashAd: BUSplashAd, error: BUAdError?) {
-        logging.debug("splashAdRenderFail",error?.localizedDescription)
+        logging.error("splashAdRenderFail",error?.errorCode,error?.userInfo)
         IADConfig.shared.lastSplashErrorType = .csj
         fineshBlock?(.error)
     }

@@ -27,7 +27,7 @@ class GoogleSplash:NSObject{
         GADAppOpenAd.load(withAdUnitID: id, request: GADRequest()) {  appOpenAd, error in
             self.didLoadingBlock?()
             if error != nil || appOpenAd == nil{
-                logging.debug("google splash Failed to load app open ad:",error)
+                logging.error("google splash Failed to load app open ad:",error)
                 IADConfig.shared.lastSplashErrorType = .google
                 fineshBlock(.error)
             }else{
@@ -44,7 +44,7 @@ class GoogleSplash:NSObject{
 extension GoogleSplash:GADFullScreenContentDelegate{
     /// Tells the delegate that the ad failed to present full screen content.
     func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
-        logging.debug("google splash didFailToPresentFullScreenContentWithError:",error)
+        logging.error("google splash didFailToPresentFullScreenContentWithError:",error)
         IADConfig.shared.lastSplashErrorType = .google
         fineshBlock?(.error)
     }

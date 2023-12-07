@@ -7,11 +7,12 @@
 
 import Foundation
 import BUAdSDK
-
+import GoogleMobileAds
 public enum ADFineshStatus:Int{
     case error = 100
     case skip = 101
     case finish = 102
+    case off = 103
     case none
 }
 public enum ADTYPE:Int,CaseIterable{
@@ -23,27 +24,40 @@ public class IADConfig:NSObject{
     public static let shared = IADConfig()
    
     // MARK: 穿山甲
-    public var csj_appID:String? = "5452703"
-    public var csj_splashID:String? = "888689796"
-    public var csj_rewardedID:String? = "954637653"
+    public var csj_appID:String?  = nil // "5452703"
+    public var csj_splashID:String?  = nil // "888689796"
+    public var csj_rewardedID:String?  = nil //"954637653"
     
     // MARK: 谷歌
-    public var google_splashID:String? = "ca-app-pub-8735546255287972/1575822425"
-    public var google_rewardedID:String? = "ca-app-pub-3940256099942544/1712485313"
-    public var google_expressID:String = "ca-app-pub-3940256099942544/1712485313"
+    public var google_splashID:String?  = nil // "ca-app-pub-8735546255287972/1575822425"
+    public var google_rewardedID:String?  = nil // "ca-app-pub-3940256099942544/1712485313"
+    public var google_expressID:String?  = nil //"ca-app-pub-3940256099942544/1712485313"
     
+    public var ison:Bool = true
     public var splashType:ADTYPE? = nil //展示固定的广告商，如果为空，则执行auto
     public var rewardedType:ADTYPE? = nil //展示固定的广告商，如果为空，则执行auto
     
     override init() {
         super.init()
-        let csjconfig = BUAdSDKConfiguration.configuration()
-        csjconfig.appID = csj_appID
-        BUAdSDKManager.start(syncCompletionHandler: {_,error in
-            if let error = error{
-                logging.debug(error)
-            }
-        })
+       
+    }
+    
+    public func setup() async throws{
+
+        await GADMobileAds.sharedInstance().start()
+        return try await withUnsafeThrowingContinuation{ continuation in
+            let csjconfig = BUAdSDKConfiguration.configuration()
+            csjconfig.appID = csj_appID
+            BUAdSDKManager.start(syncCompletionHandler: {_,error in
+                if let error = error{
+                    logging.debug(error)
+                    continuation.resume(throwing: error)
+                }else{
+                    continuation.resume(returning: ())
+                }
+                
+            })
+        }
     }
     
 
@@ -114,7 +128,13 @@ public extension UIViewController{
      展示穿山甲开屏广告
      */
     func csj_showSplash(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
+        if IADConfig.shared.ison == false{
+            logging.debug("广告已被你关闭")
+            fineshBlock(.off)
+            return
+        }
         guard let _ = IADConfig.shared.csj_appID else{
+            IADConfig.shared.lastSplashErrorType = .csj
             return fineshBlock(.error)
         }
         csj_splash.show(vc: self, fineshBlock: fineshBlock)
@@ -124,8 +144,13 @@ public extension UIViewController{
      展示googel开屏广告
      */
     func googel_showSplash(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
-        
+        if IADConfig.shared.ison == false{
+            logging.debug("广告已被你关闭")
+            fineshBlock(.off)
+            return
+        }
         guard let splashid = IADConfig.shared.google_splashID else{
+            IADConfig.shared.lastSplashErrorType = .google
             return fineshBlock(.error)
         }
         google_splash = GoogleSplash(id: splashid)
@@ -190,7 +215,13 @@ private var google_rewarded:GoogleRewarded!
 public extension UIViewController{
     
     func csj_showRewarded(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
+        if IADConfig.shared.ison == false{
+            logging.debug("广告已被你关闭")
+            fineshBlock(.off)
+            return
+        }
         guard let _ = IADConfig.shared.csj_rewardedID else{
+            IADConfig.shared.lastRewardedErrorType = .csj
             return fineshBlock(.error)
         }
         csj_rewarder.show(vc: self, fineshBlock: fineshBlock)
@@ -198,7 +229,13 @@ public extension UIViewController{
     }
     
     func googel_showRewarded(fineshBlock: @escaping (_: ADFineshStatus) -> Void){
+        if IADConfig.shared.ison == false{
+            logging.debug("广告已被你关闭")
+            fineshBlock(.off)
+            return
+        }
         guard let rewardedID = IADConfig.shared.google_rewardedID else{
+            IADConfig.shared.lastRewardedErrorType = .google
             return fineshBlock(.error)
         }
         google_rewarded = GoogleRewarded(id: rewardedID)

@@ -55,6 +55,12 @@ public extension Optional{
         }
         return value1
     }
+    func i_intValue() -> Int? {
+        guard let value = self else {
+            return nil
+        }
+        return i_int()
+    }
     
     func i_bool(_ defual:Int=0) -> Bool{
         return i_int()>0

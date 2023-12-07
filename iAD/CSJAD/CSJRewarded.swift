@@ -33,14 +33,14 @@ class CSJRewarded:NSObject{
 extension CSJRewarded:BUNativeExpressRewardedVideoAdDelegate{
     // 返回的错误码(error)表示广告加载失败的原因，所有错误码详情请见链接
     public func nativeExpressRewardedVideoAd(_ rewardedVideoAd: BUNativeExpressRewardedVideoAd, didFailWithError error: Error?) {
-        logging.error("激励广告-穿山甲ExpressRewardedVideoAd:",error?.localizedDescription)
+        logging.error("激励广告-穿山甲nativeExpressRewardedVideoAd:",error)
         IADConfig.shared.lastSplashErrorType = .csj
         fineshBlock?(.error)
     }
     // 渲染失败，网络原因或者硬件原因导致渲染失败,可以更换手机或者网络环境测试。建议升级到穿山甲平台最新版本
     public func nativeExpressRewardedVideoAdViewRenderFail(_ rewardedVideoAd: BUNativeExpressRewardedVideoAd, error: Error?) {
 
-        logging.error("激励广告-穿山甲ExpressRewardedVideoAdViewRenderFail:",error?.localizedDescription)
+        logging.error("激励广告-穿山甲nativeExpressRewardedVideoAdViewRenderFail:",error)
         IADConfig.shared.lastSplashErrorType = .csj
         fineshBlock?(.error)
         
