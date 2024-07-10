@@ -1,5 +1,5 @@
 //
-//  ShowImageCell.swift
+//  ImagePlayerCell.swift
 //  iPotho
 //
 //  Created by mac on 2023/2/28.
@@ -8,12 +8,12 @@
 import Foundation
 import UIKit
 
-class ShowImageCell:UICollectionViewCell{
+class ImagePlayerCell:UICollectionViewCell{
     
     var minScale:CGFloat = 1
     var mazScale:CGFloat = 4
   
-    var longPressBlock:((_ cell:ShowImageCell)->())? = nil
+    var longPressBlock:((_ cell:ImagePlayerCell)->())? = nil
     
     lazy var doubleTap: UITapGestureRecognizer = {
         let value = UITapGestureRecognizer()
@@ -105,7 +105,7 @@ class ShowImageCell:UICollectionViewCell{
 
 }
  
-extension ShowImageCell:UIScrollViewDelegate{
+extension ImagePlayerCell:UIScrollViewDelegate{
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }

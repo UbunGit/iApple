@@ -1,13 +1,12 @@
 //
 //  IBoxBaseViewController.swift
-//  iApple
+//  iPods
 //
 //  Created by admin on 2023/7/26.
 //
 
 import Foundation
 public protocol ICombineDelegate:AnyObject{
-    
     func valueDidChange()
 }
 public protocol ICombineProtocol:AnyObject {

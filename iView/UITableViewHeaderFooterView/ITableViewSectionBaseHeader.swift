@@ -1,6 +1,6 @@
 //
 //  ITableViewSectionBaseHeader.swift
-//  iApple
+//  iPods
 //
 //  Created by admin on 2023/10/8.
 //
@@ -13,6 +13,7 @@ open class ITableViewSectionBaseHeader: UITableViewHeaderFooterView {
         let value = UILabel()
         return value
     }()
+
    
     public override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -24,10 +25,7 @@ open class ITableViewSectionBaseHeader: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
     open func makeUI(){
-  
         contentView.addSubview(titleLab)
-     
-      
     }
     open func makeLayout(){
         titleLab.snp.makeConstraints { make in

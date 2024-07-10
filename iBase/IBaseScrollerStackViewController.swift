@@ -1,6 +1,6 @@
 //
 //  IBaseScrollerStackViewController.swift
-//  iApple
+//  iPods
 //
 //  Created by admin on 2023/10/13.
 //
@@ -52,11 +52,10 @@ open class IBaseScrollerStackViewController: IBaseViewController {
         ])
     }
 }
-open class ScrollerStackView:IBaseView{
+open class IScrollerStackView:IBaseView{
     open  lazy var stackView: UIStackView = {
         let value = UIStackView()
         value.translatesAutoresizingMaskIntoConstraints = false
-        value.axis = .horizontal
         value.alignment = .center
         value.spacing = 8
         value.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)

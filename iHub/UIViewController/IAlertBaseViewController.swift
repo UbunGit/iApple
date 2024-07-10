@@ -9,7 +9,7 @@ import Foundation
 import YYCategories
 
 
-open class IAlertBaseViewController:IBaseViewController{
+open class IAlertBaseViewController:UIViewController{
   
     open lazy var closeBtn: UIButton = {
         let value = UIButton(frame: .init(origin: .zero, size: .init(width: 44, height: 44)))
@@ -38,11 +38,11 @@ open class IAlertBaseViewController:IBaseViewController{
         super.viewWillAppear(animated)
         
     }
-    open override func makeUI(){
+    open  func makeUI(){
         view.addSubview(contentView)
         view.addSubview(closeBtn)
     }
-    open override func makeLayout(){
+    open  func makeLayout(){
         
         contentView.snp.makeConstraints { make in
             make.center.equalToSuperview()

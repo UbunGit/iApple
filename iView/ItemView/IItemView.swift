@@ -7,6 +7,14 @@
 
 import Foundation
 import UIKit
+open class IImageItemViewData{
+    var image:String = "house.circle"
+    var title:String = "首页"
+    public init(image: String, title: String) {
+        self.image = image
+        self.title = title
+    }
+}
 open class IItemView:UIStackView{
    
     public override init(frame: CGRect) {
@@ -75,7 +83,7 @@ open class IImageItemView:UIStackView{
     }()
     
     open func makeUI() {
-       
+        backgroundColor = .red
         addArrangedSubview(imageView)
         addArrangedSubview(titleLab)
     }

@@ -1,0 +1,16 @@
+PODS:
+  - iApple/iSwiftUIKit (1.0.0)
+
+DEPENDENCIES:
+  - iApple/iSwiftUIKit (from `../../`)
+
+EXTERNAL SOURCES:
+  iApple:
+    :path: "../../"
+
+SPEC CHECKSUMS:
+  iApple: bf43cddec7007d2f11723bf07dbb21edc2486be7
+
+PODFILE CHECKSUM: 52b312059640a750f21c156797166b91f3a02b36
+
+COCOAPODS: 1.13.0

@@ -16,7 +16,6 @@ open class CollectionBaseHeader: UICollectionReusableView {
     }()
     public lazy var gradientView: GradientView = {
         let value = GradientView()
-        value.horizontalMode = true
         value.i_radius = 2
         return value
     }()

@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  iApple
+//  iPods
 //
 //  Created by mac on 2023/2/28.
 //
@@ -10,7 +10,7 @@ import Foundation
 public extension UIScreen{
     
     static var i_safeAreaInsets:UIEdgeInsets{
-        guard let safe = UIApplication.shared.delegate?.window??.safeAreaInsets else{
+        guard let safe = UIApplication.shared.i_window?.safeAreaInsets else{
             return .zero
         }
         return  safe

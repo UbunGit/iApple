@@ -8,7 +8,8 @@
 import UIKit
 import SnapKit
 open class IBaseViewController: UIViewController {
-
+    public var prefersLargeTitles:Bool = false
+    public var largeTitleDisplayMode:UINavigationItem.LargeTitleDisplayMode = .automatic
     public var isNavigationBarHidden = false
     open lazy var backBtn: UIButton = {
         let value = UIButton()
@@ -38,6 +39,8 @@ open class IBaseViewController: UIViewController {
         }else{
             backBtn.isHidden = true
         }
+        navigationController?.navigationBar.prefersLargeTitles = prefersLargeTitles
+        navigationController?.navigationItem.largeTitleDisplayMode = largeTitleDisplayMode
         navigationController?.setNavigationBarHidden(isNavigationBarHidden, animated: false)
     }
  

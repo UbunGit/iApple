@@ -1,6 +1,6 @@
 //
 //  Date.swift
-//  iApple
+//  iPods
 //
 //  Created by mac on 2023/2/25.
 //
@@ -10,7 +10,7 @@ public extension Date{
     
     func i_dateString(_ format:String="yyyy-MM-dd HH:mm:ss") -> String {
         let formatter = DateFormatter()
-        //        formatter.locale = locale
+        formatter.locale = Locale.current
         formatter.dateFormat = format
         let date = formatter.string(from: self)
         return date

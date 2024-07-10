@@ -59,8 +59,9 @@ public class CloudKitCoreDataManage{
         container.persistentStoreDescriptions = [description]
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-                
+                logging.error(error)
                 fatalError("Unresolved error \(error), \(error.userInfo)")
+                
             }
         })
         return container

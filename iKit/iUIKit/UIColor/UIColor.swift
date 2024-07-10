@@ -1,19 +1,15 @@
 //
 //  UIColor.swift
-//  iApple
+//  iPods
 //
 //  Created by mac on 2023/3/2.
 //
 
 import Foundation
+import SwiftUI
 public extension UIColor{
     
-    static var i_random:UIColor{
-        let r = CGFloat.random(in: 0...255)/255
-        let g = CGFloat.random(in: 0...255)/255
-        let b = CGFloat.random(in: 0...255)/255
-        return UIColor(red: r, green: g, blue:b, alpha: 1)
-    }
+  
     
     func i_alpha(_ value:CGFloat) -> UIColor {
         return self.withAlphaComponent(value)
@@ -54,7 +50,8 @@ public extension UIColor{
                 }
             }
             return color
-        }else {
+        }
+        else {
             return lightColor
         }
     }
@@ -75,3 +72,6 @@ public extension UIColor{
         
     }
 }
+
+
+

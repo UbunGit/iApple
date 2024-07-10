@@ -1,6 +1,6 @@
 //
 //  CKR+.swift
-//  iApple
+//  iPods
 //
 //  Created by mac on 2023/7/4.
 //
@@ -19,6 +19,13 @@ public extension CKRecord{
             return nil
         }
         return value
+    }
+    
+    func int(forColumn column:String)->Int{
+        if let value:Int = self.value(forColumn: column){
+            return value
+        }
+        return 0
     }
     
     func string(forColumn column:String)->String{
@@ -43,10 +50,5 @@ public extension CKRecord{
         return value.toImage()
     }
 #endif
-    func int(forColumn column:String)->Int{
-        if let value:Int = self.value(forColumn: column){
-            return value
-        }
-        return 0
-    }
+    
 }

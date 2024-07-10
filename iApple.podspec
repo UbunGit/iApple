@@ -20,6 +20,7 @@ Pod::Spec.new do |spec|
   spec.subspec 'iKit' do |spec|
     spec.dependency "YYCategories"
     spec.dependency "iApple/iMD5"
+    spec.dependency "iApple/iLog"
     spec.source_files  =  [
     "iKit/**/*.{h,m,swift}"
     ]
@@ -34,12 +35,21 @@ Pod::Spec.new do |spec|
     "iURL/**/*.{h,m,swift}"
     ]
   end
+  
   spec.subspec 'iBase' do |spec|
     spec.dependency "SnapKit"
+    spec.dependency "MJRefresh"
     spec.source_files  =  [
     "iBase/**/*.{h,m,swift}"
     ]
   end
+  spec.subspec 'iSwiftUIKit' do |spec|
+    
+    spec.source_files  =  [
+    "iSwiftUIKit/**/*.{h,m,swift}"
+    ]
+  end
+  
   
   spec.subspec 'iBox' do |spec|
     spec.dependency "iApple/iKit"
@@ -62,14 +72,9 @@ Pod::Spec.new do |spec|
     "iImage/**/*.{h,m,swift}"
     ]
   end
-  spec.subspec 'iColor' do |spec|
-    spec.dependency "iApple/iBox"
-    spec.source_files  =  [
-    "iColor/**/*.{h,m,swift}"
-    ]
-  end
+
   spec.subspec 'iLog' do |spec|
-    spec.dependency "iApple/iBox"
+    
     spec.dependency 'CocoaLumberjack/Swift'
     spec.source_files  =  [
     "iLog/**/*.{h,m,swift}"
@@ -108,6 +113,9 @@ Pod::Spec.new do |spec|
     spec.dependency "SDWebImage"
     spec.dependency "SnapKit"
     spec.dependency "iApple/iBox"
+    spec.dependency "iApple/iHub"
+    spec.dependency "iApple/iImage"
+    spec.dependency "iApple/iBase"
     spec.source_files  =  [
     "iView/**/*.{h,m,swift}"
     ]
@@ -234,15 +242,7 @@ Pod::Spec.new do |spec|
     ]
   end
   
-  
-  
-  
-  spec.subspec 'iBander' do |spec|
-    spec.dependency "SnapKit"
-    spec.source_files  =  [
-    "iBander/**/*.{h,m,swift}"
-    ]
-  end
+
   spec.subspec 'iSCalendar' do |spec|
     spec.source_files  =  [
     "iSCalendar/**/*.{h,m,swift}"
@@ -287,8 +287,12 @@ Pod::Spec.new do |spec|
     spec.dependency "IQKeyboardManagerSwift"
     spec.dependency "SnapKit"
     
+  
     spec.dependency "iApple/iHub"
     spec.dependency "iApple/iView"
+    spec.dependency "iApple/iBase"
+    spec.dependency "iApple/iStore"
+    
     spec.source_files  =  [
     "iSetting/**/*.{h,m,swift}"
     ]

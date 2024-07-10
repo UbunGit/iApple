@@ -8,8 +8,11 @@
 import Foundation
 import UIKit
 import SnapKit
-open class IBanderCollectionCell<T:Any>:UICollectionViewCell,I_UICollectionViewProtocol{
+import Combine
+open class IBanderView<T:Any>:UIView,I_UICollectionViewProtocol{
     
+    public var selectIndexChangeBlock:(()->())? = nil
+    public var selectIndex:IndexPath = .init(row: 0, section: 0)
     public var dataSouce:[T] = []{
         didSet{
             collectionView.reloadData()
@@ -52,18 +55,30 @@ open class IBanderCollectionCell<T:Any>:UICollectionViewCell,I_UICollectionViewP
     }
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.i_dequeueReusableCell(with: DefualCell.self, for: indexPath)
+        let rowData = dataSouce[indexPath.row]
+        if let image = rowData as? UIImage {
+            cell.imgView.image = image
+        }
         return cell
     }
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.bounds.size
     }
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+
+    }
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let w = Int(self.collectionView.bounds.width)
+        let x = Int(self.collectionView.contentOffset.x)
+        let index = (x+w/2) / w
+        let page  = index
+        selectIndex = .init(row: page, section: 0)
+        selectIndexChangeBlock?()
     }
   
 }
 
-extension IBanderCollectionCell{
+extension IBanderView{
     open  class DefualCell:UICollectionViewCell{
         public lazy var imgView: UIImageView = {
             let value = UIImageView()

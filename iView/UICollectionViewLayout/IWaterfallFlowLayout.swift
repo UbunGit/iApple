@@ -29,11 +29,14 @@ open class IWaterfallFlowLayout : UICollectionViewFlowLayout {
         
         let columnsCount = CGFloat(numberOfColumns)
         let sp = minimumInteritemSpacing * (columnsCount - 1)
-        let itemWidth = (collectionView.frame.width - sectionInset.left - sectionInset.right - sp) / columnsCount
+        let itemWidth = (collectionView.width - sectionInset.left - sectionInset.right - sp) / columnsCount
         
         var xOffset: [CGFloat] = []
         for column in 0..<Int(numberOfColumns) {
-            xOffset.append((itemWidth + minimumInteritemSpacing) * CGFloat(column))
+            let n = CGFloat(column%numberOfColumns)
+            let _sp = n*sp
+            let x = sectionInset.left + _sp + (n*itemWidth)
+            xOffset.append(x)
         }
         
         var yOffset: [CGFloat] = .init(repeating: 0, count: Int(numberOfColumns))

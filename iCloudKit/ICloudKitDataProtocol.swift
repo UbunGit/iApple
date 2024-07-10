@@ -1,6 +1,6 @@
 //
 //  ICloudKitDataPro.swift
-//  iApple
+//  iPods
 //
 //  Created by mac on 2023/6/30.
 //
@@ -12,18 +12,18 @@ import CoreData
 
 
 open class ICloudSqlObject{
-    
-    var keyValues:[String:SqlValueProtocol] = [:]
-    
-    public init(keyValues:[String:SqlValueProtocol]) {
-        self.keyValues = keyValues
-    }
-    public var uuid:String{
-        return keyValues["uuid"] as! String
-    }
-    public lazy var isDelete: Bool = {
-        return keyValues["isdelete"] as? Int == 1
-    }()
+//    
+//    var keyValues:[String:SqlValueProtocol] = [:]
+//    
+//    public init(keyValues:[String:SqlValueProtocol]) {
+//        self.keyValues = keyValues
+//    }
+//    public var uuid:String{
+//        return keyValues["uuid"] as! String
+//    }
+//    public lazy var isDelete: Bool = {
+//        return keyValues["isdelete"] as? Int == 1
+//    }()
 }
 
 

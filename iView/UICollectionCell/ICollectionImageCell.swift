@@ -8,11 +8,14 @@
 import UIKit
 
 open class ICollectionImageCell: UICollectionViewCell {
+    
     public lazy var imageView: UIImageView = {
         let value = UIImageView()
         value.i_radius = 0.1
+        value.contentMode = .scaleAspectFill
         return value
     }()
+    
     public override init(frame: CGRect) {
         super.init(frame: frame)
         makeUI()

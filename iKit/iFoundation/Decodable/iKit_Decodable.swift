@@ -17,7 +17,7 @@ public extension Encodable{
             let data = try JSONEncoder().encode(self)
             return try JSONSerialization.jsonObject(with: data,options: .fragmentsAllowed)
         }catch{
-            logging.debug(error)
+            logging.error(error)
             return nil
         }
         

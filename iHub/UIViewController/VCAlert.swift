@@ -73,7 +73,13 @@ public extension UIViewController{
         self.present(alertvc, animated: true)
     }
     
-    func i_sheet(view:UIView){
-        
+    func i_sheet(view:UIView, completion: ((_ vc:UIViewController) -> Void)? = nil){
+        let vc = ISheetBaseViewController()
+        vc.contentView = view
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true){ [weak vc] in
+            guard let vc = vc else {return}
+            completion?(vc)
+        }
     }
 }

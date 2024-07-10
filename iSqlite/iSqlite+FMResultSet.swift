@@ -1,21 +1,13 @@
 //
 //  iSqlite+FMResultSet.swift
-//  iApple
+//  iPods
 //
 //  Created by admin on 2023/10/14.
 //
 
 import Foundation
 import FMDB
-public extension Dictionary where Key == String {
-    func toData() throws ->Data{
-        return try JSONSerialization.data(withJSONObject:self, options: [])
-    }
-    func toModel<T:Decodable>(type:T.Type) throws ->T{
-        let data = try toData()
-        return try JSONDecoder().decode(T.self, from: data)
-    }
-}
+
 public extension FMResultSet{
     
     func toDictionary(handle:((_ key:String,_ resultSet:FMResultSet)->Any?)? = nil) throws ->[String:Any]{

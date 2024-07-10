@@ -10,16 +10,19 @@ import UIKit
 
 import TZImagePickerController
 
-
+public struct MediaData{
+    public var image:UIImage
+    public var asset:PHAsset
+}
 
  public extension UIViewController{
     
     func i_selectImage(
         config:((_ imagePicker:TZImagePickerController)->())?,
-        finesh:@escaping (_ cover:[UIImage]?,_ asset:[PHAsset]?,_ error:Error?)->()
+        finesh:@escaping (_ media:[MediaData]?,_ error:Error?)->()
     ){
         guard let pickVC = TZImagePickerController(maxImagesCount: 9, columnNumber: 4, delegate: nil) else{
-            finesh (nil,nil,MediaError(code: -1, msg: "图片选择出错"))
+            finesh (nil,MediaError(code: -1, msg: "图片选择出错"))
             return
         }
         // 设置默认样式
@@ -39,9 +42,15 @@ import TZImagePickerController
         // photos 图片数组 assets资源数组 isOriginal 是否是原图
         pickVC.didFinishPickingPhotosHandle = ({ photos,assets,isOriginal in
             guard let assets = (assets) as? [PHAsset]? else{
-                return finesh(nil,nil,nil)
+                return finesh(nil,nil)
             }
-            finesh(photos,assets,nil)
+            let meidas = assets?.enumerated().compactMap{ (index,item) in
+                if let coverImage = photos?.value(at: index){
+                    return  MediaData.init(image: coverImage, asset: item)
+                }
+                return nil
+            }
+            finesh(meidas,nil)
         })
         pickVC.modalPresentationStyle = .fullScreen
         self.present(pickVC, animated: true)

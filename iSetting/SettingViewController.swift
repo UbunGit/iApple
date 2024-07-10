@@ -9,12 +9,51 @@ import UIKit
 import SDWebImage
 import StoreKit
 
-open class ISettingViewController: UIViewController {
+public enum SettingLanguage{
+    case zh
+    case en
+}
+enum SettingWord{
+    case Setting
+    case UserAgreement
+    case PrivateAgreement
+    case Feedback
+    case Version
+    case Review
+    case ContactUs
+    case ShareApp
     
+    func str(language:SettingLanguage) -> String{
+        switch self{
+        case .Setting:
+            return (language == .zh) ? "设置" : "Setting"
+        case .UserAgreement:
+            return (language == .zh) ? "用户协议" : "User Agreement"
+        case .PrivateAgreement:
+            return (language == .zh) ? "隐私协议" : "Private Agreement"
+        case .Feedback:
+            return (language == .zh) ? "意见反馈" : "Feedback"
+        case .Version:
+            return (language == .zh) ? "版本号" : "Version Number"
+        case .Review:
+            return (language == .zh) ? "给个好评" : "Review"
+        case .ContactUs:
+            return (language == .zh) ? "联系我" : "Contact us"
+        case .ShareApp:
+            return (language == .zh) ? "分享app" : "Share app"
+        }
+    }
+    
+}
+
+open class ISettingViewController: UIViewController {
+    public var language:SettingLanguage = .en
     public var email:String = "we2657932@163.com"
     public var userurl:String = "https://homewh.chaoxing.com/agree/userAgreement"
     public var privateurl:String = "https://www.julyedu.com/agreement/priv"
     public var dataSouce:[GroupData] = []
+    public var appid:String = "8888888888"
+    
     public lazy var tableView: UITableView = {
         let value = UITableView(frame: .zero, style: .insetGrouped)
         value.delegate = self
@@ -46,17 +85,17 @@ open class ISettingViewController: UIViewController {
         }
     }
     public  lazy var data_feedback: GroupData.ItemData = {
-        .init(title: "意见反馈",cellType: SettingRightArrowCell.self, handle:  {
+        .init(title: SettingWord.Feedback.str(language: language),cellType: SettingRightArrowCell.self, handle:  {
             self.handle_feedback()
         })
     }()
     public lazy var data_user_agreement: GroupData.ItemData = {
-        .init(title: "用户协议",cellType: SettingRightArrowCell.self, handle:  {
+        .init(title: SettingWord.UserAgreement.str(language: language),cellType: SettingRightArrowCell.self, handle:  {
             self.handle_user_agreement()
         })
     }()
     public lazy var data_private_agreement: GroupData.ItemData = {
-        .init(title: "隐私协议",cellType: SettingRightArrowCell.self, handle:  {
+        .init(title: SettingWord.PrivateAgreement.str(language: language),cellType: SettingRightArrowCell.self, handle:  {
             self.handle_private_agreement()
         })
     }()
@@ -66,7 +105,12 @@ open class ISettingViewController: UIViewController {
         })
     }()
     
-    
+    public lazy var data_shareApp: GroupData.ItemData = {
+        .init(title: SettingWord.ShareApp.str(language: language),cellType: SettingRightArrowCell.self, handle:  {
+            self.shareApp(appid: self.appid)
+        })
+    }()
+
    public lazy var data_clearCache: GroupData.ItemData = {
         return .init(title:"清理缓存",cellType: SettingRightArrowCell.self) {
             self.fileSizeWithInterge()
@@ -79,20 +123,21 @@ open class ISettingViewController: UIViewController {
     }()
     open func reloadData(){
         dataSouce.append(
-            .init(title: "设置", items: [
-                data_clearCache,
-                .init(title: "给个好评",cellType: SettingRightArrowCell.self, handle: {
+            .init(title: SettingWord.Setting.str(language: language), items: [
+//                data_clearCache,
+                data_shareApp,
+                .init(title: SettingWord.Review.str(language: language),cellType: SettingRightArrowCell.self, handle: {
                     self.startApp()
                 }),
-                .init(title: "联系我",cellType: SettingRightArrowCell.self, handle: {
+                .init(title: SettingWord.ContactUs.str(language: language),cellType: SettingRightArrowCell.self, handle: {
                     self.emialMe(self.email)
                 }),
-                .init(title: "版本号",
+                .init(title: SettingWord.Version.str(language: language),
                       cellType: SettingRightArrowCell.self,
                       value: {
                           UIApplication.shared.appVersion
                       }),
-                data_bannedUser
+//                data_bannedUser
                 
             ])
             
@@ -106,7 +151,6 @@ open class ISettingViewController: UIViewController {
                 data_feedback,
             ])
         )
-        
     }
     
     open func handle_feedback(){
@@ -162,10 +206,6 @@ extension ISettingViewController:I_UITableViewProtocol{
         rownData.handle?()
     }
 }
-
-
-
-
 
 extension UIViewController{
     

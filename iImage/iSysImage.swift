@@ -18,9 +18,9 @@ public extension UIImage{
     
     static let house = UIImage(systemName: "house")
     static let house_fill = UIImage(systemName: "house.fill")
-    
-    static let gearshape = UIImage(systemName: "gearshape")
-    static let gearshape_fill = UIImage(systemName: "gearshape.fill")
+    // ⚙️
+    static let i_gearshape = UIImage(systemName: "gearshape")
+    static let i_gearshape_fill = UIImage(systemName: "gearshape.fill")
     
     static let arrow_right = UIImage(systemName: "chevron.right")
   

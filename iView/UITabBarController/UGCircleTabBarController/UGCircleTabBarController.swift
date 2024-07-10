@@ -37,13 +37,7 @@ extension UGCircleTabBarController{
         
         open lazy var backGroundView: UIView = {
             let value = UIView()
-            value.i_radius = 8
-            value.layer.masksToBounds = false
-            value.layer.shadowColor = UIColor.systemGroupedBackground.cgColor
-            value.layer.shadowRadius = 4
-            value.layer.shadowOpacity = 1
-            value.layer.shadowOffset = .init(width: 0, height: 0)
-      
+     
             return value
         }()
         func makeUI(){
@@ -51,7 +45,7 @@ extension UGCircleTabBarController{
         }
         func makeLayout(){
             backGroundView.snp.makeConstraints { make in
-                make.top.equalToSuperview().offset(4)
+                make.top.equalToSuperview()
                 make.left.equalToSuperview().offset(8)
                 make.right.equalToSuperview().offset(-8)
                 make.bottom.equalToSuperview().offset(-(UIScreen.i_safeAreaInsets.bottom/2 + 4))
@@ -70,8 +64,8 @@ extension UGCircleTabBarController{
             if #available(iOS 15.0, *) {
                 scrollEdgeAppearance = appearance
             }
-            tintColor = .white.i_alpha(1)
-            unselectedItemTintColor = .red
+            
+    
         }
     }
 }

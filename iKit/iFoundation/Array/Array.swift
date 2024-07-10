@@ -14,4 +14,17 @@ public extension Array{
         }
         return self[index]
     }
+    
+    func i_randomElements(count: Int) -> [Element] {
+        var elements: [Element] = []
+        var mutableArray = self
+        
+        for _ in 0..<count {
+            let randomIndex = Int.random(in: 0..<mutableArray.count)
+            let element = mutableArray.remove(at: randomIndex)
+            elements.append(element)
+        }
+        
+        return elements
+    }
 }

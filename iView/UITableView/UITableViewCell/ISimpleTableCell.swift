@@ -1,6 +1,6 @@
 //
 //  ISimpleTableCell.swift
-//  iApple
+//  iPods
 //
 //  Created by mac on 2023/3/1.
 //
@@ -24,6 +24,18 @@ open class ISimpleTableCell: UITableViewCell {
         value.text = "升级Pro"
         value.font = .systemFont(ofSize: 16)
         value.textColor = .label
+        return value
+    }()
+    
+    lazy var leftStackView: UIStackView = {
+        let value = UIStackView()
+        value.spacing = 4
+        return value
+    }()
+    
+    lazy var rightStackView: UIStackView = {
+        let value = UIStackView()
+        value.spacing = 4
         return value
     }()
     
@@ -57,30 +69,34 @@ open class ISimpleTableCell: UITableViewCell {
     }
     
     open func makeUI(){
-        addSubview(iconView)
-        addSubview(titleLab)
-        addSubview(moreArrow)
-        addSubview(valueLab)
+        addSubview(leftStackView)
+        addSubview(rightStackView)
+        leftStackView.addArrangedSubview(iconView)
+        leftStackView.addArrangedSubview(titleLab)
+       
+        rightStackView.addArrangedSubview(valueLab)
+        rightStackView.addArrangedSubview(moreArrow)
     }
     
     open func makeLayout(){
-        iconView.snp.makeConstraints { make in
+        leftStackView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().offset(12)
         }
-        titleLab.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.left.equalTo(iconView.snp.right).offset(12)
-        }
-        moreArrow.snp.makeConstraints { make in
+       
+        rightStackView.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-12)
             make.centerY.equalToSuperview()
       
         }
-        valueLab.snp.makeConstraints { make in
-            make.right.equalTo(moreArrow.snp.left).offset(-12)
-            make.centerY.equalToSuperview()
-        }
+//        titleLab.snp.makeConstraints { make in
+//            make.centerY.equalToSuperview()
+//            make.left.equalTo(iconView.snp.right).offset(12)
+//        }
+//        valueLab.snp.makeConstraints { make in
+//            make.right.equalTo(moreArrow.snp.left).offset(-12)
+//            make.centerY.equalToSuperview()
+//        }
         
     }
     

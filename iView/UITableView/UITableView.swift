@@ -1,6 +1,6 @@
 //
 //  UITableView.swift
-//  iApple
+//  iPods
 //
 //  Created by mac on 2023/2/25.
 //
@@ -19,11 +19,7 @@ public extension UITableView{
     func i_registerCells(_ type:[UITableViewCell.Type]) {
         type.forEach { i_registerCell( $0) }
     }
-    
-    func i_dequeueReusableCell<T: UITableViewCell>(_ type: T.Type, for indexPath: IndexPath) -> T {
-        dequeueReusableCell(withIdentifier: type.i_className, for: indexPath) as! T
-    }
-    
+
     func i_registernib(cellType: UITableViewCell.Type, bundle: Bundle? = nil) {
         let className = cellType.i_className
         let identifier = className.components(separatedBy: ".").last!
@@ -32,8 +28,13 @@ public extension UITableView{
         register(nib, forCellReuseIdentifier: identifier)
     }
     
+    
     func i_registernib(cellTypes: [UITableViewCell.Type], bundle: Bundle? = nil) {
         cellTypes.forEach { i_registernib(cellType: $0, bundle: bundle) }
+    }
+    
+    func i_dequeueReusableCell<T: UITableViewCell>(_ type: T.Type, for indexPath: IndexPath) -> T {
+        dequeueReusableCell(withIdentifier: type.i_className, for: indexPath) as! T
     }
     
     func i_dequeueNibCell<T: UITableViewCell>(with type: T.Type, for indexPath: IndexPath) -> T {
@@ -69,4 +70,26 @@ public extension UITableView{
      }
 
   
+}
+
+
+public extension UITableView{
+    func i_registHeader(_ type: UITableViewHeaderFooterView.Type){
+        let className = type.i_className
+        self.register(type, forHeaderFooterViewReuseIdentifier:className)
+    }
+    func i_dequeueHeader<T: UITableViewHeaderFooterView>(_ type: T.Type)->T{
+        let className = type.i_className
+        return self.dequeueReusableHeaderFooterView(withIdentifier: className) as! T
+    }
+    
+    func i_registFooter(_ type: UITableViewHeaderFooterView.Type){
+        let className = type.i_className
+        self.register(type, forHeaderFooterViewReuseIdentifier:className)
+    }
+    func i_dequeueFooter<T: UITableViewHeaderFooterView>(_ type: T.Type)->T{
+        let className = type.i_className
+        return self.dequeueReusableHeaderFooterView(withIdentifier: className) as! T
+    }
+    
 }

@@ -1,6 +1,6 @@
 //
 //  CollectionItemCell.swift
-//  iApple
+//  iPods
 //
 //  Created by admin on 2023/8/10.
 //
@@ -12,6 +12,7 @@ open class ICollectionItemCell: UICollectionViewCell {
         let value = UIStackView()
         value.axis = .vertical
         value.spacing  = 4
+        value.alignment = .center
         return value
     }()
     public lazy var titleLab: UILabel = {
@@ -24,6 +25,7 @@ open class ICollectionItemCell: UICollectionViewCell {
     public lazy var imageView: UIImageView = {
         let value = UIImageView()
         value.i_radius = 0.1
+        
         value.contentMode = .scaleAspectFit
         return value
     }()
@@ -37,6 +39,7 @@ open class ICollectionItemCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     open func makeUI(){
+    
         contentView.addSubview(stackView)
         stackView.addArrangedSubview(imageView)
         stackView.addArrangedSubview(titleLab)
@@ -44,6 +47,7 @@ open class ICollectionItemCell: UICollectionViewCell {
     
     }
     open func makeLayout(){
+       
         titleLab.snp.makeConstraints { make in
             make.size.lessThanOrEqualTo(self)
             make.height.greaterThanOrEqualTo(24)

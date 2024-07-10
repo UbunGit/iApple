@@ -1,6 +1,6 @@
 //
 //  UIcollectionView.swift
-//  iApple
+//  iPods
 //
 //  Created by mac on 2023/2/25.
 //
@@ -54,8 +54,8 @@ public extension UICollectionView{
 
     func i_dequeueReusableCell<T: UICollectionViewCell>(with type: T.Type,
                                                       for indexPath: IndexPath) -> T {
-    
-        dequeueReusableCell(withReuseIdentifier: type.i_className, for: indexPath) as! T
+        i_register(cellType: type)
+        return dequeueReusableCell(withReuseIdentifier: type.i_className, for: indexPath) as! T
     }
 
     func i_dequeueReusableView<T: UICollectionReusableView>(with type: T.Type,

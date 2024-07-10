@@ -23,8 +23,8 @@ open class IMediaItem{
         self.placeholderImage = placeholderImage
     }
 }
-class ShowImageView:UIView {
-    var longPressBlock:((_ cell:ShowImageCell)->())? = nil
+class ImagePlayerView:UIView {
+    var longPressBlock:((_ cell:ImagePlayerCell)->())? = nil
     init(datas:[IMediaItem],index:Int = 0){
       
         self.datas = datas
@@ -62,8 +62,7 @@ class ShowImageView:UIView {
         value.i_shadow(radius: 2)
         return value
     }()
-    
-    
+
     lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
@@ -77,11 +76,9 @@ class ShowImageView:UIView {
         value.dataSource = self
         value.contentInsetAdjustmentBehavior = .never
         value.alpha = 0
-        value.i_register(cellType: ShowImageCell.self, bundle: nil)
+        value.i_register(cellType: ImagePlayerCell.self, bundle: nil)
         return value
     }()
-    
-  
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -92,6 +89,7 @@ class ShowImageView:UIView {
         addSubview(countLab)
         
     }
+    
     func makeLayout(){
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -107,13 +105,13 @@ class ShowImageView:UIView {
     
 }
 
-extension ShowImageView:I_UICollectionViewProtocol{
+extension ImagePlayerView:I_UICollectionViewProtocol{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return datas.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.i_dequeueReusableCell(with: ShowImageCell.self, for: indexPath)
+        let cell = collectionView.i_dequeueReusableCell(with: ImagePlayerCell.self, for: indexPath)
         let celldata = datas[indexPath.row]
         if let image = celldata.image {
             cell.imageView.image = image
@@ -142,83 +140,5 @@ extension ShowImageView:I_UICollectionViewProtocol{
     
 }
 
-
-open class ShowImageVC:UIViewController{
-    public var datas:[IMediaItem] = []
-    public var index:Int = 0
-    
-    lazy var closeBtn: UIButton = {
-        let value = UIButton(frame: .init(origin: .zero, size: .init(width: 32, height: 32)))
-        value.i_radius = 4
-        value.backgroundColor = .systemGroupedBackground
-        value.setTitleColor(.black, for: .normal)
-        value.setImage(.init(systemName: "chevron.left"), for: .normal)
-        value.tintColor = .tertiaryLabel
-        value.addTarget(self, action: #selector(dismissvc), for: .touchUpInside)
-        return value
-    }()
-    
-    @objc func dismissvc(){
-        self.dismiss(animated: true)
-    }
-    
-    lazy var imageView: ShowImageView = {
-        let value = ShowImageView.init(datas: datas,index: index)
-        value.longPressBlock = {cell in
-            guard let indexPath = self.imageView.collectionView.indexPath(for: cell) else {return}
-            let mediaItem = self.datas[indexPath.section]
-            var shareItems:[Any] = []
-            if let image = mediaItem.image{
-                shareItems.append(image)
-            }else if let image = cell.imageView.image{
-                shareItems.append(image)
-            }
-
-            self.share(shareItems)
-        }
-        return value
-    }()
-    open override func viewDidLoad() {
-        super.viewDidLoad()
-        makeUI()
-        makeLayout()
-        view.backgroundColor = .black
-    }
-    
-    func makeUI(){
-        
-        view.addSubview(imageView)
-        view.addSubview(closeBtn)
-        
-    }
-    
-    func makeLayout(){
-        imageView.snp.makeConstraints { make in
-            make.edges.equalTo(view)
-        }
-        closeBtn.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(12)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.size.equalTo(32)
-        }
-        
-        
-    }
-    func share(_ contends:[Any]){
-      
-        // 创建 UIActivityViewController
-        let activityViewController = UIActivityViewController(activityItems:contends, applicationActivities: nil)
-
-        // Setting要排除的分享选项
-        activityViewController.excludedActivityTypes = [.addToReadingList, .airDrop, .assignToContact]
-
-        // 显示 UIActivityViewController
-        if let popoverController = activityViewController.popoverPresentationController {
-            popoverController.sourceView = self.imageView
-            popoverController.sourceRect = self.view.bounds
-        }
-        self.present(activityViewController, animated: true, completion: nil)
-    }
-}
 
 

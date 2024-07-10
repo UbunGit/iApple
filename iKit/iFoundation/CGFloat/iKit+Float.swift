@@ -18,12 +18,34 @@ public extension Float {
         return format.string(from: NSNumber(value: self)) ?? ""
     }
     
+    var angle:Float{
+       self*Float.pi/180;
+
+    }
+    
    
 }
 
 public extension CGFloat{
+    
     static var i_screenRatio:CGFloat {
         return UIScreen.main.bounds.width/UIScreen.main.bounds.height
     }
+    
+    var angle:CGFloat{
+       self*CGFloat.pi/180;
+
+    }
 }
 
+
+public extension CGFloat{
+    var i_auto_w:CGFloat{
+        (UIScreen.i_width/375) * self
+    }
+}
+public extension Double{
+    var i_auto_w:Double{
+        (UIScreen.i_width/375) * self
+    }
+}

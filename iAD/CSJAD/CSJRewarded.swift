@@ -71,8 +71,6 @@ extension CSJRewarded:BUNativeExpressRewardedVideoAdDelegate{
         }
     }
     
-    
-    
     public func nativeExpressRewardedVideoAdServerRewardDidSucceed(_ rewardedVideoAd: BUNativeExpressRewardedVideoAd, verify: Bool) {
         logging.debug("激励广告-穿山甲触发有效激励")
         isValidSucceed = true

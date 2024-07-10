@@ -107,6 +107,11 @@ extension UIApplication:SKProductsRequestDelegate{
     // MARK: SKProductsRequestDelegate
     public func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         logging.debug(response.products.map{$0.productIdentifier})
+        if response.products.count <= 0  {
+            UIView.loadingDismiss()
+            UIView.tost(msg: "未找到对应商品")
+            return
+        }
         response.products.forEach { product in
             let payment = SKMutablePayment.init(product: product)
             payment.quantity = 1

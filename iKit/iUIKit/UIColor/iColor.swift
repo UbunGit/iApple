@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 public extension UIColor{
-    static let i_accent = UIColor.init(named: "AccentColor")
+    static let i_accent:UIColor = UIColor.init(named: "AccentColor") ?? .i_random
 }
 
 
